@@ -1,6 +1,8 @@
 package quest.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -62,6 +64,11 @@ public class FormateurController extends HttpServlet {
 
 		request.setAttribute("formateur", formateurBdd);
 		
+		List<Civilite> civilites = new ArrayList<>();
+		Collections.addAll(civilites, Civilite.values());
+		request.setAttribute("civilites", civilites);
+		
+		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/updateFormateur.jsp").forward(request, response);
 	}
 
@@ -71,6 +78,11 @@ public class FormateurController extends HttpServlet {
 	{
 		List<Formateur> formateurs = Singleton.getInstance().getDaoPersonne().findAllFormateur();
 		request.setAttribute("formateurs", formateurs);
+		
+		List<Civilite> civilites = new ArrayList<>();
+		Collections.addAll(civilites, Civilite.values());
+		request.setAttribute("civilites", civilites);
+		
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/formateur.jsp").forward(request, response);
 		

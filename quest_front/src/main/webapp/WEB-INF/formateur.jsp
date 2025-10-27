@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 
 <!DOCTYPE html>
 <html>
@@ -17,34 +18,37 @@
 
 
 <table>
+
+
+
+
 	<tr><th>ID</th><th>Login</th><th>Password</th><th>Nom</th><th>Prénom</th><th>Civilité</th><th>Admin</th><th>Actions</th></tr>
+	
+	<c:forEach items="${formateurs}" var="formateur" >
+	
 	<tr>
-		<td>1</td>
-		<td>profchen</td>
-		<td>profchen</td>
-		<td>Chen</td>
-		<td>Professeur</td>
-		<td>homme</td>
-		<td>oui</td>
+	
+	
+	
+		<td>${formateur.id}</td>
+		<td>${formateur.login}</td>
+		<td>${formateur.password}</td>
+		<td>${formateur.nom}</td>
+		<td>${formateur.prenom}</td>
+		<td>${formateur.civilite}</td>
+		
+	    <c:choose>
+			<c:when test="${formateur.admin==false}"> <td>non</td> </c:when>
+			<c:otherwise><td>oui</td></c:otherwise>
+		</c:choose>
+		
 		<td>
-			<a href="formateur?id=1"><input type="button" value="Modifier"></a>
-			<a href="formateur?id=1&delete"><input type="button" value="Supprimer"></a>
+			<a href="formateur?id=${formateur.id}"><input type="button" value="Modifier"></a>
+			<a href="formateur?id=${formateur.id}&delete"><input type="button" value="Supprimer"></a>
 		</td>
 	</tr>
 	
-	<tr>
-		<td>2</td>
-		<td>profketeleeria</td>
-		<td>profketeleeria</td>
-		<td>Keteleeria</td>
-		<td>Professeure</td>
-		<td>femme</td>
-		<td>non</td>
-		<td>
-			<a href="formateur?id=2"><input type="button" value="Modifier"></a>
-			<a href="formateur?id=2&delete"><input type="button" value="Supprimer"></a>
-		</td>
-	</tr>
+	</c:forEach>
 </table>
 
 <form method="POST" action="formateur">
@@ -52,12 +56,21 @@
 	Password : <input type="password" name="password" placeholder="password" required><br>
 	Nom : <input type="text" id="nom" name="nom" placeholder="nom" required><br>
 	Prénom : <input type="text" id="prenom" name="prenom" placeholder="prenom" required><br>
-	Civilité : <input type="radio" id="homme" name="civilite" value="Homme" checked>
-            <label for="homme">Homme</label>
-            <input type="radio" id="femme" name="civilite" value="Femme">
-            <label for="femme">Femme</label>
-            <input type="radio" id="nb" name="civilite" value="NB">
-            <label for="nb">Non-binaire</label><br>
+	Civilité : 
+	
+	        <c:forEach items="${civilites}" var="civilite">
+        	
+        	
+      			  <input type="radio" id="${civilite}" name="civilite" value="${civilite}" >
+          		  <label for="${civilite}">${civilite}</label>
+      			
+            </c:forEach>
+            
+            <c:forEach items="${civilites}" var="civilite" varStatus="status">
+ 
+            
+	
+	<br>
 	Admin : <input type="checkbox" id="admin" name="admin"> Admin
 	<input type="submit" value="Ajouter">
 </form>

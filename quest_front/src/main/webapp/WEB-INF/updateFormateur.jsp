@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+    
+    
 <!DOCTYPE html>
 
 
@@ -27,19 +31,44 @@
         <label for="prenom">Prénom :</label>
         <input type="text" id="prenom" name="prenom" placeholder="prenom" required value="${formateur.prenom}"><br><br>
 
+
+
+
         <p>Civilite</p>
+        
         <div class="civilite">
-            
-            <input type="radio" id="homme" name="civilite" value="Homme" checked>
-            <label for="homme">Homme</label>
-            <input type="radio" id="femme" name="civilite" value="Femme">
-            <label for="femme">Femme</label>
-            <input type="radio" id="nb" name="civilite" value="NB">
-            <label for="nb">Non-binaire</label> 
+        <c:forEach items="${civilites}" var="civilite">
+        	<c:choose>
+        		<c:when test="${formateur.civilite==civilite}">
+      			  <input type="radio" id="${civilite}" name="civilite" value="${civilite}" checked>
+          		  <label for="${civilite}">${civilite}</label>
+      			</c:when>
+      			<c:otherwise>
+      			  <input type="radio" id="${civilite}" name="civilite" value="${civilite}" >
+          		  <label for="${civilite}">${civilite}</label>
+      			</c:otherwise>
+      	
+            </c:choose>
+            </c:forEach>
         </div>
         <br><br>
+        
+        
+        
+      
         <div class="admin">
-            <input type="checkbox" id="admin" name="admin">
+        
+        <c:choose>
+        		<c:when test="${formateur.admin==true}">
+      			  <input type="checkbox" id="admin" name="admin" checked>
+            
+      			</c:when>
+      			<c:otherwise>
+      			  <input type="checkbox" id="admin" name="admin">
+      			</c:otherwise>
+      	
+            </c:choose>
+        
             <label for="admin">Admin</label><br><br>
         </div>
         
