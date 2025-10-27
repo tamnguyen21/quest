@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Filières</title>
 <style>
 body{
 	text-align:center;
@@ -45,49 +45,64 @@ background-color:yellow;
 </style>
 </head>
 
-<div>${filieres}</div>
 
 <body>
 
 
-<h1>Gestion des filieres</h1>
+<h1>Gestion des filières</h1>
 
 <a href="index.html" ><input type="button" value="Retour" class="retour"></a>
-
 <table>
-<tr><th>ID</th><th>libelle</th><th>debut</th><th>fin</th><th>Actions</th></tr>
 <tr>
-<th id="id">1</th>
-<td>SOPRA2025</td>
-<td>2025-10-10</td>
-<td>2025-12-10</td>
-<td>
-	<a href="filiere?id=1"><input type="button" value="Modifier" class="modifier"></a>
-	<a href="filiere?id=1&delete"><input type="button" value="Supprimer" class="supprimer" onclick="alert('Êtes-vous sûr de vouloir supprimer ?')"></a>
-</td>
-</tr>
-<tr>
-<th id="id">2</th>
-<td>SOPRA2022</td>
-<td>2022-10-10</td>
-<td>2022-12-10</td>
-<td>
-	<a href="filier?id=2"><input type="button" value="Modifier" class="modifier"></a>
-	<a href="filiere?id=2&delete"><input type="button" value="Supprimer" class="supprimer" onclick="alert('Êtes-vous sûr de vouloir supprimer ?')"></a>
-</td>
+<th>ID</th>
+<th>Libellé</th>
+<th>Début</th>
+<th>Fin</th>
+<th>Actions</th>
 </tr>
 
+<c:forEach items="${filieres}" var="filiere" >
+<tr>
+<td>${filiere.id}</td>
+<td>${filiere.libelle}</td>
+<td>${filiere.debut}</td>
+<td>${filiere.fin}</td>
+<td>
+<a href="filiere?id=${filiere.id}">
+<button class="modifier">Modifier</button>
+</a>
+<a href="filiere?id=${filiere.id}&delete=true" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette filière ?');">
+<button class="supprimer">Supprimer</button>
+</a>
+</td>
+</tr>
+</c:forEach>
 </table>
 
 
 
+
+
+
+
 	<form method="POST" action="filiere">
-	Nom de la formation : <input required type="text" name="libelle"><br>
-	Date de debut : <input required type="date" name="debut">
+	Nom de la formation : <input required type="text" name="libelle" placeholder = "nom de la formation"><br>
+	Date de debut : <input required type="date" name="debut" onchange="updateFin()" id = "debutDate">
 	<br>
-	Date de fin : <input required type="date" name="fin">
+	Date de fin : <input required type="date" name="fin" min = "${filiere.debut}" id = "finDate">
 	<br>  
 	<input type="submit" value="Ajouter" class="ajouter">
 	</form>
 </body>
 </html>
+
+<script>
+function updateFin(){
+	var debutInput = document.getElementById("debutDate");
+	var finInput = document.getElementById("finDate");
+	
+	finInput.min = debutInput.value;
+	finInput.value = "";
+}
+
+</script>
