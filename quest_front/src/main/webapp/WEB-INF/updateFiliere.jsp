@@ -47,9 +47,9 @@ background-color:yellow;
 <form method="POST" action="filiere">
 	<input type="hidden" name="id" value="${filiere.id}">
 	Nom de la formation : <input required type="text" name="libelle" value="${filiere.libelle}"><br>
-	Date de debut : <input required type="date" name="debut" value="${filiere.debut}">
+	Date de debut : <input required type="date" name="debut" value="${filiere.debut}" id = "debutDate" onchange="updateFin()">
 	<br>
-	Date de fin : <input required type="date" name="fin" value="${filiere.fin}">
+	Date de fin : <input required type="date" name="fin" value="${filiere.fin}" min = "${filiere.debut}" id = "finDate">
 	<br>  
 	<input type="submit" value="Modifier">
 	<a href="filiere" ><input type="button" value="Retour" class="retour"></a>
@@ -57,3 +57,13 @@ background-color:yellow;
 	</form>
 </body>
 </html>
+<script>
+function updateFin(){
+	var debutInput = document.getElementById("debutDate");
+	var finInput = document.getElementById("finDate");
+	
+	finInput.min = debutInput.value;
+	finInput.value = "";
+}
+
+</script>

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>      
+    
 
 <!DOCTYPE html>
 <html>
@@ -73,18 +76,6 @@ form {
 	border : 3px solid black;
 }
 
-footer {
-	color: #ffffff;
-	background-color: salmon;
-	border: 2px solid black;
-	text-shadow: 2px 2px 0px #000000;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	padding: 0 10px;
-}
-
 img {
 	position: absolute; 
 	top: 20px; right: 
@@ -97,44 +88,28 @@ img {
 </head>
 <body>
 
-<div>${ordinateurs}</div>
-
 <h1>Gestion des ordinateurs</h1>
 
 <img src="https://i.ibb.co/j9w1t5mg/image.webp" alt="Blason">
 
+
+
 <table>
 <tr><th>ID</th><th>Marque</th><th>RAM (Giga)</th><th>Actions</th>
+
+<c:forEach items="${ordinateurs}" var="ordinateur">
 <tr>
-<td>1</td>
-<td>Dell</td>
-<td>4</td>
+<td>${ordinateur.id }</td>
+<td>${ordinateur.marque }</td>
+<td>${ordinateur.ram }</td>
+
 <td>
-	<a href="ordinateur?id=1"><input type="button" value="Modifier"></a>
-	<a href="ordinateur?id=1&delete"><input type="button" value="Supprimer"></a>
+	<a href="ordinateur?id=${ordinateur.id }"><input type="button" value="Modifier"></a>
+	<a href="ordinateur?id=${ordinateur.id }&delete"><input type="button" value="Supprimer"></a>
 </td>
 </tr>
 
-<tr>
-<td>2</td>
-<td>Asus</td>
-<td>8</td>
-<td>
-	<a href="ordinateur?id=2"><input type="button" value="Modifier"></a>
-	<a href="ordinateur?id=2&delete"><input type="button" value="Supprimer"></a>
-</td>
-</tr>
-
-
-<tr>
-<td>3</td>
-<td>HP</td>
-<td>4</td>
-<td>
-	<a href="ordinateur?id=3"><input type="button" value="Modifier"></a>
-	<a href="ordinateur?id=3&delete"><input type="button" value="Supprimer"></a>
-</td>
-</tr>
+</c:forEach>
 </table>
 
 <form method="POST" action="ordinateur">
@@ -142,8 +117,8 @@ img {
 	RAM (Giga): <input required type="number" name="ram"><br>
 	<input type="submit" value="Ajouter">
 </form>
-<footer>
-<p>&copy; CSS 2025 La_Terreur. All rights reserved.</p>
-</footer>
+
+<%@ include file="/footer.jsp" %>
+
 </body>
 </html>

@@ -1,20 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<base href="/quest_front/">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 
 <style>
-
-tr
-{
- text-align: center;
+tr {
+	text-align: center;
 }
 
 #fond {
-  background-image: url('assets/images/tpt.png');
-  background-position: center;
+	background-image: url('assets/images/tpt.png');
+	background-position: center;
 }
-
 </style>
 
 <head>
@@ -24,26 +23,31 @@ tr
 </head>
 <body id="fond">
 
-<h1>Gestion des matières</h1>
+	<h1>Gestion des matières</h1>
 
-<div>${matieres}</div>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Libellé</th>
+			<th>Actions</th>
+		</tr>
+		<c:forEach items="${matieres}" var="matiere">
 
-<table id="taz">
-<tr><th>ID</th><th>Libellé</th><th>Actions</th></tr>
-<tr><td>1</td><td>java</td><td>
-	<a href="matiere?id=1"><input type="button" value="Modifier"></a>
-	<a href="matiere?id=1&delete"><input type="button" value="Supprimer"></a>
-</td></tr>
-<tr><td>2</td><td>html</td><td>
-	<a href="matiere?id=2"><input type="button" value="Modifier"></a>
-	<a href="matiere?id=2&delete"><input type="button" value="Supprimer"></a>
-</td></tr>
+			<tr>
+				<td>${matiere.id}</td>
+				<td>${matiere.libelle}</td>
 
-</table>
+				<td><a href="matiere?id=${matiere.id}"><input type="button"
+						value="Modifier"></a> <a
+					href="matiere?id=${matiere.id}&delete"><input type="button"
+						value="Supprimer"></a></td>
+			</tr>
+		</c:forEach>
+	</table>
 
-<form method="POST" action="matiere">
-	Libelle  : <input required type="text" name="libelle"><br>
-	<input type="submit" value="Ajouter">
+	<form method="POST" action="matiere">
+		Libelle : <input required type="text" name="libelle"><br>
+		<input type="submit" value="Ajouter">
 	</form>
 </body>
 
