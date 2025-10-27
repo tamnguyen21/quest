@@ -12,7 +12,7 @@ public class Test {
 		//Game g = Singleton.getInstance().getGame();
 		 ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("classpath:application-context.xml");
 	
-		 Game g = (Game) ctx.getBean("ConfigJeu");
+		 Game g = (Game) ctx.getBean("game");
 		 Game g2 = (Game) ctx.getBean(Game.class);
 		  System.out.println(g);
 		  System.out.println(g2);

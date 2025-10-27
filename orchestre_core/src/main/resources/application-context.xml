@@ -15,18 +15,11 @@
 
 
 
-	<bean id="audio" class="demo.composant.Audio">
-		<property name="volume" value="50" />
-	</bean>
-
-	<bean id="graphisme" class="demo.composant.Graphisme" />
 
 
-	<bean id="game" class="demo.composant.Game">
-		<property name="graphisme" ref="graphisme" />
-		<property name="configAudio" ref="audio" />
-	</bean>
-	
+
+
+
 
 </beans>
 

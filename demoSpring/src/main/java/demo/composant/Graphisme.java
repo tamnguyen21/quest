@@ -1,6 +1,6 @@
 package demo.composant;
 
-public class Graphisme {
+public class Graphisme implements IConfig {
 
 	private boolean fenetre=true;
 	
