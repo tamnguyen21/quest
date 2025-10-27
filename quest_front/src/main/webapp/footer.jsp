@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>      
+
 <style>
 footer {
     display:grid;
@@ -58,11 +60,13 @@ footer p{
 
 <footer>
 <div></div>
-<button onclick="location.href='filiere'">Gestion des filieres</button>
-<button onclick="location.href='matiere'">Gestion des matieres</button>
-<button onclick="location.href='ordinateur'">Gestion des ordinateurs</button>
-<button onclick="location.href='formateur'">Gestion des formateurs</button>
-<button onclick="location.href='stagiaire'">Gestion des stagiaires</button>
+ <c:if test="${connected!=null && connected.getClass().getSimpleName().equals('Formateur')}">
+	<button onclick="location.href='filiere'">Gestion des filieres</button>
+	<button onclick="location.href='matiere'">Gestion des matieres</button>
+	<button onclick="location.href='ordinateur'">Gestion des ordinateurs</button>
+	<button onclick="location.href='formateur'">Gestion des formateurs</button>
+	<button onclick="location.href='stagiaire'">Gestion des stagiaires</button>
+</c:if>
 <p>&copy; CSS 2025 La_Terreur. All rights reserved.</p>
 <div></div>
 

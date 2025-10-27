@@ -85,10 +85,10 @@ public class FiliereController extends HttpServlet {
 		String libelle = request.getParameter("libelle");
 		LocalDate debut = LocalDate.parse(request.getParameter("debut"));		
 		LocalDate fin = LocalDate.parse(request.getParameter("fin"));
-
+		Integer version = Integer.parseInt(request.getParameter("version"));
 
 		Filiere filiere = new Filiere(id,libelle,debut,fin);
-
+		filiere.setVersion(version);
 		Singleton.getInstance().getDaoFiliere().save(filiere);
 
 		response.sendRedirect("filiere");

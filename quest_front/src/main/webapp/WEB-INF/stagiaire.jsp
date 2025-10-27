@@ -83,7 +83,7 @@ font-weight:bold;
 <tr> <td id="gras">Civilite : </td> <td>
 <select name="civilite">
 	<c:forEach items="${civilites}" var="civilite">
-	<option>${civilite}</option>
+		<option>${civilite}</option>
 	</c:forEach> 
 	</select>
 <tr> <td id="gras">Email : </td> <td> <input type="email" name="email" placeholder="email" required> <br> </td> </tr>
@@ -94,37 +94,23 @@ font-weight:bold;
  		<td>	<input type="text" name="adresse.ville" placeholder="ville" required> <br> </td> </tr>
  		
  <tr><td id="gras"> Ordinateur : </td> 
- <td><select name="ordinateur.id" required>
- <option value="">Choisir un ordinateur</option>
-
-<c:forEach var="ordinateur" items="${ordinateurs}">
-	<c:choose>
-		<c:when test="${ordinateur.id==stagiaire.ordinateur.id}">
-			<option selected value="${ordinateur.id}">${ordinateur.marque}</option>
-		</c:when>
-		<c:otherwise>
-			<option value="${ordinateur.id}">${ordinateur.marque}</option>
-		</c:otherwise>
-	</c:choose>
-</c:forEach>
+ <td>
+ <select name="ordinateur.id" required>
+ 	<option value="">Choisir un ordinateur</option>
+	<c:forEach var="ordinateur" items="${ordinateurs}">
+		<option value="${ordinateur.id}">${ordinateur.marque}</option>
+	</c:forEach>
 </select>
 </td>
 </tr>
 
  <tr><td id="gras"> Filiere : </td> 
- <td><select name="filiere.id" required>
-  <option value="">Choisir une filiere</option>
-
-<c:forEach var="filiere" items="${filieres}">
-	<c:choose>
-		<c:when test="${filiere.id==stagiaire.filiere.id}">
-			<option selected value="${filiere.id}">${filiere.libelle}</option>
-		</c:when>
-		<c:otherwise>
-			<option value="${filiere.id}">${filiere.libelle}</option>
-		</c:otherwise>
-	</c:choose>
-</c:forEach>
+ <td>
+ <select name="filiere.id" required>
+  	<option value="">Choisir une filiere</option>
+	<c:forEach var="filiere" items="${filieres}">
+		<option value="${filiere.id}">${filiere.libelle}</option>
+	</c:forEach>
 </select>
 </td>
 </tr>

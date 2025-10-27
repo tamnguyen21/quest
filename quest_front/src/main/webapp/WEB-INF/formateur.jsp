@@ -14,7 +14,6 @@
 
 <h1>Gestion des formateurs</h1>
 
-<div>${formateurs}</div>
 
 
 <table>
@@ -23,7 +22,7 @@
 
 
 	<tr><th>ID</th><th>Login</th><th>Password</th><th>Nom</th><th>Prénom</th><th>Civilité</th><th>Admin</th><th>Actions</th></tr>
-	
+	<c:if test="${formateurs.isEmpty()}"><tr><td align="center" colspan="8">Aucun Formateur</td></tr></c:if>
 	<c:forEach items="${formateurs}" var="formateur" >
 	
 	<tr>
@@ -58,16 +57,12 @@
 	Prénom : <input type="text" id="prenom" name="prenom" placeholder="prenom" required><br>
 	Civilité : 
 	
-	        <c:forEach items="${civilites}" var="civilite">
-        	
-        	
-      			  <input type="radio" id="${civilite}" name="civilite" value="${civilite}" >
+	        <c:forEach items="${civilites}" var="civilite" varStatus="status">
+      			  <input <c:if  test="${status.first}">checked</c:if> type="radio" id="${civilite}" name="civilite" value="${civilite}" >
           		  <label for="${civilite}">${civilite}</label>
       			
             </c:forEach>
-            
-            <c:forEach items="${civilites}" var="civilite" varStatus="status">
- 
+           
             
 	
 	<br>

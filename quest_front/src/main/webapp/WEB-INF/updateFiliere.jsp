@@ -46,6 +46,7 @@ background-color:yellow;
 
 <form method="POST" action="filiere">
 	<input type="hidden" name="id" value="${filiere.id}">
+	<input type="hidden" name="version" value="${filiere.version}">
 	Nom de la formation : <input required type="text" name="libelle" value="${filiere.libelle}"><br>
 	Date de debut : <input required type="date" name="debut" value="${filiere.debut}" id = "debutDate" onchange="updateFin()">
 	<br>

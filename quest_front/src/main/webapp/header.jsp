@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Quest Front</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+ <base href="/quest_front/">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>      
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
   
@@ -156,37 +154,31 @@
     }
 
   </style>
-</head>
-<body>
-
+  
+  
+  
   <header class="site-header">
-    <nav class="menuItems" role="navigation" aria-label="Menu principal">
-      <ul>
-        <li><a href="matiere" data-item="Gestion matiÃ¨re">matiÃ¨re</a></li>
-        <li><a href="filiere" data-item="Gestion filiÃ¨re">filiÃ¨re</a></li>
-        <li><a href="ordinateur" data-item="Gestion ordinateur">ordinateur</a></li>
-        <li><a href="stagiaire" data-item="Gestion stagiaire">stagiaire</a></li>
-        <li><a href="formateur" data-item="Gestion formateur">formateur</a></li>
-      </ul>
-    </nav>
-
-
+    <c:if test="${connected!=null && connected.getClass().getSimpleName().equals('Formateur')}">
+	    <nav class="menuItems" role="navigation" aria-label="Menu principal">
+	      <ul>
+	        <li><a href="matiere" data-item="Gestion matière">matière</a></li>
+	        <li><a href="filiere" data-item="Gestion filière">filière</a></li>
+	        <li><a href="ordinateur" data-item="Gestion ordinateur">ordinateur</a></li>
+	        <li><a href="stagiaire" data-item="Gestion stagiaire">stagiaire</a></li>
+	        <li><a href="formateur" data-item="Gestion formateur">formateur</a></li>
+	      </ul>
+	    </nav>
+	</c:if>
     <div class="actions" role="region" aria-label="Actions utilisateur">
-      <a class="btn primary" href="/login" id="btn-login">Se connecter</a>
-      <a class="btn ghost" href="/logout" id="btn-logout" style="display:none">Se dÃ©connecter</a>
+     
+     <c:if test="${connected==null}">
+      	<a class="btn primary" href="home" id="btn-login">Se connecter</a>
+      </c:if>
+       <c:if test="${connected!=null}">
+       	<div>Welcome ${connected.login}</div>
+      	<a class="btn ghost" href="home?logout" id="btn-logout" >Se déconnecter</a>
+      </c:if>
     </div>
    
   </header>
-
-
-
-  <script>
-    (function() {
-      var logged = !!localStorage.getItem('auth_token');
-      document.getElementById('btn-login').style.display = logged ? 'none' : 'inline-block';
-      document.getElementById('btn-logout').style.display = logged ? 'inline-block' : 'none';
-    })();
-  </script>
-
-</body>
-</html>
+ 

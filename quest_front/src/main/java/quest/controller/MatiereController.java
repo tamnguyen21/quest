@@ -19,7 +19,14 @@ public class MatiereController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("id")==null) 
 		{
-			allMatieres(request,response);
+			if(request.getParameter("searchLike")==null) 
+			{
+				allMatieres(request,response);
+			}
+			else 
+			{
+				allMatiereLibelleLike(request,response);
+			}
 		}
 		else 
 		{
@@ -105,6 +112,23 @@ public class MatiereController extends HttpServlet {
 
 	}
 
-
+	private void allMatiereLibelleLike(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		List<Matiere> matieres = Singleton.getInstance().getDaoMatiere().findByLibelleLike(request.getParameter("searchLike"));
+		if(matieres.isEmpty()) 
+		{
+			response.getWriter().println("<tr><td align='center' colspan='3'>Aucun resultat</td></tr>");
+		}
+		for(Matiere matiere : matieres) {
+		response.getWriter().println("<tr>");
+		response.getWriter().println("<td>"+matiere.getId()+"</td>");
+		response.getWriter().println("<td>"+matiere.getLibelle()+"</td>");
+		response.getWriter().println("<td>");
+		response.getWriter().println("<a href='matiere?id="+matiere.getId()+"'><input type='button' value='Modifier'></a>");
+		response.getWriter().println("<a href='matiere?id="+matiere.getId()+"&delete'><input type='button' value='Supprimer'></a>");
+		response.getWriter().println("</td>");
+		response.getWriter().println("</tr>");
+		}
+	}
 
 }

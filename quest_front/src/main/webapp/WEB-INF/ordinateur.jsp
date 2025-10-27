@@ -92,8 +92,6 @@ img {
 
 <img src="https://i.ibb.co/j9w1t5mg/image.webp" alt="Blason">
 
-
-
 <table>
 <tr><th>ID</th><th>Marque</th><th>RAM (Giga)</th><th>Actions</th>
 
@@ -117,8 +115,6 @@ img {
 	RAM (Giga): <input required type="number" name="ram"><br>
 	<input type="submit" value="Ajouter">
 </form>
-
-<%@ include file="/footer.jsp" %>
 
 </body>
 </html>

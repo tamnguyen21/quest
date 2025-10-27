@@ -61,7 +61,7 @@ public class DAOPersonne implements IDAOPersonne {
 	@Override
 	public List<Fournisseur> findAllFournisseur() {
 		EntityManager em = Singleton.getInstance().getEmf().createEntityManager();
-		List<Fournisseur> fournisseurs  = em.createQuery("from Fourniseur").getResultList();
+		List<Fournisseur> fournisseurs  = em.createQuery("from Fournisseur").getResultList();
 		em.close();
 		return fournisseurs;
 	}

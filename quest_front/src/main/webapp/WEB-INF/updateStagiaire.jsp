@@ -28,7 +28,7 @@ Civilite :
 			<option selected>${civilite}</option>
 		</c:when>
 		<c:otherwise>
-		<option>${civilite}</option>
+			<option>${civilite}</option>
 		</c:otherwise>
 		
 		</c:choose>

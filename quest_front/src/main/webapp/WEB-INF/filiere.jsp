@@ -51,7 +51,7 @@ background-color:yellow;
 
 <h1>Gestion des filières</h1>
 
-<a href="index.html" ><input type="button" value="Retour" class="retour"></a>
+<a href="index.jsp" ><input type="button" value="Retour" class="retour"></a>
 <table>
 <tr>
 <th>ID</th>
@@ -61,6 +61,11 @@ background-color:yellow;
 <th>Actions</th>
 </tr>
 
+<c:if test="${filieres.isEmpty()}">
+
+	<tr><td colspan="5" align="center">Pas de filiere</td></tr>
+
+</c:if>
 <c:forEach items="${filieres}" var="filiere" >
 <tr>
 <td>${filiere.id}</td>

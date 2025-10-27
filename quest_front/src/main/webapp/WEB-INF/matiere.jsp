@@ -17,6 +17,11 @@ tr {
 </style>
 
 <head>
+<script
+src="https://code.jquery.com/jquery-3.7.1.min.js"
+integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+crossorigin="anonymous"></script>
+
 <meta charset="UTF-8">
 
 <title>Page Matiere</title>
@@ -24,13 +29,14 @@ tr {
 <body id="fond">
 
 	<h1>Gestion des matières</h1>
-
+	<input type="text" placeholder="Filtrer par libelle" id="filterByLib">
 	<table>
 		<tr>
 			<th>ID</th>
 			<th>Libellé</th>
 			<th>Actions</th>
 		</tr>
+		<tbody id="tbody">
 		<c:forEach items="${matieres}" var="matiere">
 
 			<tr>
@@ -43,6 +49,8 @@ tr {
 						value="Supprimer"></a></td>
 			</tr>
 		</c:forEach>
+				
+		</tbody>
 	</table>
 
 	<form method="POST" action="matiere">
@@ -52,3 +60,21 @@ tr {
 </body>
 
 </html>
+
+<script>
+
+filterByLib.onkeyup=function(event)
+{
+	$.ajax("matiere", {
+	    type: "GET",
+	    data: {
+	      searchLike: $("#filterByLib").val()
+	    },
+	    success: function (resp) {
+	      $('#tbody').html(resp);
+	    }
+	  });
+}
+
+
+</script>

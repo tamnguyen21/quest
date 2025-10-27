@@ -71,8 +71,5 @@ img {
 	RAM (Giga): <input required type="number" name="ram" value="${ordinateur.ram}"><br>
 	<input type="submit" value="Modifier">
 </form>
-<footer>
-<p>&copy; CSS 2025 La_Terreur. All rights reserved.</p>
-</footer>
 </body>
 </html>

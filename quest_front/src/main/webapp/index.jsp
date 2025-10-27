@@ -18,6 +18,8 @@ body {
 	background-image: url('assets/images/tpt.png');
 	background-position: center;
 }
+
+#error{color:red;}
 </style>
 
 <head>
@@ -25,7 +27,7 @@ body {
 <title>Index</title>
 </head>
 <body>
-	<form method="POST" action="index.jsp">
+	<form method="POST" action="home">
 
 		<fieldset>
 			<table>
@@ -37,13 +39,14 @@ body {
 				<tr>
 					<td>Password :</td>
 					<td><input type="password"
-						placeholder="Saisir votre mot de passe"
-						pattern="^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$" name="password"></td>
+						placeholder="Saisir votre mot de passe" name="password"></td>
 				</tr>
 
 			</table>
 			<input type="submit" value="Se connecter">
+			
 		</fieldset>
+		<div id="error">${error}</div>
 	</form>
 </body>
 </html>

@@ -8,7 +8,6 @@
 </head>
 <body>
 
-<div>${matiere}</div>
 <h1>Update de la matière ${matiere.id}</h1>
 
 <form method="POST" action="matiere">
