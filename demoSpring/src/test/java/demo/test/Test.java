@@ -2,8 +2,8 @@ package demo.test;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import demo.composant.Audio;
 import demo.composant.Game;
-import demo.composant.Graphisme;
 
 public class Test {
 
@@ -14,6 +14,8 @@ public class Test {
 	
 		 Game g = (Game) ctx.getBean("game");
 		 Game g2 = (Game) ctx.getBean(Game.class);
+		 Audio a = (Audio) ctx.getBean("audio");
+		 System.out.println(a);
 		  System.out.println(g);
 		  System.out.println(g2);
 	}

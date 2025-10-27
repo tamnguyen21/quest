@@ -1,5 +1,8 @@
 package demo.composant;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Audio implements IConfig{
 
 	private int volume;
