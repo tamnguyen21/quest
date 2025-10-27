@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+       <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html>
 
 
@@ -22,8 +23,6 @@ font-weight:bold;
 </head>
 <body>
 
-<div>${stagiaires}</div>
-
 <h1> Gestion des Stagiaires </h1>
 
 <table> 
@@ -31,50 +30,44 @@ font-weight:bold;
 <tr>
 
 
-<th> id</th>
-<th> login</th>
-<th> password </th>
-<th> nom </th>
-<th> prenom </th>
-<th> civilite</th>
-<th> email</th>
-<th> adresse</th>
+<th>Id</th>
+<th>Login</th>
+<th>Password</th>
+<th>Nom</th>
+<th>Prenom</th>
+<th>Civilite</th>
+<th>Email</th>
+<th>Adresse</th>
+<th>Ordinateur</th>
+<th>Filiere</th>
 <th> action </th>
 
 </tr>
 
+<c:forEach items="${stagiaires}" var="stagiaire">
 <tr>
-<td> 1</td>
-<td> root</td>
-<td> root</td>
-<td> Doe</td>
-<td> John</td>
-<td> homme</td>
-<td> johndoe@email.com</td>
-<td> 1, Rue de Paris, 75000, Paris</td>
+
+<td>${stagiaire.id}</td>
+<td>${stagiaire.login}</td>
+<td>${stagiaire.password}</td>
+<td>${stagiaire.nom}</td>
+<td>${stagiaire.prenom}</td>
+<td>${stagiaire.civilite}</td>
+<td>${stagiaire.email}</td>
+<td>${stagiaire.adresse}</td>
+<td>${stagiaire.ordinateur.id} - ${stagiaire.ordinateur.marque}</td>
+<td>${stagiaire.filiere.id} - ${stagiaire.filiere.libelle}</td>
+
 <td>
-	<a href="stagiaire?id=1"><input type="button" value="Modifier"></a>
-	<a href="stagiaire?id=1&delete"><input type="button" value="Supprimer"></a>
+<a href="stagiaire?id=${stagiaire.id}"><input type="button" value="Modifier"></a>
+<a href="stagiaire?id=${stagiaire.id}&delete"><input type="button" value="Supprimer"></a>
 </td>
+
 </tr>
-
-
-<tr>
-<td>2</td>
-<td>root2</td>
-<td>root2</td>
-<td> Doe</td>
-<td> Jane</td>
-<td> femme</td>
-<td> janedoe@email.com</td>
-<td> 2, Rue de Paris, 75000, Paris</td>
-<td>
-	<a href="stagiaire?id=2"><input type="button" value="Modifier"></a>
-	<a href="stagiaire?id=2&delete"><input type="button" value="Supprimer"></a>
-</td>
-</tr>
-
+</c:forEach>
 </table>
+
+
 
 <fieldset>
 
@@ -88,18 +81,54 @@ font-weight:bold;
 <tr> <td id="gras"> Nom : </td> <td>  <input type="text" name="nom" placeholder="nom" required> <br> </td> </tr>
 <tr> <td id="gras">Prenom : </td> <td>  <input type="text" name="prenom" placeholder="prenom" required> <br> </td> </tr>
 <tr> <td id="gras">Civilite : </td> <td>
-	<select name="civilite" required>
-		<option value=""> Choisir civilite  </option>
-		<option>Homme</option>
-		<option>Femme</option>
-		<option>NB</option>
-	</select><br> </td> </tr>
+<select name="civilite">
+	<c:forEach items="${civilites}" var="civilite">
+	<option>${civilite}</option>
+	</c:forEach> 
+	</select>
 <tr> <td id="gras">Email : </td> <td> <input type="email" name="email" placeholder="email" required> <br> </td> </tr>
 
 <tr> <td id="gras">Adresse : </td>  <td> <input type="text" name="adresse.numero" placeholder="numero_rue" required> <br> </td> 
  		<td><input type="text" name="adresse.voie" placeholder="rue" required> <br> </td>
  		<td>	<input type="text" name="adresse.cp" placeholder="cp" required> <br> </td>
  		<td>	<input type="text" name="adresse.ville" placeholder="ville" required> <br> </td> </tr>
+ 		
+ <tr><td id="gras"> Ordinateur : </td> 
+ <td><select name="ordinateur.id" required>
+ <option value="">Choisir un ordinateur</option>
+
+<c:forEach var="ordinateur" items="${ordinateurs}">
+	<c:choose>
+		<c:when test="${ordinateur.id==stagiaire.ordinateur.id}">
+			<option selected value="${ordinateur.id}">${ordinateur.marque}</option>
+		</c:when>
+		<c:otherwise>
+			<option value="${ordinateur.id}">${ordinateur.marque}</option>
+		</c:otherwise>
+	</c:choose>
+</c:forEach>
+</select>
+</td>
+</tr>
+
+ <tr><td id="gras"> Filiere : </td> 
+ <td><select name="filiere.id" required>
+  <option value="">Choisir une filiere</option>
+
+<c:forEach var="filiere" items="${filieres}">
+	<c:choose>
+		<c:when test="${filiere.id==stagiaire.filiere.id}">
+			<option selected value="${filiere.id}">${filiere.libelle}</option>
+		</c:when>
+		<c:otherwise>
+			<option value="${filiere.id}">${filiere.libelle}</option>
+		</c:otherwise>
+	</c:choose>
+</c:forEach>
+</select>
+</td>
+</tr>
+
 
 </table>
 <input type="submit" value="Ajouter">
