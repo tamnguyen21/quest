@@ -42,8 +42,7 @@ body {
 				</tr>
 
 			</table>
-			<input type="submit" value="Save"><input type="reset"
-				value="Reset">
+			<input type="submit" value="Se connecter">
 		</fieldset>
 	</form>
 </body>
