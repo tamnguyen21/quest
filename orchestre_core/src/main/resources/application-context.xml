@@ -13,28 +13,13 @@
         http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-
-<!--<context:component-scan base-package="orchestre.model"/>
-
-
-  
-<bean id="piano" class="orchestre.model.Piano"/>
-<bean id="guitare" class="orchestre.model.Guitare"/>
-<bean id="flute" class="orchestre.model.Flute"/>
-
-<bean id="pianiste" class="orchestre.model.Pianiste">
-	<property name="instrument" ref="piano"/>
-</bean>
-
-<bean id="flutiste" class="orchestre.model.Flutiste">
-	<property name="flute" ref="flute"/>
-</bean>
-
-<bean id="guitariste" class="orchestre.model.Guitariste">
-	<property name="instrument" ref="guitare"/>
-	<property name="prenom" value="Toto"/>
-</bean>
--->
+	<!--<context:component-scan base-package="orchestre.model"/> <bean id="piano" 
+		class="orchestre.model.Piano"/> <bean id="guitare" class="orchestre.model.Guitare"/> 
+		<bean id="flute" class="orchestre.model.Flute"/> <bean id="pianiste" class="orchestre.model.Pianiste"> 
+		<property name="instrument" ref="piano"/> </bean> <bean id="flutiste" class="orchestre.model.Flutiste"> 
+		<property name="flute" ref="flute"/> </bean> <bean id="guitariste" class="orchestre.model.Guitariste"> 
+		<property name="instrument" ref="guitare"/> <property name="prenom" value="Toto"/> 
+		</bean> -->
 
 
 

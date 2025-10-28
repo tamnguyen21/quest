@@ -3,6 +3,7 @@ package orchestre.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 
 import orchestre.model.Flutiste;
 import orchestre.model.Guitariste;
@@ -11,7 +12,7 @@ import orchestre.model.Pianiste;
 
 @Configuration
 @ComponentScan("orchestre.model")
-//@ImportResource("classpath:application-context.xml")
+@ImportResource("classpath:application-context.xml")
 public class AppConfig {
 
 	@Bean

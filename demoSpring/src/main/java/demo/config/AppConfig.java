@@ -10,7 +10,7 @@ import demo.composant.Graphisme;
 
 @Configuration
 @ComponentScan("demo.composant")
-//@ImportResource("classpath:application-context.xml")
+@ImportResource("classpath:application-context.xml")
 public class AppConfig {
 	
 	

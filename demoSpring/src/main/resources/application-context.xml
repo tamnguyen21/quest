@@ -14,6 +14,22 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
+<bean id="aspectDemo" class="demo.aspect.AspectDemo"/>
+
+
+<aop:config>
+
+	<aop:pointcut id="demoPointCut" expression="execution(public void demo.composant.Game.lancerLeJeu())" />
+	<aop:aspect id="aspect" ref="aspectDemo">
+		<aop:before method="seLanceAvantLeJeu" pointcut-ref="demoPointCut" ></aop:before>
+		<aop:after method="seLanceApresLeJeu" pointcut-ref="demoPointCut" ></aop:after>
+		<aop:after-returning method="seLanceApresReturn" returning="leMessage" pointcut="execution(public String uneFonctionAvecReturn())"/>
+		<aop:after-throwing method="seLanceSiException" pointcut="execution(public int demo.composant.Game.diviser(int))"/>
+		<aop:around method="seLanceAroundLeJeu" pointcut-ref="demoPointCut"/>
+	</aop:aspect>
+
+
+</aop:config>
 
  	<!--<context:component-scan base-package="demo.composant"/>
 

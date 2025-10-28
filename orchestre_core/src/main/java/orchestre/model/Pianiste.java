@@ -41,6 +41,5 @@ public class Pianiste implements IMusicien {
 
 	public void jouer() {
 		System.out.println("Le pianiste "+prenom+" joue ! "+instrument.son());
-	}
-
+	}	
 }

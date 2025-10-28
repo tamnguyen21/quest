@@ -35,6 +35,13 @@ public class Test {
 		 System.out.println(a);
 		 System.out.println(g);
 		
+		 System.out.println("------");
+		 g.lancerLeJeu();
+		 System.out.println(g.uneFonctionAvecReturn());
+		 
+		 try{
+		System.out.println(g.diviser(0));
+		 }catch(Exception e) {}
 		 // ctx.close();
 	
 	}
