@@ -14,9 +14,9 @@ import quest.model.Stagiaire;
 public class Test {
 
 
-	public static void main(String[] args) {
+	public void run(String[] args) {
 
-		Singleton.getInstance();
+		//Singleton.getInstance();
 		
 		Ordinateur ordinateur1 = new Ordinateur("Dell",4);
 		Ordinateur ordinateur2 = new Ordinateur("Asus",8);
@@ -49,8 +49,9 @@ public class Test {
 		Stagiaire stagiaire1 = new Stagiaire("stagiaire","stagiaire","COSTENARO","Alyssa",Civilite.Femme,"email@email.fr","1","rue de Paris","75009","Paris", ordinateur1, filiere1);
 		Stagiaire stagiaire2 = new Stagiaire("stagiaire2","stagiaire2","DA COSTA","Jany",Civilite.Homme,"email2@email.fr","3bis","rue de Paris","75009","Paris", ordinateur2, filiere1);
 		
+		System.out.println(stagiaire1);
 
-		Singleton.getInstance().getEmf().close();
+		//Singleton.getInstance().getEmf().close();
 	}
 
 }
