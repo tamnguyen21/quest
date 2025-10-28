@@ -18,7 +18,8 @@
  	<!--<context:component-scan base-package="demo.composant"/>
 
 
-	  <bean id="audio" class="demo.composant.Audio">
+	 <bean id="audio" class="demo.composant.Audio">
+	    <property name="typeSortie" value="Stereo">
 		<property name="volume" value="50" />
 	</bean>
 
