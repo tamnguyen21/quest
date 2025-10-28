@@ -12,7 +12,18 @@
   		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+<!--
+	<bean id="aspectDemo" class="orchestre.aspect.PublicAspect" />
 
+	<aop:config>
+		<aop:aspect id="aspect" ref="aspectDemo">
+			<aop:after-returning method="afterToStringGuitariste" returning="leToString"
+				pointcut="execution(public String orchestre.model.Guitariste.toString())"></aop:after-returning>
+		</aop:aspect>
+	</aop:config>
+	
+	-->
+	
 	<!--<context:component-scan base-package="orchestre.model"/> <bean id="piano" 
 		class="orchestre.model.Piano"/> <bean id="guitare" class="orchestre.model.Guitare"/> 
 		<bean id="flute" class="orchestre.model.Flute"/> <bean id="pianiste" class="orchestre.model.Pianiste"> 

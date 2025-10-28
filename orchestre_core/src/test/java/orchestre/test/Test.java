@@ -3,7 +3,6 @@ package orchestre.test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import orchestre.model.Guitariste;
 import orchestre.model.IMusicien;
 
 public class Test {
@@ -25,8 +24,17 @@ public class Test {
 		olivier.jouer();
 		*/
 	
-		guitariste.toString();
+		//guitariste.toString();
+		
+		System.out.println("DEBUT DU CONCERT");
+		
+		try {
+			guitariste.jouer();
+		}
+		catch(Exception e) {System.out.println(e.getMessage());}
 			
+		
+		System.out.println("FIN DU CONCERT");
 	}
 
 }
