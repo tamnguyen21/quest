@@ -14,10 +14,11 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
- 	<context:component-scan base-package="demo.composant"/>
+
+ 	<!--<context:component-scan base-package="demo.composant"/>
 
 
-	<!--  <bean id="audio" class="demo.composant.Audio">
+	  <bean id="audio" class="demo.composant.Audio">
 		<property name="volume" value="50" />
 	</bean>
 

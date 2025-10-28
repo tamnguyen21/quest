@@ -1,14 +1,17 @@
 package orchestre.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Flutiste implements IMusicien {
 
 	private String prenom;
+	
+	@Autowired
 	private IInstrument flute;
 	
-	public Flutiste() 
-	{
-		this.prenom = "Olivier";
-	}
+	public Flutiste() {}
 	
 	public String getPrenom() {
 		return prenom;

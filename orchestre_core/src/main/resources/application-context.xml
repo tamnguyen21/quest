@@ -14,9 +14,10 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
+<context:component-scan base-package="orchestre.model"/>
 
 
-
+<!--  
 <bean id="piano" class="orchestre.model.Piano"/>
 <bean id="guitare" class="orchestre.model.Guitare"/>
 <bean id="flute" class="orchestre.model.Flute"/>
@@ -33,6 +34,9 @@
 	<property name="instrument" ref="guitare"/>
 	<property name="prenom" value="Toto"/>
 </bean>
+-->
+
+
 
 
 </beans>

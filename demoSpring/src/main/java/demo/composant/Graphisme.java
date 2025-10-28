@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Graphisme implements IConfig {
 
-	private boolean fenetre=true;
+	private boolean fenetre;
 	
 	public Graphisme() {}
 
