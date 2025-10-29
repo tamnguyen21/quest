@@ -3,13 +3,26 @@ package eshop.test;
 import java.util.List;
 import java.util.Scanner;
 
-import eshop.context.Singleton;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import eshop.dao.IDAOAchat;
+import eshop.dao.IDAOPersonne;
+import eshop.dao.IDAOProduit;
 import eshop.model.Client;
 import eshop.model.Fournisseur;
 import eshop.model.Produit;
 
 public class TestDAO {
 
+	@Autowired
+	IDAOProduit daoProduit;
+	
+	@Autowired
+	IDAOPersonne daoPersonne;
+	
+	@Autowired 
+	IDAOAchat daoAchat;
+	
 	public static String saisieString(String message) 
 	{
 		Scanner monScanner = new Scanner(System.in);
@@ -17,10 +30,10 @@ public class TestDAO {
 		return monScanner.nextLine();
 	}
 	
-	public static void main(String[] args) {
+	public void run(String[] args) {
 		
 		String saisie = saisieString("Saisir un libelle");
-		List<Produit> produits = Singleton.getInstance().getDaoProduit().findByLibLike(saisie);
+		List<Produit> produits = daoProduit.findByLibLike(saisie);
 		
 		if(produits.isEmpty()) 
 		{
@@ -32,7 +45,7 @@ public class TestDAO {
 		
 		System.out.println("-----------");
 		
-		Produit p2 = Singleton.getInstance().getDaoProduit().findByIdWithVentes(1);
+		Produit p2 = daoProduit.findByIdWithVentes(1);
 		System.out.println("Liste des ventes du produit "+p2.getLibelle()+" :");
 		if(p2.getVentes().isEmpty()) 
 		{
@@ -46,7 +59,7 @@ public class TestDAO {
 		System.out.println("-----------");
 		
 		
-		Fournisseur fournisseur = Singleton.getInstance().getDaoPersonne().findByIdWithStock(1);
+		Fournisseur fournisseur = daoPersonne.findByIdWithStock(1);
 		System.out.println("----Fournisseur + le stock-----");
 		System.out.println("Voici le stock du fournisseur "+fournisseur.getPrenom()+" "+fournisseur.getNom()+" :");
 		for(Produit p : fournisseur.getStock())
@@ -56,25 +69,20 @@ public class TestDAO {
 		
 		//Comment recuperer uniquement les produit du stock d'un fournisseur : 
 		System.out.println("----Uniquement le stock-----");
-		for(Produit p : Singleton.getInstance().getDaoProduit().findByFournisseur(1))
+		for(Produit p : daoProduit.findByFournisseur(1))
 		{
 			System.out.println(p.getLibelle());
 		}
 		
 		System.out.println("-----------");
 		
-		Client client = Singleton.getInstance().getDaoPersonne().findByIdWithAchats(2);
+		Client client = daoPersonne.findByIdWithAchats(2);
 		System.out.println("Le client "+client.getPrenom()+" "+client.getNom()+" a effectue "+client.getAchats().size()+" achat(s)");
 		
 		
 		
-		System.out.println(Singleton.getInstance().getDaoProduit().findById(1).getVentes());
-		
-		
-		
-		
-		
-		Singleton.getInstance().getEmf().close();
+		System.out.println(daoProduit.findByIdWithVentes(1).getVentes());
+	
 	}
 
 }
