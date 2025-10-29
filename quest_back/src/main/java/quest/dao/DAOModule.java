@@ -3,57 +3,45 @@ package quest.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
-import quest.context.Singleton;
+import org.springframework.stereotype.Repository;
+
 import quest.model.Module;
 
+@Repository
+@Transactional
 public class DAOModule implements IDAOModule {
+
+	 @PersistenceContext
+	 private EntityManager em;
 
 	@Override
 	public List<Module> findAll() {
-		EntityManager em = Singleton.getInstance().getEmf().createEntityManager();
-		List<Module> modules  = em.createQuery("from Module").getResultList();
-		em.close();
-		return modules;
+		return em.createQuery("from Module").getResultList();
 	}
 
 	@Override
 	public Module findById(Integer id) {
-		EntityManager em = Singleton.getInstance().getEmf().createEntityManager();
-		Module module  = em.find(Module.class, id);
-		em.close();
-		return module;
+		return em.find(Module.class, id);
 	}
 
 	@Override
-	public Module save(Module module) {
-		EntityManager em = Singleton.getInstance().getEmf().createEntityManager();
-		em.getTransaction().begin();
-		module=  em.merge(module);
-		em.getTransaction().commit();
-		em.close();
-		return module;
+	public Module save(Module filiere) {
+		return em.merge(filiere);
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		EntityManager em = Singleton.getInstance().getEmf().createEntityManager();
-		em.getTransaction().begin();
-		Module module = em.find(Module.class, id);
-		em.remove(module);
-		em.getTransaction().commit();
-		em.close();
-	
+		Module filiere = em.find(Module.class, id);
+		em.remove(filiere);
 	}
 
 	@Override
-	public void delete(Module module) {
-		EntityManager em = Singleton.getInstance().getEmf().createEntityManager();
-		em.getTransaction().begin();
-		module = em.merge(module);
-		em.remove(module);
-		em.getTransaction().commit();
-		em.close();
+	public void delete(Module filiere) {
+		filiere = em.merge(filiere);
+		em.remove(filiere);
 	}
 
 }

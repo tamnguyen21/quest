@@ -1,30 +1,49 @@
 package quest.test;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import quest.context.Singleton;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import quest.dao.IDAOFiliere;
+import quest.dao.IDAOMatiere;
+import quest.dao.IDAOModule;
+import quest.dao.IDAOOrdinateur;
+import quest.dao.IDAOPersonne;
 import quest.model.Civilite;
 import quest.model.Filiere;
 import quest.model.Formateur;
 import quest.model.Matiere;
 import quest.model.Module;
 import quest.model.Ordinateur;
+import quest.model.Personne;
 import quest.model.Stagiaire;
 
 public class Test {
 
+	@Autowired
+	IDAOMatiere daoMatiere;
+	
+	@Autowired
+	IDAOModule daoModule;
+	
+	@Autowired
+	IDAOOrdinateur daoOrdinateur;
+	
+	@Autowired
+	IDAOFiliere daoFiliere;
+	
+	@Autowired
+	IDAOPersonne daoPersonne;
 
 	public void run(String[] args) {
 
-		//Singleton.getInstance();
+	
 		
 		Ordinateur ordinateur1 = new Ordinateur("Dell",4);
 		Ordinateur ordinateur2 = new Ordinateur("Asus",8);
 		Ordinateur ordinateur3 = new Ordinateur("HP",4);
 		
-		//ordinateur1 = Singleton.getInstance().getDaoOrdinateur().save(ordinateur1);
-		//ordinateur2 = Singleton.getInstance().getDaoOrdinateur().save(ordinateur1);
-		//ordinateur3 = Singleton.getInstance().getDaoOrdinateur().save(ordinateur1);
 	
 		Formateur formateur1 = new Formateur("formateur","formateur","ABID","Jordan",Civilite.Homme,true);
 		Formateur formateur2 = new Formateur("formateur2","formateur2","PERROUALT","Jeremy",Civilite.Homme,false);
@@ -49,9 +68,28 @@ public class Test {
 		Stagiaire stagiaire1 = new Stagiaire("stagiaire","stagiaire","COSTENARO","Alyssa",Civilite.Femme,"email@email.fr","1","rue de Paris","75009","Paris", ordinateur1, filiere1);
 		Stagiaire stagiaire2 = new Stagiaire("stagiaire2","stagiaire2","DA COSTA","Jany",Civilite.Homme,"email2@email.fr","3bis","rue de Paris","75009","Paris", ordinateur2, filiere1);
 		
-		System.out.println(stagiaire1);
-
-		//Singleton.getInstance().getEmf().close();
+		
+		for(Matiere m : daoMatiere.findAll())
+		{
+			System.out.println(m);
+		}
+		for(Filiere f : daoFiliere.findAll())
+		{
+			System.out.println(f);
+		}
+		for(Ordinateur o : daoOrdinateur.findAll())
+		{
+			System.out.println(o);
+		}
+		for(Personne p : daoPersonne.findAll())
+		{
+			System.out.println(p);
+		}
+		for(Module m : daoModule.findAll())
+		{
+			System.out.println(m);
+		}
+	
 	}
 
 }

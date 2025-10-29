@@ -3,57 +3,45 @@ package quest.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
-import quest.context.Singleton;
+import org.springframework.stereotype.Repository;
+
 import quest.model.Ordinateur;
 
+@Repository
+@Transactional
 public class DAOOrdinateur implements IDAOOrdinateur {
+
+	 @PersistenceContext
+	 private EntityManager em;
 
 	@Override
 	public List<Ordinateur> findAll() {
-		EntityManager em = Singleton.getInstance().getEmf().createEntityManager();
-		List<Ordinateur> ordinateurs  = em.createQuery("from Ordinateur").getResultList();
-		em.close();
-		return ordinateurs;
+		return em.createQuery("from Ordinateur").getResultList();
 	}
 
 	@Override
 	public Ordinateur findById(Integer id) {
-		EntityManager em = Singleton.getInstance().getEmf().createEntityManager();
-		Ordinateur ordinateur  = em.find(Ordinateur.class, id);
-		em.close();
-		return ordinateur;
+		return em.find(Ordinateur.class, id);
 	}
 
 	@Override
 	public Ordinateur save(Ordinateur ordinateur) {
-		EntityManager em = Singleton.getInstance().getEmf().createEntityManager();
-		em.getTransaction().begin();
-		ordinateur=  em.merge(ordinateur);
-		em.getTransaction().commit();
-		em.close();
-		return ordinateur;
+		return em.merge(ordinateur);
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		EntityManager em = Singleton.getInstance().getEmf().createEntityManager();
-		em.getTransaction().begin();
 		Ordinateur ordinateur = em.find(Ordinateur.class, id);
 		em.remove(ordinateur);
-		em.getTransaction().commit();
-		em.close();
-	
 	}
 
 	@Override
 	public void delete(Ordinateur ordinateur) {
-		EntityManager em = Singleton.getInstance().getEmf().createEntityManager();
-		em.getTransaction().begin();
 		ordinateur = em.merge(ordinateur);
 		em.remove(ordinateur);
-		em.getTransaction().commit();
-		em.close();
 	}
 
 }
