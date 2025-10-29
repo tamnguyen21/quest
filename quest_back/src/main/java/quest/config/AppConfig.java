@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan("quest.dao")
 @EnableTransactionManagement 
-@PropertySource("classpath:infos.properties")
+@PropertySource("classpath:application.properties")
 public class AppConfig {
 
 	/*@Value("${spring.datasource.url}")
@@ -38,8 +38,8 @@ public class AppConfig {
 		dataSource.setDriverClassName(env.getProperty("spring.datasource.driver"));
 		//dataSource.setUrl(url);
 		dataSource.setUrl(env.getProperty("spring.datasource.url"));
-		dataSource.setUsername("root");
-		dataSource.setPassword("root");
+		dataSource.setUsername(env.getProperty("spring.datasource.username"));
+		dataSource.setPassword(env.getProperty("spring.datasource.password"));
 		dataSource.setMaxTotal(Integer.parseInt(env.getProperty("spring.datasource.total")));
 		return dataSource;
 	}
@@ -57,10 +57,10 @@ public class AppConfig {
 
 	private Properties hibernateProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "update");
-		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
+		properties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto"));
+		properties.setProperty("hibernate.dialect", env.getProperty("spring.jpa.hibernate.dialect"));
 		properties.setProperty("hibernate.show_sql", env.getProperty("spring.jpa.show-sql"));
-		properties.setProperty("hibernate.format_sql", "false");
+		properties.setProperty("hibernate.format_sql", env.getProperty("spring.jpa.format-sql"));
 		return properties;
 	}
 	

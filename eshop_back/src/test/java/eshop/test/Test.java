@@ -37,9 +37,6 @@ public class Test {
 		
 		client1=(Client) daoPersonne.save(client1);
 		
-		
-		
-		
 		for(Produit p : daoProduit.findAll()) 
 		{
 			System.out.println(p);
