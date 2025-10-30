@@ -1,68 +1,94 @@
 package quest.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import quest.dao.IDAOPersonne;
 import quest.model.Formateur;
+import quest.model.Ordinateur;
 import quest.model.Personne;
 import quest.model.Stagiaire;
 
+@Service
 public class PersonneService {
 
-	/*
+	@Autowired
+	IDAOPersonne daoPersonne;
+
 	public Personne getById(Integer id)
 	{
-		
-	}
-	public Stagiaire getStagiaireById(Integer id)
-	{
-		
-	}
-	public Formateur getFormateurById(Integer id)
-	{
-		
+		Optional<Personne> opt = daoPersonne.findById(id);
+		if(opt.isEmpty()) {return null;}
+		else {return opt.get();}
 	}
 
-	public Personne getByLoginAndPassword(String login, String password)
+	public Stagiaire getStagiaireById(Integer id)
 	{
-		
+		Optional <Personne> opt = daoPersonne.findById(id);
+		if(opt.isEmpty()) {return null;}
+		else {return (Stagiaire)opt.get();}
 	}
+
+	public Formateur getFormateurById(Integer id)
+	{
+		Optional <Personne> opt = daoPersonne.findById(id);
+		if(opt.isEmpty()) {return null;}
+		else {
+
+			if(opt.get() instanceof Formateur) 
+			{
+				return (Formateur)opt.get();
+			}
+			else 
+			{
+				throw new RuntimeException("L'id recu n'est pas celui d'un Formateur...");
+			}
+		}
+
+
+	}
+
+	public Personne getByLoginAndPassword(String login,String password)
+	{
+		return daoPersonne.findByLoginAndPassword(login,password);
+	}
+
+	public List<Formateur> getAllFormateurs()
+	{
+		return daoPersonne.findAllFormateur();
+	}
+
+	public List<Stagiaire> getAllStagiaires()
+	{
+		return daoPersonne.findAllStagiaire();
+	}
+
 	public List<Personne> getAll()
 	{
-	
-	}
-	
-	public List<Stagiaire> getAllStagiaire()
-	{
-	
-	}
-	
-	public List<Formateur> getAllFormateur()
-	{
-	
-	}
-	
-	public List<Personne> getAllByLibelleLike(String libelle)
-	{
-		
+		return daoPersonne.findAll();
 	}
 
 	public Personne create(Personne personne) 
 	{
+		return daoPersonne.save(personne);
 	}
 
 	public Personne update(Personne personne) 
 	{
-
+		return daoPersonne.save(personne);
 	}
 
-	public boolean deleteById(Integer id) 
+	public void deleteById(Integer id) 
 	{
-		
+		daoPersonne.deleteById(id);
 	}
 
-	public boolean delete(Personne personne)
+	public void delete(Personne personne)
 	{
-	
+		daoPersonne.delete(personne);
 	}
-	*/
+
 }

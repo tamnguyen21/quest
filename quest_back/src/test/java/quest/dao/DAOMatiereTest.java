@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import quest.config.AppConfig;
 import quest.model.Matiere;
+import quest.service.MatiereService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes={ AppConfig.class })
@@ -24,7 +25,6 @@ public class DAOMatiereTest {
 
 	@Autowired
 	IDAOMatiere daoMatiere;
-	
 	
 	@Test
 	public void injectDAOMatiere() 
@@ -58,7 +58,7 @@ public class DAOMatiereTest {
 		//Act
 		daoMatiere.delete(matiere);
 		//Assert 
-		Matiere matiereBis = daoMatiere.findById(matiere.getId());
+		Matiere matiereBis = daoMatiere.findById(matiere.getId()).get();
 		assertNull(matiereBis);
 	}
 	

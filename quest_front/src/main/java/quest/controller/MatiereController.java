@@ -3,19 +3,35 @@ package quest.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import quest.context.Singleton;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+
+import quest.config.AppConfig;
 import quest.model.Matiere;
+import quest.service.MatiereService;
 
 
 @WebServlet("/matiere")
 public class MatiereController extends HttpServlet {
 
+	
+	private MatiereService matiereSrv;
+	
+	
+	public void init(ServletConfig config) throws ServletException
+	{
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+		matiereSrv = ctx.getBean(MatiereService.class);
+	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("id")==null) 
 		{
@@ -63,8 +79,12 @@ public class MatiereController extends HttpServlet {
 
 	public void ficheMatiere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		
+		
+		
+		
 		Integer id=Integer.parseInt(request.getParameter("id"));
-		Matiere matiereBdd = Singleton.getInstance().getDaoMatiere().findById(id);
+		Matiere matiereBdd = matiereSrv.getById(id);
 
 		request.setAttribute("matiere", matiereBdd);
 
@@ -76,7 +96,7 @@ public class MatiereController extends HttpServlet {
 	public void allMatieres(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 
-		List<Matiere> matieres = Singleton.getInstance().getDaoMatiere().findAll();
+		List<Matiere> matieres = matiereSrv.getAll();
 		request.setAttribute("matieres", matieres);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/matiere.jsp").forward(request, response);
 
@@ -89,7 +109,7 @@ public class MatiereController extends HttpServlet {
 		String libelle = (request.getParameter("libelle"));
 		Matiere matiere = new Matiere(id,libelle);
 
-		Singleton.getInstance().getDaoMatiere().save(matiere);
+		matiereSrv.update(matiere);
 		
 		response.sendRedirect("matiere");
 	}
@@ -98,7 +118,7 @@ public class MatiereController extends HttpServlet {
 		String libelle = (request.getParameter("libelle"));
 		Matiere matiere = new Matiere(null,libelle);
 		
-		Singleton.getInstance().getDaoMatiere().save(matiere);
+		matiereSrv.create(matiere);
 
 		
 		response.sendRedirect("matiere");
@@ -107,14 +127,14 @@ public class MatiereController extends HttpServlet {
 	public void supprimerMatiere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		Integer id=Integer.parseInt(request.getParameter("id"));
-		Singleton.getInstance().getDaoMatiere().deleteById(id);
+		matiereSrv.deleteById(id);
 		response.sendRedirect("matiere");
 
 	}
 
 	private void allMatiereLibelleLike(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		List<Matiere> matieres = Singleton.getInstance().getDaoMatiere().findByLibelleLike(request.getParameter("searchLike"));
+		List<Matiere> matieres = matiereSrv.getAllByLibelleLike(request.getParameter("searchLike"));
 		if(matieres.isEmpty()) 
 		{
 			response.getWriter().println("<tr><td align='center' colspan='3'>Aucun resultat</td></tr>");

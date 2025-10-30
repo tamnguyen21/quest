@@ -1,44 +1,59 @@
 package quest.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import quest.dao.IDAOMatiere;
 import quest.model.Matiere;
 
+@Service
 public class MatiereService {
 
-	/*
-	public Matiere getById(Integer id)
+	@Autowired
+	IDAOMatiere daoMatiere;
+
+	public Matiere getById(Integer id) throws RuntimeException
 	{
-		
+		if(id==null) 
+		{
+			throw new RuntimeException("L'id d'une matiere ne peut pas etre null");	
+		}
+		Optional <Matiere> opt = daoMatiere.findById(id);
+		if(opt.isEmpty()) {return null;}
+		else {return opt.get();}
 	}
 
 	public List<Matiere> getAll()
 	{
-	
+		return daoMatiere.findAll();
 	}
 	
-	public List<Matiere> getAllByLibelleLike(String libelle)
+	public List<Matiere> getAllByLibelleLike(String recherche)
 	{
-		
+		return daoMatiere.findByLibelleContaining(recherche);
 	}
 
 	public Matiere create(Matiere matiere) 
 	{
+		return daoMatiere.save(matiere);
 	}
 
 	public Matiere update(Matiere matiere) 
 	{
-
+		return daoMatiere.save(matiere);
 	}
 
-	public boolean deleteById(Integer id) 
+	public void deleteById(Integer id) 
 	{
-		
+		daoMatiere.deleteById(id);
 	}
 
-	public boolean delete(Matiere matiere)
+	public void delete(Matiere matiere)
 	{
+		daoMatiere.delete(matiere);
+	}
 	
-	}
-	*/
 }

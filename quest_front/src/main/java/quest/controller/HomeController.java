@@ -2,18 +2,30 @@ package quest.controller;
 
 import java.io.IOException;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import quest.context.Singleton;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+
+import quest.config.AppConfig;
 import quest.model.Formateur;
 import quest.model.Personne;
+import quest.service.PersonneService;
 
 @WebServlet("/home")
 public class HomeController extends HttpServlet {
+	
+
+	public void init(ServletConfig config) throws ServletException
+	{
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
@@ -48,8 +60,10 @@ public class HomeController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-
-		Personne connected = Singleton.getInstance().getDaoPersonne().findByLoginAndPassword(request.getParameter("login"), request.getParameter("password"));
+		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+		PersonneService personneSrv = ctx.getBean(PersonneService.class);
+		
+		Personne connected = personneSrv.getByLoginAndPassword(request.getParameter("login"), request.getParameter("password"));
 
 		if(connected==null) 
 		{
@@ -72,5 +86,5 @@ public class HomeController extends HttpServlet {
 
 
 	}
-
+ 
 }

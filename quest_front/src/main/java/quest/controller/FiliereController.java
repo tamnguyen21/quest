@@ -1,21 +1,36 @@
 package quest.controller;
 
 import java.io.IOException;
-
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+
+import quest.config.AppConfig;
+import quest.dao.IDAOFiliere;
 import quest.model.Filiere;
-import quest.context.Singleton;
 
 @WebServlet("/filiere")
 public class FiliereController extends HttpServlet {
+
+	private IDAOFiliere daoFiliere;
+	
+	public void init(ServletConfig config) throws ServletException
+	{
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+		daoFiliere = ctx.getBean(IDAOFiliere.class);
+	}
+
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("id")==null) 
@@ -56,10 +71,9 @@ public class FiliereController extends HttpServlet {
 
 
 	public void ficheFiliere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-
+	{	
 		Integer id=Integer.parseInt(request.getParameter("id"));
-		Filiere filiere = Singleton.getInstance().getDaoFiliere().findById(id);
+		Filiere filiere = daoFiliere.findById(id).get();
 
 		request.setAttribute("filiere", filiere);
 
@@ -70,7 +84,8 @@ public class FiliereController extends HttpServlet {
 
 	public void allFilieres(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		List<Filiere> filieres = Singleton.getInstance().getDaoFiliere().findAll();
+		
+		List<Filiere> filieres = daoFiliere.findAll();
 		request.setAttribute("filieres", filieres);
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/filiere.jsp").forward(request, response);
@@ -80,7 +95,6 @@ public class FiliereController extends HttpServlet {
 
 	public void modifierFiliere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-
 		Integer id=Integer.parseInt(request.getParameter("id"));
 		String libelle = request.getParameter("libelle");
 		LocalDate debut = LocalDate.parse(request.getParameter("debut"));		
@@ -89,7 +103,7 @@ public class FiliereController extends HttpServlet {
 
 		Filiere filiere = new Filiere(id,libelle,debut,fin);
 		filiere.setVersion(version);
-		Singleton.getInstance().getDaoFiliere().save(filiere);
+		daoFiliere.save(filiere);
 
 		response.sendRedirect("filiere");
 	}
@@ -103,17 +117,16 @@ public class FiliereController extends HttpServlet {
 
 		Filiere filiere = new Filiere(null,libelle,debut,fin);
 
-		Singleton.getInstance().getDaoFiliere().save(filiere);
+		daoFiliere.save(filiere);
 
 		response.sendRedirect("filiere");
 
 	}
 	public void supprimerFiliere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-
 		Integer id=Integer.parseInt(request.getParameter("id"));
 
-		Singleton.getInstance().getDaoFiliere().deleteById(id);
+		daoFiliere.deleteById(id);
 
 		response.sendRedirect("filiere");
 

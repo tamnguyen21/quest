@@ -4,8 +4,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import quest.context.Singleton;
-
 
 @WebListener
 public class LaunchListener implements ServletContextListener {
@@ -20,7 +18,7 @@ public class LaunchListener implements ServletContextListener {
    		Class.forName("com.mysql.cj.jdbc.Driver");
    		}
    		catch(Exception e) {}
-       Singleton.getInstance();
+ 
     }
 	
 }

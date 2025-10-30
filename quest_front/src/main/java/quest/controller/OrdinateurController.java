@@ -3,19 +3,34 @@ package quest.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import quest.context.Singleton;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+
+import quest.config.AppConfig;
 import quest.model.Ordinateur;
+import quest.service.OrdinateurService;
 
 
 @WebServlet("/ordinateur")
 public class OrdinateurController extends HttpServlet {
-
+	
+	private OrdinateurService ordinateurSrv;
+	
+	public void init(ServletConfig config) throws ServletException
+	{
+		super.init(config);
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+		ordinateurSrv = ctx.getBean(OrdinateurService.class);
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("id")==null) 
 		{
@@ -50,7 +65,7 @@ public class OrdinateurController extends HttpServlet {
 	public void ficheOrdinateur(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		Integer id=Integer.parseInt(request.getParameter("id"));
-		Ordinateur tableBdd = Singleton.getInstance().getDaoOrdinateur().findById(id);
+		Ordinateur tableBdd = ordinateurSrv.getById(id);
 
 		request.setAttribute("ordinateur", tableBdd);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/updateOrdinateur.jsp").forward(request, response);
@@ -59,7 +74,7 @@ public class OrdinateurController extends HttpServlet {
 
 	public void allOrdinateurs(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		List<Ordinateur> ordinateurs = Singleton.getInstance().getDaoOrdinateur().findAll();
+		List<Ordinateur> ordinateurs =ordinateurSrv.getAll();
 		request.setAttribute("ordinateurs", ordinateurs);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/ordinateur.jsp").forward(request, response);
@@ -74,7 +89,7 @@ public class OrdinateurController extends HttpServlet {
 
 		Ordinateur ordinateur = new Ordinateur(id,marque,ram);
 
-		Singleton.getInstance().getDaoOrdinateur().save(ordinateur);
+		ordinateurSrv.update(ordinateur);
 		
 		response.sendRedirect("ordinateur");
 	}
@@ -86,7 +101,7 @@ public class OrdinateurController extends HttpServlet {
 		int ram = Integer.parseInt(request.getParameter("ram"));
 
 		Ordinateur ordinateur = new Ordinateur(marque,ram);
-		Singleton.getInstance().getDaoOrdinateur().save(ordinateur);
+		ordinateurSrv.create(ordinateur);
 		
 		response.sendRedirect("ordinateur");
 	}
@@ -95,7 +110,7 @@ public class OrdinateurController extends HttpServlet {
 	{
 		Integer id=Integer.parseInt(request.getParameter("id"));
 		
-		Singleton.getInstance().getDaoOrdinateur().deleteById(id);
+		ordinateurSrv.deleteById(id);
 		
 		response.sendRedirect("ordinateur");
 	}
