@@ -66,7 +66,7 @@ public class DAOProduitTest {
 		produit = daoProduit.save(produit);
 		Integer idTest = produit.getId();
 		
-		Produit produitTest = daoProduit.findById(idTest);
+		Produit produitTest = daoProduit.findById(idTest).orElse(null);
 		
 		assertNotNull(produitTest);
 		assertEquals(fournisseur.getId(),produitTest.getFournisseur().getId());
@@ -84,7 +84,7 @@ public class DAOProduitTest {
 		daoProduit.delete(produit);
 		
 		
-		Produit produitTest= daoProduit.findById(idTest);
+		Produit produitTest= daoProduit.findById(idTest).orElse(null);
 		assertNull(produitTest);
 	}
 

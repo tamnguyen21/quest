@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import quest.dao.IDAOOrdinateur;
-import quest.model.Filiere;
 import quest.model.Ordinateur;
 
 @Service
@@ -18,9 +17,10 @@ public class OrdinateurService {
 
 	public Ordinateur getById(Integer id)
 	{
-		Optional <Ordinateur> opt = daoOrdinateur.findById(id);
+		/*Optional <Ordinateur> opt = daoOrdinateur.findById(id);
 		if(opt.isEmpty()) {return null;}
-		else {return opt.get();}
+		else {return opt.get();}*/
+		return daoOrdinateur.findById(id).orElse(null);
 	}
 
 	public List<Ordinateur> getAll()

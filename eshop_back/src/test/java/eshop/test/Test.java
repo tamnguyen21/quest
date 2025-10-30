@@ -43,6 +43,13 @@ public class Test {
 		}
 		
 		
+		System.out.println("----Prix between [2000,3000] -----");
+		System.out.println(daoProduit.findByPrixBetween(2000, 3000));
+		System.out.println("----Prix like QL-----");
+		System.out.println(daoProduit.findByLibelleContaining("QL"));
 		
+		System.out.println(daoProduit.findByLibLike("QL"));
+		System.out.println("----First Formation JPA-----");
+		System.out.println(daoProduit.findTop1ByLibelle("Formation JPA"));
 	}
 }
