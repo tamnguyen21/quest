@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,8 @@ public class FournisseurController {
 	public String allFournisseurs(Model model) 
 	{
 		model.addAttribute("fournisseurs",daoPersonne.findAllFournisseurWithStock());
-		return "/WEB-INF/fournisseurs.jsp";
+		model.addAttribute("fournisseur",new Fournisseur());
+		return "fournisseurs/fournisseurs";
 	}
 	
 	@GetMapping("/{id}")
@@ -30,7 +32,7 @@ public class FournisseurController {
 	{
 		Fournisseur fournisseur = (Fournisseur)daoPersonne.findById(id).get();
 		model.addAttribute("fournisseur",fournisseur);
-		return "/WEB-INF/updateFournisseur.jsp";
+		return "fournisseurs/updateFournisseur";
 	}
 	
 	@GetMapping("/delete/{id}")
@@ -40,19 +42,24 @@ public class FournisseurController {
 		return "redirect:/fournisseur";
 	}
 	
-	@PostMapping
+	/*@PostMapping
 	public String ajoutFournisseur(String nom,String prenom,String societe) 
 	{
 		Fournisseur fournisseur = new Fournisseur(nom,prenom,societe);
 		daoPersonne.save(fournisseur);
 		return "redirect:/fournisseur";
+	}*/
+	
+	@PostMapping
+	public String ajoutFournisseur(@ModelAttribute Fournisseur fournisseur) 
+	{
+		daoPersonne.save(fournisseur);
+		return "redirect:/fournisseur";
 	}
 	
 	@PostMapping("/{id}")
-	public String modifierFournisseur(@PathVariable Integer id,String nom,String prenom,String societe) 
+	public String modifierFournisseur(@ModelAttribute Fournisseur fournisseur) 
 	{
-		Fournisseur fournisseur = new Fournisseur(nom,prenom,societe);
-		fournisseur.setId(id);
 		daoPersonne.save(fournisseur);
 		return "redirect:/fournisseur";
 	}

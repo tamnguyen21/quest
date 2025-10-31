@@ -28,7 +28,7 @@ public class ProduitController {
 	public String allProduits(Model model) {
 		model.addAttribute("produits", daoProduit.findAll());
 		model.addAttribute("fournisseurs", daoPersonne.findAllFournisseur());
-		return "/WEB-INF/produits.jsp";
+		return "produits/produits";
 	}
 
 	@GetMapping("/{id}")
@@ -36,7 +36,7 @@ public class ProduitController {
 		Produit produit = daoProduit.findById(id).get();
 		model.addAttribute("produit", produit);
 		model.addAttribute("fournisseurs", daoPersonne.findAllFournisseur());
-		return "/WEB-INF/updateProduit.jsp";
+		return "produits/updateProduit";
 	}
 
 	@GetMapping("/delete/{id}")

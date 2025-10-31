@@ -11,3 +11,10 @@ body {
 .formAjout {
 	display: none;
 }
+
+ .disabledBtn
+ {
+ 	font-size:12px;
+ 	color:red;
+ 	visibility:hidden;
+ }
