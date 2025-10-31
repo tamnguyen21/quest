@@ -19,7 +19,7 @@ public interface IDAOProduit extends JpaRepository<Produit,Integer> {
 	
 	public List<Produit> findByPrixBetween(double min,double max);
 	
-	@Query("SELECT p from Produit p LEFT JOIN FETCH p.ventes")
+	@Query("SELECT DISTINCT p from Produit p LEFT JOIN FETCH p.ventes")
 	public List<Produit> findAllIdWithVentes();
 	
 	@Query("SELECT p from Produit p LEFT JOIN FETCH p.ventes where p.id=:id")

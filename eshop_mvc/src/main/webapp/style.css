@@ -1,5 +1,7 @@
 body {
 	background-color: #F4EFE7;
+	background-image:url("assets/images/tpt.png");
+	background-size:100% 100%;
 }
 
 #content {

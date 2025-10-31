@@ -6,7 +6,9 @@
  {
  	font-size:12px;
  	color:red;
+ 	visibility:hidden;
  }
+ 
  
  </style>
 <!DOCTYPE html>
@@ -43,7 +45,7 @@
           <a href="fournisseur/${fournisseur.id}"><input type="button" class ="btn btn-warning" value="Modifier"></a>
           <c:choose>
           	<c:when test="${fournisseur.stock.isEmpty()==false}">
-          		<input disabled type="button" class ="btn btn-danger" value="Supprimer"> <span class="disabledBtn">*Impossible de supprimer un fournisseur ayant des produits</span>
+          		<balise onmouseover="showWarning(${fournisseur.id})" onmouseout="hideWarning(${fournisseur.id})"><input disabled type="button" class ="btn btn-danger" value="Supprimer"><balise> <span id="warning-${fournisseur.id}"class="disabledBtn">*Impossible de supprimer un fournisseur ayant des produits</span>
           	</c:when>
           	<c:otherwise>
           		<a href="fournisseur/delete/${fournisseur.id}"><input  type="button" class ="btn btn-danger" value="Supprimer"></a>
@@ -85,6 +87,16 @@
   btnAddFournisseur.onclick=function()
   {
     addFormFournisseur.style.display="block";
+  }
+  
+  function showWarning(id)
+  {
+	document.getElementById("warning-"+id).style.visibility="visible";  
+  }
+  
+  function hideWarning(id)
+  {
+	document.getElementById("warning-"+id).style.visibility="hidden";  
   }
  
 </script>
