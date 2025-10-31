@@ -26,6 +26,11 @@
 			<version>${spring.version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>formation-sopra</groupId>
+			<artifactId>eshop_back</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
   </dependencies>
   
   

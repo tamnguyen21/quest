@@ -18,6 +18,10 @@ public interface IDAOPersonne extends JpaRepository<Personne,Integer> {
 	public List<Client> findAllClient();
 	@Query("SELECT c from Client c LEFT JOIN FETCH c.achats where c.id=:id")
 	public Client findByIdWithAchats(@Param("id") Integer idClient);
+	
 	@Query("SELECT f from Fournisseur f JOIN FETCH f.stock where f.id=:id")
 	public Fournisseur findByIdWithStock(@Param("id") Integer idFournisseur);
+	
+	@Query("SELECT f from Fournisseur f LEFT JOIN FETCH f.stock")
+	public List<Fournisseur> findAllFournisseurWithStock();
 }

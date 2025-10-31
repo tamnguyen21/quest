@@ -1,0 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Site Eshop</title>
+</head>
+<body>
+
+<h1>Bonjour ${login} vous êtes connecté en tant que ${role}</h1>
+</body>
+</html>

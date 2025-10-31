@@ -4,20 +4,31 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("/home")
 public class DemoController {
 
 
-	@RequestMapping(value="/home")
+	@GetMapping("")
 	public String accueil() 
 	{
 		return "/WEB-INF/demo.jsp";
 	}
-
-	@RequestMapping(value="/demo",method = RequestMethod.POST)
+	
+	@GetMapping("/demo/{chaine}")
+	public String test(@PathVariable String chaine,String test) 
+	{
+		System.out.println(chaine);
+		System.out.println(test);
+		return "";
+	}
+	
+	@PostMapping
 	public String recevoirFormAccueil(String prenom,int age,Model model,HttpSession session) 
 	{
 		session.setAttribute("loginSession", "tpt");
@@ -27,4 +38,5 @@ public class DemoController {
 		return "/WEB-INF/apresForm.jsp";
 	}
 
+	
 }

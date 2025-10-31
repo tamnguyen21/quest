@@ -10,7 +10,7 @@
 
 
 
-<form action="demo" method="POST">
+<form action="home" method="POST">
 	<input type="text" name="prenom" placeholder="Saisir prenom"><br>
 	<input type="number" name="age" placeholder="Saisir age"><br>
 	<input type="submit" value="GO">
