@@ -66,7 +66,7 @@ img {
 <img src="https://i.ibb.co/j9w1t5mg/image.webp" alt="Blason">
 
 <form:form modelAttribute= "ordinateur" action="ordinateur" method="POST" >
-	<input type="hidden" name="id" value="${ordinateur.id}">
+	<form:hidden path="id"/>
 	Marque : <form:input path="marque" required= "required"/><br>
 	RAM (Giga): <form:input path = "ram" type="number" required="required"/><br>
 	<input type="submit" value="Modifier">

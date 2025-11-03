@@ -41,14 +41,14 @@ public class OrdinateurController {
 	}
 	
 	@PostMapping
-	public String ajoutOrdinateur(@ModelAttribute Ordinateur ordinateur, BindingResult result, Model model) {
+	public String ajoutOrdinateur(@ModelAttribute Ordinateur ordinateur) {
 		ordinateurSrv.create(ordinateur);
 		return "redirect:/ordinateur";
 		
 	}
 	
 	@PostMapping("/{id}")
-	public String modifierOrdinateur(@ModelAttribute Ordinateur ordinateur, BindingResult result, Model model) {
+	public String modifierOrdinateur(@ModelAttribute Ordinateur ordinateur) {
 		ordinateurSrv.update(ordinateur);
 		return "redirect:/ordinateur";
 		
