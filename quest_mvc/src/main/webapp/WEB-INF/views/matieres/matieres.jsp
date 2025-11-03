@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <base href="/quest_front/">
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>     
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -43,9 +45,9 @@ crossorigin="anonymous"></script>
 				<td>${matiere.id}</td>
 				<td>${matiere.libelle}</td>
 
-				<td><a href="matiere?id=${matiere.id}"><input type="button"
+				<td><a href="matiere/${matiere.id}"><input type="button"
 						value="Modifier"></a> <a
-					href="matiere?id=${matiere.id}&delete"><input type="button"
+					href="matiere/delete/${matiere.id}"><input type="button"
 						value="Supprimer"></a></td>
 			</tr>
 		</c:forEach>
@@ -53,10 +55,10 @@ crossorigin="anonymous"></script>
 		</tbody>
 	</table>
 
-	<form method="POST" action="matiere">
-		Libelle : <input required type="text" name="libelle"><br>
+	<form:form modelAttribute="matiere" method="POST" action="matiere">
+		Libelle : <form:input required="required" type="text" path="libelle" placeholder="Saisir libellé"/><br>
 		<input type="submit" value="Ajouter">
-	</form>
+	</form:form>
 </body>
 
 </html>
@@ -65,7 +67,7 @@ crossorigin="anonymous"></script>
 
 filterByLib.onkeyup=function(event)
 {
-	$.ajax("matiere", {
+	$.ajax("matiere/filter", {
 	    type: "GET",
 	    data: {
 	      searchLike: $("#filterByLib").val()
