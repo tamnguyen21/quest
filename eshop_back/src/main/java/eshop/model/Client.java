@@ -8,15 +8,16 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Positive;
 
 @Entity
 @DiscriminatorValue("customer")
 public class Client extends Personne {
 
-	
+	@Positive
+	@Max(99)
 	private int age;
 	@Column(name="birthdate")
 	private LocalDate dateNaissance;

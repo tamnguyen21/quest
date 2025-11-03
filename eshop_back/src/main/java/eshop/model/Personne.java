@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="person")
@@ -18,6 +21,10 @@ public abstract class Personne {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
+	
+	@NotEmpty(message="Une personne doit TOUJOURS avoir un nom")
+	@NotBlank(message="Le nom ne peut pas etre vide")
+	@Size(min = 5,max=50)
 	protected String nom;
 	protected String prenom;
 	

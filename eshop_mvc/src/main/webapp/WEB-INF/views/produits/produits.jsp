@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>     
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +8,7 @@
 </head>
 <div id="content">
   <h1>Liste des Produits</h1>
-  <input id="btnAddProduit" type="button" class ="btn btn-success" value="Ajouter">
+  <!-- <input id="btnAddProduit" type="button" class ="btn btn-success" value="Ajouter"> -->
   <a href="home"><input type="button" class ="btn btn-info" value="Retour"></a>
 
   <table class="table table-striped">
@@ -53,23 +53,21 @@
 
   <div id="addFormProduit" class="formAjout">
     <h3>Ajouter Produit</h3>
-    <form action="produit" method="post">
+    <form:form modelAttribute="produitVide" action="produit" method="post">
       <table>
-      <tr><td>Libelle : </td><td><input required name="libelle" type="text" placeholder="Saisir votre libelle"> </td></tr>
-      <tr><td>Prix : </td><td><input required name="prix" type="number" placeholder="Saisir prix" step="0.01"> </td></tr>
+      <tr><td>Libelle : </td><td><form:input required="required" path="libelle" placeholder="Saisir votre libelle"/> </td></tr>
+      <tr><td>Prix : </td><td><form:input required="required" path="prix" type="number" placeholder="Saisir prix" step="0.01"/> </td></tr>
       <tr><td>Fournisseur : </td><td>
-      <select required name="fournisseur.id">
-      <option value="">Choisir un fournisseur</option>
-      	<c:forEach items="${fournisseurs}" var="fournisseur">
-      	 <option value="${fournisseur.id}">${fournisseur.id} - ${fournisseur.nom} ${fournisseur.prenom}</option>
-      	</c:forEach>
-      </select></td></tr>
+      <form:select required="required" path="fournisseur.id">
+      	<form:option value="">Choisir un fournisseur</form:option>
+     	<form:options items="${fournisseurs}" itemValue="id" itemLabel="infosSelect"/>
+      </form:select></td></tr>
       
       </table>
 
 
       <input class ="btn btn-success" type="submit" value="Ajouter">
-    </form>
+    </form:form>
   </div>
 
 </div>
@@ -77,7 +75,7 @@
 
 </body>
 </html>
-<script>
+<!--  <script>
 
 
   btnAddProduit.onclick=function()
@@ -85,4 +83,4 @@
     addFormProduit.style.display="block";
   }
  
-</script>
+</script>-->

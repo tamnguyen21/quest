@@ -6,12 +6,14 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 
 @Entity
 @DiscriminatorValue("supplier")
 public class Fournisseur extends Personne{
 
 	@Column(name="company",length = 30)
+	@Size(min=5,max=30,message = "Le nom d'une societe doit faire entre 5 et 30 caracteres")
 	private String societe;
 
 	@OneToMany(mappedBy="fournisseur")

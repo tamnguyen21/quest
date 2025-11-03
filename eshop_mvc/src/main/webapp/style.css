@@ -9,9 +9,13 @@ body {
 }
 
 .formAjout {
-	display: none;
+	/*display: none;*/
 }
 
+.errorForm
+{
+	color:red;
+}
  .disabledBtn
  {
  	font-size:12px;

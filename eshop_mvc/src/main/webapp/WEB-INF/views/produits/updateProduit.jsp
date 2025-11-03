@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>    
 <html>
 <head>
 
@@ -9,22 +9,21 @@
 	<div id="content">
 
 		<h3>Modifier Produit ${produit.id}</h3>
-		<form action="produit/${produit.id}" method="post">
-			<input type="hidden" name="id" value="${produit.id}">
+		<form:form modelAttribute="produit" action="produit/${produit.id}" method="post">
+			<form:hidden path="id"/>
 			<table>
 				<tr>
 					<td>Libelle :</td>
-					<td><input required name="libelle" value="${produit.libelle}"
-						type="text" placeholder="Saisir votre libelle"></td>
+					<td><form:input required="required" path="libelle" placeholder="Saisir votre libelle"/></td>
 				</tr>
 				<tr>
 					<td>Prix :</td>
-					<td><input required value="${produit.prix}" name="prix"
-						type="number" placeholder="Saisir prix" step="0.01"></td>
+					<td><form:input required="required" path="prix" type="number" placeholder="Saisir prix" step="0.01"/></td>
 				</tr>
 				<tr>
 					<td>Fournisseur :</td>
-					<td><select required name="fournisseur.id">
+					<td>
+					<!--<select required name="fournisseur.id">
 							<option value="">Choisir un fournisseur</option>
 							<c:forEach items="${fournisseurs}" var="fournisseur">
 								<c:choose>
@@ -39,7 +38,11 @@
 								</c:choose>
 							</c:forEach>
 					</select>
-					
+					-->
+					<form:select required="required" path="fournisseur.id">
+							<form:option value="">Choisir un fournisseur</form:option>
+							<form:options items="${fournisseurs}"  itemValue="id" itemLabel="infosSelect"/>
+					</form:select>
 					</td>
 				</tr>
 			</table>
@@ -49,7 +52,7 @@
 			<input class="btn btn-warning" type="submit" value="Modifier">
 			<a href="produit"><input type="button" class="btn btn-info"
 				value="Retour"></a>
-		</form>
+		</form:form>
 	</div>
 </body>
 </html>

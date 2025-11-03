@@ -9,8 +9,8 @@
 </head>
 <div id="content">
 	<h1>Liste des Fournisseurs</h1>
-	<input id="btnAddFournisseur" type="button" class="btn btn-success"
-		value="Ajouter"> <a href="home"><input type="button"
+	<!--  <input id="btnAddFournisseur" type="button" class="btn btn-success"
+		value="Ajouter">--> <a href="home"><input type="button"
 		class="btn btn-info" value="Retour"></a>
 
 	<table class="table table-striped">
@@ -66,7 +66,7 @@
 				<tr>
 					<td>Nom :</td>
 					<td><form:input path="nom" placeholder="Saisir nom"
-							required="required" /><td>
+							required="required" /><form:errors class="errorForm"  path="nom"/><td>
 				
 				</tr>
 				<tr>
@@ -77,7 +77,7 @@
 				<tr>
 				<td>Societe :</td>
 					<td><form:input required="required" path="societe"
-							placeholder="Saisir societe" /></td>
+							placeholder="Saisir societe" /><form:errors class="errorForm"  path="societe"/></td>
 				</tr>
 			</table>
 			
@@ -93,10 +93,10 @@
 <script>
 
 
-  btnAddFournisseur.onclick=function()
+  /*btnAddFournisseur.onclick=function()
   {
     addFormFournisseur.style.display="block";
-  }
+  }*/
   
   function showWarning(id)
   {
