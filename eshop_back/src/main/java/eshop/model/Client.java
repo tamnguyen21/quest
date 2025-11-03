@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @DiscriminatorValue("customer")
 public class Client extends Personne {
@@ -20,6 +22,7 @@ public class Client extends Personne {
 	@Max(99)
 	private int age;
 	@Column(name="birthdate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateNaissance;
 	@Embedded
 	private Adresse adresse;

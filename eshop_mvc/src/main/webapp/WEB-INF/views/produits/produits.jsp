@@ -53,10 +53,10 @@
 
   <div id="addFormProduit" class="formAjout">
     <h3>Ajouter Produit</h3>
-    <form:form modelAttribute="produitVide" action="produit" method="post">
+    <form:form modelAttribute="produit" action="produit" method="post">
       <table>
-      <tr><td>Libelle : </td><td><form:input required="required" path="libelle" placeholder="Saisir votre libelle"/> </td></tr>
-      <tr><td>Prix : </td><td><form:input required="required" path="prix" type="number" placeholder="Saisir prix" step="0.01"/> </td></tr>
+      <tr><td>Libelle : </td><td><form:input required="required" path="libelle" placeholder="Saisir votre libelle"/><form:errors class="errorForm" path="libelle"/></td></tr>
+      <tr><td>Prix : </td><td><form:input required="required" path="prix" type="number" placeholder="Saisir prix" step="0.01"/><form:errors class="errorForm" path="prix"/> </td></tr>
       <tr><td>Fournisseur : </td><td>
       <form:select required="required" path="fournisseur.id">
       	<form:option value="">Choisir un fournisseur</form:option>

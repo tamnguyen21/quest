@@ -10,6 +10,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -22,9 +23,10 @@ public abstract class Personne {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	
+	@NotNull
 	@NotEmpty(message="Une personne doit TOUJOURS avoir un nom")
 	@NotBlank(message="Le nom ne peut pas etre vide")
-	@Size(min = 5,max=50)
+	@Size(min = 2,max=50)
 	protected String nom;
 	protected String prenom;
 	

@@ -1,0 +1,145 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+
+body {
+  background-color: #5999ff;
+  font-family: 'Press Start 2P';
+  color: #000;
+  margin: 40px;
+  text-align: center;
+  
+}
+
+a {
+  text-decoration: none;
+}
+
+
+
+form {
+  display: inline-block;
+  background: #6ded8a;
+  padding: 20px;
+  border: 4px solid #000;
+  box-shadow: 6px 6px 0 #000;
+  text-align: left;
+  font-size: 10px;
+}
+
+label {
+
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+input[type="text"],
+input[type="password"] {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  padding: 10px;
+  background: #fefefe;
+  border: 4px solid #000;
+  box-shadow: 4px 4px 0 #000;
+  width: 90%;
+  margin-bottom: 15px;
+  transition: 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  background: #d9eadd;
+  color: #04651b;
+}
+
+
+
+.civilite, .admin {
+  margin-top: 10px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  transform: scale(1.5);
+  margin-right: 10px;
+  accent-color: #ed3833;
+}
+
+label[for="homme"], label[for="femme"], label[for="nb"], label[for="admin"] {
+  margin-right: 20px;
+}
+
+
+
+input[type="submit"],
+input[type="button"] {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  background: #ed3833;
+  color: white;
+  border: 4px solid #000;
+  box-shadow: 4px 4px 0 #000;
+  padding: 10px 15px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background: #ff5f85;
+  box-shadow: 1px 1px 0 #000;
+}
+
+h1 {
+  background: #1645f5;
+  color: #fff;
+  padding: 15px;
+  border: 4px solid #000;
+  box-shadow: 4px 4px 0 #000;
+  text-transform: uppercase;
+  display: inline-block;
+  font-size: 14px;
+}
+
+
+
+table {
+  margin: 30px auto;
+  border-collapse: collapse;
+  border: 4px solid #000;
+  background: #fefefe;
+  box-shadow: 6px 6px 0 #000;
+}
+
+th, td {
+  border: 2px solid #000;
+  padding: 10px;
+  font-size: 10px;
+}
+
+th {
+  background: #1645f5;
+  color: #fff;
+}
+
+td {
+  background: #6ded8a;
+}
+
+tr:nth-child(even) td {
+  background: #f0f14e;
+}
+
+
+
+.button {
+  text-align: center;
+}
+
+form input[type="submit"] {
+  display: block;
+  margin: 20px auto 0 auto;
+}

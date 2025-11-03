@@ -14,11 +14,15 @@
 			<table>
 				<tr>
 					<td>Libelle :</td>
-					<td><form:input required="required" path="libelle" placeholder="Saisir votre libelle"/></td>
+					<td><form:input required="required" path="libelle" placeholder="Saisir votre libelle"/>
+					<form:errors class="errorForm" path="libelle"/>
+					</td>
 				</tr>
 				<tr>
 					<td>Prix :</td>
-					<td><form:input required="required" path="prix" type="number" placeholder="Saisir prix" step="0.01"/></td>
+					<td><form:input required="required" path="prix" type="number" placeholder="Saisir prix" step="0.01"/>
+					<form:errors class="errorForm" path="prix"/>
+					</td>
 				</tr>
 				<tr>
 					<td>Fournisseur :</td>
