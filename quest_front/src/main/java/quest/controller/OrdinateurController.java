@@ -1,29 +1,53 @@
 package quest.controller;
 
-import java.io.IOException;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-
-import quest.config.AppConfig;
 import quest.model.Ordinateur;
 import quest.service.OrdinateurService;
 
-
-@WebServlet("/ordinateur")
-public class OrdinateurController extends HttpServlet {
+@Controller
+@RequestMapping("/ordinateur")
+public class OrdinateurController {
 	
+	@Autowired
 	private OrdinateurService ordinateurSrv;
 	
-	public void init(ServletConfig config) throws ServletException
+	@GetMapping
+	public String allOrdinateurs(Model model) {
+		model.addAttribute("ordinateur",ordinateurSrv.getAll());
+		model.addAttribute("ordinateur",new Ordinateur());
+		return "ordinateurs";
+	}
+	
+	@GetMapping("/{id}")
+	public String ficheOrdinateur(@PathVariable Integer id, Model model ) {
+		Ordinateur ordinateur = ordinateurSrv.getById(id);
+		model.addAttribute("ordinateur",ordinateur);
+		return "updateOrdinateur";
+	}
+	
+	@GetMapping("/delete/{id}")
+	public String supprimerOrdinateur(@PathVariable Integer id) {
+		ordinateurSrv.deleteById(id);
+		return "redirect:/ordinateur";
+	}
+	
+	@PostMapping
+	public String ajoutOrdinateur(@ModelAttribute Ordinateur ordinateur, BindingResult result, Model model) {
+		ordinateurSrv.create(ordinateur);
+		return "redirect:/ordinateur";
+		
+	}
+	
+	/*public void init(ServletConfig config) throws ServletException
 	{
 		super.init(config);
 		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
@@ -113,6 +137,6 @@ public class OrdinateurController extends HttpServlet {
 		ordinateurSrv.deleteById(id);
 		
 		response.sendRedirect("ordinateur");
-	}
+	}*/
 
 }
