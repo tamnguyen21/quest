@@ -2,6 +2,8 @@ package quest.controller;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import quest.model.Matiere;
 import quest.service.MatiereService;
@@ -27,6 +30,31 @@ public class MatiereController {
 		model.addAttribute("matieres",matserv.getAll());
 		model.addAttribute("matiere",new Matiere());
 		return "matieres/matieres";
+	}
+	
+	
+	@GetMapping("/filter")
+	@ResponseBody
+	public String allMatiereFilter(String searchLike, Model model) 
+	{
+		String reponse ="";
+		List<Matiere> matieres = matserv.getAllByLibelleLike(searchLike);
+		if(matieres.isEmpty()) 
+		{
+			reponse+="<tr><td align='center' colspan='3'>Aucun resultat</td></tr>";
+		}
+		for(Matiere matiere : matieres) 
+		{
+			reponse+="<tr>";
+			reponse+="<td>"+matiere.getId()+"</td>";
+			reponse+="<td>"+matiere.getLibelle()+"</td>";
+			reponse+="<td>";
+			reponse+="<a href='matiere/id="+matiere.getId()+"'><input type='button' value='Modifier'></a>";
+			reponse+="<a href='matiere/delete/id="+matiere.getId()+"'><input type='button' value='Supprimer'></a>";
+			reponse+="</td>";
+			reponse+="</tr>";
+		}
+		return reponse;
 	}
 	
 	@GetMapping("/{id}")

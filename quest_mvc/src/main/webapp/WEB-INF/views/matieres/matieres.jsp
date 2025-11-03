@@ -67,7 +67,7 @@ crossorigin="anonymous"></script>
 
 filterByLib.onkeyup=function(event)
 {
-	$.ajax("matiere", {
+	$.ajax("matiere/filter", {
 	    type: "GET",
 	    data: {
 	      searchLike: $("#filterByLib").val()
