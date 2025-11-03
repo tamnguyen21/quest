@@ -20,9 +20,9 @@ import quest.service.OrdinateurService;
 
 @WebServlet("/ordinateur")
 public class OrdinateurController extends HttpServlet {
-	
+
 	private OrdinateurService ordinateurSrv;
-	
+
 	public void init(ServletConfig config) throws ServletException
 	{
 		super.init(config);
@@ -30,20 +30,20 @@ public class OrdinateurController extends HttpServlet {
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
 		ordinateurSrv = ctx.getBean(OrdinateurService.class);
 	}
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("id")==null) 
+		if(request.getParameter("id")==null)
 		{
 			allOrdinateurs(request,response);
 		}
-		else 
+		else
 		{
-			if(request.getParameter("delete")==null) 
+			if(request.getParameter("delete")==null)
 			{
 				ficheOrdinateur(request, response);
 			}
 
-			else 
+			else
 			{
 				supprimerOrdinateur(request,response);
 			}
@@ -55,7 +55,7 @@ public class OrdinateurController extends HttpServlet {
 		if(request.getParameter("id")==null) {
 			ajoutOrdinateur(request,response);
 		}
-		else 
+		else
 		{
 			modifierOrdinateur(request,response);
 		}
@@ -76,11 +76,11 @@ public class OrdinateurController extends HttpServlet {
 	{
 		List<Ordinateur> ordinateurs =ordinateurSrv.getAll();
 		request.setAttribute("ordinateurs", ordinateurs);
-		
+
 		this.getServletContext().getRequestDispatcher("/WEB-INF/ordinateur.jsp").forward(request, response);
 	}
-	
-	
+
+
 	public void modifierOrdinateur(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		Integer id=Integer.parseInt(request.getParameter("id"));
@@ -90,11 +90,11 @@ public class OrdinateurController extends HttpServlet {
 		Ordinateur ordinateur = new Ordinateur(id,marque,ram);
 
 		ordinateurSrv.update(ordinateur);
-		
+
 		response.sendRedirect("ordinateur");
 	}
-	
-	
+
+
 	public void ajoutOrdinateur(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String marque = request.getParameter("marque");
@@ -102,16 +102,16 @@ public class OrdinateurController extends HttpServlet {
 
 		Ordinateur ordinateur = new Ordinateur(marque,ram);
 		ordinateurSrv.create(ordinateur);
-		
+
 		response.sendRedirect("ordinateur");
 	}
-	
+
 	public void supprimerOrdinateur(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		Integer id=Integer.parseInt(request.getParameter("id"));
-		
+
 		ordinateurSrv.deleteById(id);
-		
+
 		response.sendRedirect("ordinateur");
 	}
 
