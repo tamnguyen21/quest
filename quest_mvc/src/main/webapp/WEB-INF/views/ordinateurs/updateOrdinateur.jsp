@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,11 +65,11 @@ img {
 
 <img src="https://i.ibb.co/j9w1t5mg/image.webp" alt="Blason">
 
-<form method="POST" action="ordinateur">
+<form:form modelAttribute= "ordinateur" action="ordinateur" method="POST" >
 	<input type="hidden" name="id" value="${ordinateur.id}">
-	Marque : <input name="marque" value="${ordinateur.marque}"><br>
-	RAM (Giga): <input required type="number" name="ram" value="${ordinateur.ram}"><br>
+	Marque : <form:input path="marque" required= "required"/><br>
+	RAM (Giga): <form:input path = "ram" type="number" required="required"/><br>
 	<input type="submit" value="Modifier">
-</form>
+</form:form>
 </body>
 </html>
