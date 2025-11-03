@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,18 +45,18 @@ background-color:yellow;
 
 <h1>Update de la filiere ${filiere.id}</h1>
 
-<form method="POST" action="filiere">
-	<input type="hidden" name="id" value="${filiere.id}">
-	<input type="hidden" name="version" value="${filiere.version}">
-	Nom de la formation : <input required type="text" name="libelle" value="${filiere.libelle}"><br>
-	Date de debut : <input required type="date" name="debut" value="${filiere.debut}" id = "debutDate" onchange="updateFin()">
+<form:form modelAttribute="filiere" methode="POST" action="filiere">
+	<form:input type="hidden" path="id"/>
+	<form:input type="hidden" path="version"/>
+	Nom de la formation : <form:input required="required" path="libelle"/><br>
+	Date de debut : <form:input required="required" type="date" path="debut" id = "debutDate" onchange="updateFin()"/>
 	<br>
-	Date de fin : <input required type="date" name="fin" value="${filiere.fin}" min = "${filiere.debut}" id = "finDate">
+	Date de fin : <form:input required="required" type="date" path="fin" min = "${filiere.debut}" id = "finDate"/>
 	<br>  
 	<input type="submit" value="Modifier">
 	<a href="filiere" ><input type="button" value="Retour" class="retour"></a>
 	
-	</form>
+	</form:form>
 </body>
 </html>
 <script>

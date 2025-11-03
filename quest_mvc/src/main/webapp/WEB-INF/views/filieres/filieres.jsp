@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>   
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
 <!DOCTYPE html>
 <html>
@@ -73,10 +74,10 @@ background-color:yellow;
 <td>${filiere.debut}</td>
 <td>${filiere.fin}</td>
 <td>
-<a href="filiere?id=${filiere.id}">
+<a href="filiere/${filiere.id}">
 <button class="modifier">Modifier</button>
 </a>
-<a href="filiere?id=${filiere.id}&delete=true" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette filière ?');">
+<a href="filiere/delete/${filiere.id}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette filière ?');">
 <button class="supprimer">Supprimer</button>
 </a>
 </td>
@@ -90,14 +91,14 @@ background-color:yellow;
 
 
 
-	<form method="POST" action="filiere">
-	Nom de la formation : <input required type="text" name="libelle" placeholder = "nom de la formation"><br>
-	Date de debut : <input required type="date" name="debut" onchange="updateFin()" id = "debutDate">
+	<form:form modelAttribute="filiere" method="POST" action="filiere">
+	Nom de la formation : <form:input required="required" path="libelle" placeholder = "nom de la formation"/><br>
+	Date de debut : <form:input required="required" type="date" path="debut" onchange="updateFin()" id = "debutDate"/>
 	<br>
-	Date de fin : <input required type="date" name="fin" min = "${filiere.debut}" id = "finDate">
+	Date de fin : <form:input required="required" type="date" path="fin" min = "${filiere.debut}" id = "finDate"/>
 	<br>  
 	<input type="submit" value="Ajouter" class="ajouter">
-	</form>
+	</form:form>
 </body>
 </html>
 
