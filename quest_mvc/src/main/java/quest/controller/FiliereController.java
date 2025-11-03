@@ -44,23 +44,15 @@ public class FiliereController {
 		return "redirect:/filiere";
 	}
 	
-	/*@PostMapping
-	public String ajoutFiliere(String nom,String prenom,String societe) 
-	{
-		Filiere filiere = new Filiere(nom,prenom,societe);
-		filiereSrv.save(filiere);
-		return "redirect:/filiere";
-	}*/
-	
 	@PostMapping
-	public String ajoutFiliere(@ModelAttribute Filiere filiere,Model model) 
+	public String ajoutFiliere(@ModelAttribute Filiere filiere) 
 	{
 		filiereSrv.create(filiere);
 		return "redirect:/filiere";
 	}
 	
 	@PostMapping("/{id}")
-	public String modifierFiliere(@ModelAttribute Filiere filiere,Model model) 
+	public String modifierFiliere(@ModelAttribute Filiere filiere) 
 	{
 	
 		filiereSrv.update(filiere);
