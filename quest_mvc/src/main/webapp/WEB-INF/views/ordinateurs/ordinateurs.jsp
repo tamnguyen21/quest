@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>      
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
     
 
 <!DOCTYPE html>
@@ -99,29 +100,39 @@ img {
 
 <img src="https://i.ibb.co/j9w1t5mg/image.webp" alt="Blason">
 
-<table>
-<tr><th>ID</th><th>Marque</th><th>RAM (Giga)</th><th>Actions</th>
-
+<table class="table table-striped">
+<thead>
+<tr>
+<th>ID</th>
+<th>Marque</th>
+<th>RAM (Giga)</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
 <c:forEach items="${ordinateurs}" var="ordinateur">
+
+
 <tr>
 <td>${ordinateur.id }</td>
 <td>${ordinateur.marque }</td>
 <td>${ordinateur.ram }</td>
 
-<td>
-	<a href="ordinateur?id=${ordinateur.id }"><input type="button" value="Modifier"></a>
-	<a href="ordinateur?id=${ordinateur.id }&delete"><input type="button" value="Supprimer"></a>
-</td>
+<td><a href="ordinateur/${ordinateur.id}"><input
+type="button" class="btn btn-warning" value="Modifier"></a> <a
+href="ordinateur/delete/${ordinateur.id}"><input type="button"
+class="btn btn-danger" value="Supprimer"></a></td>
 </tr>
-
 </c:forEach>
+
+</tbody>
 </table>
 
-<form method="POST" action="ordinateur">
-	Marque : <input name="marque"><br>
-	RAM (Giga): <input required type="number" name="ram"><br>
+<form:form modelAttribute="ordinateur" action="ordinateur" method="POST" >
+	Marque : <form:input path="marque" required="required"/><br>
+	RAM (Giga): <form:input path="ram" type="number" required="required"/><br>
 	<input type="submit" value="Ajouter">
-</form>
+</form:form>
 
 </body>
 </html>

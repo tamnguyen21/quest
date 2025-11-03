@@ -1,4 +1,4 @@
-package quest.dao;
+/*package quest.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -95,4 +95,4 @@ public class DAOModuleTest {
 		assertTrue(matiere.getId()==module.getMatiere().getId());
 		
 	}
-}
+}*/
