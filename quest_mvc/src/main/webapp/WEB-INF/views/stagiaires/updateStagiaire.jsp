@@ -23,9 +23,9 @@ Nom : <form:input type="text" path="nom" placeholder="nom" required="required" v
 Prenom : <form:input type="text" path="prenom" placeholder="prenom" required="required" value="${stagiaire.prenom}"/> <br>
 
 Civilite : 
-<form:select required="required" path="civilite.id">
+<form:select required="required" path="civilite">
 <form:option value="">Choisir genre</form:option>
-<form:options items="${civilites}" itemValue="id" itemLabel="infos"/>
+<form:options items="${civilites}"/>
 </form:select>
 
 <br>
@@ -33,14 +33,14 @@ Civilite :
 Email : <form:input type="email" path="email" placeholder="email" required="required" value="${stagiaire.email}"/> <br>
 
 Adresse :   <form:input type="text" path="adresse.numero"  placeholder="numero_rue" required="required" value="${stagiaire.adresse.numero}"/><br>
- 			<form:input type="text" path="adresse.rue" placeholder="rue" required="required" value="${stagiaire.adresse.voie}"/><br>
+ 			<form:input type="text" path="adresse.voie" placeholder="rue" required="required" value="${stagiaire.adresse.voie}"/><br>
  			<form:input type="text" path="adresse.cp" placeholder="cp" required="required" value="${stagiaire.adresse.cp}"/><br>
  			<form:input type="text" path="adresse.ville" placeholder="ville" required="required" value="${stagiaire.adresse.ville}"/><br>
  
  Ordinateur: 
 <form:select required="required" path="ordinateur.id">
 <form:option value="">Choisir ordinateur</form:option>
-<form:options items="${ordinateurs}" itemValue="id" itemLabel="infos"/>
+<form:options items="${ordinateurs}" itemValue="id" itemLabel="marque"/>
 </form:select>
 
 
@@ -49,7 +49,7 @@ Adresse :   <form:input type="text" path="adresse.numero"  placeholder="numero_r
 Filiere: 
 <form:select required="required" path="filiere.id">
 <form:option value="">Choisir filiere</form:option>
-<form:options items="${filieres}" itemValue="id" itemLabel="infos"/>
+<form:options items="${filieres}" itemValue="id" itemLabel="libelle"/>
 </form:select>
 
 

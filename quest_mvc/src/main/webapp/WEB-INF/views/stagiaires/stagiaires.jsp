@@ -82,25 +82,23 @@ font-weight:bold;
 <tr> <td id="gras"> Nom : </td> <td>  <form:input type="text" path="nom" required="required"/> <br> </td> </tr>
 <tr> <td id="gras">Prenom : </td> <td>  <form:input type="text" path="prenom" required="required"/> <br> </td> </tr>
 <tr> <td id="gras">Civilite : </td> <td>
-<select name="civilite">
-	<c:forEach items="${civilites}" var="civilite">
-		<option>${civilite}</option>
-	</c:forEach> 
-	</select>
+<form:select path="civilite">
+<form:options items="${civilites}"/></form:select>
 	
 <tr> <td id="gras">Email : </td> <td> <form:input type="email" path="email" required="required"/> <br> </td> </tr>
 
-<tr> <td id="gras">Adresse : </td>  <td> <form:input type="text" path="adresse" required="required"/> <br> </td> 
- 		<td><form:input type="text" path="adresse.rue" required="required"/> <br> </td>
- 		<td>	<form:input type="text" path="adresse.cp" required="required"/> <br> </td>
- 		<td>	<form:input type="text" path="adresse.ville"required="required"/> <br> </td> </tr>
+<tr> <td id="gras">Adresse : </td>  
+		<td><form:input type="text" path="adresse.numero" required="required"/> <br> </td> 
+ 		<td><form:input type="text" path="adresse.voie" required="required"/> <br> </td>
+ 		<td><form:input type="text" path="adresse.cp" required="required"/> <br> </td>
+ 		<td><form:input type="text" path="adresse.ville" required="required"/> <br> </td> </tr>
  		
  <tr><td id="gras"> Ordinateur : </td> 
  <td>
 
 <form:select required="required" path="ordinateur.id">
 <form:option value="">Choisir Ordinateur</form:option>
-<form:options items="${ordinateurs}" itemValue="id" itemLabel="infos"/>
+<form:options items="${ordinateurs}" itemValue="id" itemLabel="marque"/>
 </form:select>
 </td>
 </tr>
@@ -109,7 +107,7 @@ font-weight:bold;
  <td>
 <form:select required="required" path="filiere.id">
 <form:option value="">Choisir une filiere</form:option>
-<form:options items="${filieres}" itemValue="id" itemLabel="infos"/>
+<form:options items="${filieres}" itemValue="id" itemLabel="libelle"/>
 </form:select>
 </td>
 </tr>

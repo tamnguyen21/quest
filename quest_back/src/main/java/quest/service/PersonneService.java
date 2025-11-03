@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import quest.dao.IDAOPersonne;
 import quest.model.Formateur;
-import quest.model.Ordinateur;
 import quest.model.Personne;
 import quest.model.Stagiaire;
 

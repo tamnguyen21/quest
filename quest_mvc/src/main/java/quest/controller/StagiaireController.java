@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import quest.model.Civilite;
 import quest.model.Stagiaire;
+import quest.service.FiliereService;
 import quest.service.PersonneService;
 
 @Controller
@@ -19,23 +21,26 @@ public class StagiaireController {
 	@Autowired
 	PersonneService personneServ;
 	
+	@Autowired
+	FiliereService filiereService;
 
 	@GetMapping
 	public String allStagiaires(Model model) {
 		model.addAttribute("stagiaires", personneServ.getAllStagiaires());
-		model.addAttribute("stagiaires",new Stagiaire());
-		model.addAttribute("action","stagiaires");
+		model.addAttribute("stagiaire",new Stagiaire());
+		model.addAttribute("civilites",Civilite.values());
+		model.addAttribute("filieres",filiereService.getAll());
 		return "stagiaires/stagiaires";
 		
 	}
 	
 	@GetMapping("/{id}")
 	public String ficheStagiaire(@PathVariable Integer id, Model model) {
-		Stagiaire stagiaire = (Stagiaire) personneServ.getStagiaireById(id);
-		model.addAttribute("stagiaires", personneServ.getAllStagiaires());
+		Stagiaire stagiaire = personneServ.getStagiaireById(id);
 		model.addAttribute("stagiaire", stagiaire);
-		model.addAttribute("action","stagiaire/"+id);
-		return "stagiaires/stagiaires";
+		model.addAttribute("civilites",Civilite.values());
+		model.addAttribute("filieres",filiereService.getAll());
+		return "stagiaires/updateStagiaire";
 	}
 	
 	@GetMapping("/delete/{id}")
