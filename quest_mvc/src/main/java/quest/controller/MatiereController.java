@@ -25,7 +25,7 @@ public class MatiereController {
 	public String allMatiere(Model model) 
 	{
 		model.addAttribute("matieres",matserv.getAll());
-		model.addAttribute("matieres",new Matiere());
+		model.addAttribute("matiere",new Matiere());
 		return "matieres/matieres";
 	}
 	
