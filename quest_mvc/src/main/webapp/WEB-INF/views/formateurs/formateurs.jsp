@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <!DOCTYPE html>
 <html>
@@ -14,21 +15,81 @@
 
 <h1>Gestion des formateurs</h1>
 
-
-
 <table>
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Login</th>
+			<th>Password</th>
+			<th>Nom</th>
+			<th>Prénom</th>
+			<th>Civilité</th>
+			<th>Admin</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach items="${formateurs}" var="formateur">
+			<tr>
+				<td>${formateur.id}</td>
+				<td>${formateur.login}</td>
+				<td>${formateur.password}</td>
+				<td>${formateur.nom}</td>
+				<td>${formateur.prenom}</td>
+				<td>${formateur.civilite}</td>
+			    <c:choose>
+					<c:when test="${formateur.admin==false}"> <td>non</td> </c:when>
+					<c:otherwise><td>oui</td></c:otherwise>
+				</c:choose>
+				<td>
+					<a href="formateur/${formateur.id}"><input type="button" value="Modifier"></a>
+					<a href="formateur/delete/${formateur.id}"><input type="button" value="Supprimer"></a>
+				</td>
+			</tr>
+		</c:forEach>
+	</tbody>
+</table>	
 
-
-
-
+<h1>Ajouter Formateur</h1>
+		<form:form modelAttribute="formateur" action="formateur" method="post">
+			<table>
+				<tr>
+					<td>Login :</td>
+					<td><form:input path="login" placeholder="Saisir login" required="required" /><td>
+				</tr>
+				
+				<tr>
+					<td>Password :</td>
+					<td><form:input path="password" placeholder="Saisir password" required="required" /><td>
+				</tr>						
+				
+				<tr>
+					<td>Nom :</td>
+					<td><form:input path="nom" placeholder="Saisir nom" required="required" /><td>
+				</tr>
+				<tr>
+					<td>Prenom :</td>
+					<td><form:input path="prenom" placeholder="Saisir prenom" required="required" /></td>
+				</tr>
+				<tr>
+					<td>Civilite :</td>
+					<td><form:radiobuttons path="civilite" items="${civilite}" required="required" /></td>
+				</tr>
+				<tr> 
+					<td>Administrateur :</td>
+					<td><form:checkbox path="admin"/></td>
+				</tr>
+			</table>
+			
+			<input class="btn btn-success" type="submit" value="Ajouter">
+		</form:form>
+	
+<!-- 
+<table>
 	<tr><th>ID</th><th>Login</th><th>Password</th><th>Nom</th><th>Prénom</th><th>Civilité</th><th>Admin</th><th>Actions</th></tr>
 	<c:if test="${formateurs.isEmpty()}"><tr><td align="center" colspan="8">Aucun Formateur</td></tr></c:if>
 	<c:forEach items="${formateurs}" var="formateur" >
-	
 	<tr>
-	
-	
-	
 		<td>${formateur.id}</td>
 		<td>${formateur.login}</td>
 		<td>${formateur.password}</td>
@@ -69,6 +130,8 @@
 	Admin : <input type="checkbox" id="admin" name="admin"> Admin
 	<input type="submit" value="Ajouter">
 </form>
+-->
+
 
 </body>
 </html>
