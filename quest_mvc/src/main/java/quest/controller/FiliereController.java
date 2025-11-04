@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import quest.model.Filiere;
 import quest.service.FiliereService;
@@ -58,6 +59,4 @@ public class FiliereController {
 		filiereSrv.update(filiere);
 		return "redirect:/filiere";
 	}
-	
-
 }

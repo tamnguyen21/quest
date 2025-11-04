@@ -26,7 +26,7 @@ public class FormateurController {
 	{
 		model.addAttribute("formateurs",personneSrv.getAllFormateurs());
 		model.addAttribute("formateur",new Formateur());
-		model.addAttribute("civilite", Civilite.values());
+		model.addAttribute("civilites", Civilite.values());
 		return "formateurs/formateurs";
 	}
 	
@@ -36,7 +36,7 @@ public class FormateurController {
 	{
 		Formateur formateur = (Formateur)personneSrv.getById(id);
 		model.addAttribute("formateur",formateur);
-		model.addAttribute("civilite", Civilite.values());
+		model.addAttribute("civilites", Civilite.values());
 		return "formateurs/updateFormateur";
 	}
 	

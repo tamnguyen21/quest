@@ -35,7 +35,7 @@ public class MatiereController {
 	
 	@GetMapping("/filter")
 	@ResponseBody
-	public String allMatiereFilter(String searchLike, Model model) 
+	public String allMatiereFilter(String searchLike) 
 	{
 		String reponse ="";
 		List<Matiere> matieres = matserv.getAllByLibelleLike(searchLike);

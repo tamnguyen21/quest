@@ -52,9 +52,7 @@ public class HomeController {
 	@PostMapping
 	public String connect(String login,String password,Model model,HttpSession session) 
 	{
-		System.out.println("here connexion");
 		Personne connected = personneSrv.getByLoginAndPassword(login,password);
-		System.out.println(connected);
 		if(connected==null) 
 		{
 			model.addAttribute("error", "Identifiants invalides");

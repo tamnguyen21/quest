@@ -1,5 +1,7 @@
 package quest.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import quest.model.Civilite;
+import quest.model.Personne;
 import quest.model.Stagiaire;
 import quest.service.FiliereService;
 import quest.service.OrdinateurService;
@@ -61,6 +64,14 @@ public class StagiaireController {
 		return "redirect:/stagiaire";
 	}
 
+	@PostMapping("/changeConnect")
+	public String modifierInfosConnect(String login,String password,HttpSession session) 
+	{
+		Integer id = ((Personne) session.getAttribute("connected")).getId();
+		session.setAttribute("connected", personneServ.updateInfosConnect(id, login, password)); 
+		return "redirect:/home";
+	}
+	
 	@PostMapping("/{id}")
 	public String modifierStagiaire(@ModelAttribute Stagiaire stagiaire) {
 		personneServ.update(stagiaire);

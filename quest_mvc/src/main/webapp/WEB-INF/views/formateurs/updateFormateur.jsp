@@ -39,7 +39,7 @@
 				</tr>
 				<tr>
 					<td>Civilite :</td>
-					<td><form:radiobuttons path="civilite" items="${civilite}" required="required" /></td>
+					<td><form:radiobuttons path="civilite" items="${civilites}" required="required" /></td>
 				</tr>
 				<tr> 
 					<td>Administrateur :</td>
