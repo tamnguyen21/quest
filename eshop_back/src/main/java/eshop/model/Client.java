@@ -4,15 +4,19 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Positive;
-
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import eshop.view.Views;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @DiscriminatorValue("customer")
@@ -20,11 +24,17 @@ public class Client extends Personne {
 
 	@Positive
 	@Max(99)
+	@JsonView(Views.Common.class)
 	private int age;
+	
 	@Column(name="birthdate")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonView(Views.Common.class)
 	private LocalDate dateNaissance;
+	
 	@Embedded
+	@JsonView(Views.Common.class)
 	private Adresse adresse;
 	
 	@OneToMany(mappedBy="client")
@@ -34,6 +44,7 @@ public class Client extends Personne {
 	joinColumns = @JoinColumn(name="acheteur"),
 	inverseJoinColumns = @JoinColumn(name="produit")
 	)*/
+	@JsonView(Views.ClientWithAchat.class)
 	private List<Achat> achats = new ArrayList();
 	
 	public Client() {}

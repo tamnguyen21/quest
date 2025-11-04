@@ -2,18 +2,21 @@ package eshop.model;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import eshop.view.Views;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="product")
@@ -21,23 +24,28 @@ public class Produit {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.Common.class)
 	private Integer id;
+	
 	@Column(name="label",nullable = false,length = 50)
-	
 	@NotBlank(message="Le libelle doit avoir du contenu non vide")
+	@JsonView(Views.Common.class)
 	private String libelle;
-	@Column(name="price",columnDefinition = "DECIMAL(6,2)")
 	
+	@Column(name="price",columnDefinition = "DECIMAL(6,2)")
 	@Min(100)
 	@DecimalMax(value="10000",inclusive = false)
+	@JsonView(Views.Common.class)
 	private double prix;
 	
 	@ManyToOne
 	@JoinColumn(name="vendeur",nullable = false)
+	@JsonView(Views.Produit.class)
 	private Fournisseur fournisseur;
 	
 	
 	@OneToMany(mappedBy="produit")
+	@JsonView(Views.ProduitWithVentes.class)
 	private List<Achat> ventes;
 	
 	
