@@ -37,7 +37,7 @@ public class StagiaireRestController {
 	@JsonView(Views.Stagiaire.class)
 	public Stagiaire ficheStagiaire(@PathVariable Integer id) 
 	{
-		return (Stagiaire) personneSrv.getById(id);
+		return personneSrv.getStagiaireById(id);
 	}
 	
 	@PostMapping
@@ -56,7 +56,6 @@ public class StagiaireRestController {
 	}
 	
 	@DeleteMapping("/{id}")
-	@JsonView(Views.Stagiaire.class)
 	public void deleteStagiaire(@PathVariable Integer id) 
 	{
 		personneSrv.deleteById(id);
