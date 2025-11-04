@@ -1,10 +1,9 @@
 package quest.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-
 import com.fasterxml.jackson.annotation.JsonView;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import quest.view.Views;
 
 @Embeddable

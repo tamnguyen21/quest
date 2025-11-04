@@ -2,11 +2,10 @@ package quest.model;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-
 import com.fasterxml.jackson.annotation.JsonView;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import quest.view.Views;
 
 @Entity

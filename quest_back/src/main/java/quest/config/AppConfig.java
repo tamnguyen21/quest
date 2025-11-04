@@ -2,8 +2,6 @@ package quest.config;
 
 import java.util.Properties;
 
-import javax.persistence.EntityManagerFactory;
-
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +15,8 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+
+import jakarta.persistence.EntityManagerFactory;
 
 @Configuration
 @ComponentScan("quest.service")
