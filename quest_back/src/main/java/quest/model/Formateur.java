@@ -5,11 +5,18 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import quest.view.Views;
+
 @Entity
 public class Formateur extends Personne {
 
+	@JsonView(Views.Common.class)
 	private boolean admin;
+	
 	@OneToMany(mappedBy = "formateur")
+	@JsonView(Views.FormateurWithModules.class)
 	private List<Module> formations;
 	
 	public Formateur() {}

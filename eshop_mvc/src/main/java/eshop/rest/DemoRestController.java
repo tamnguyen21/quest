@@ -44,4 +44,10 @@ public class DemoRestController {
 		System.out.println(fournisseur);
 		return fournisseur;
 	}
+	
+	@PostMapping
+	public void ajoutProduit(@RequestBody Produit produit) 
+	{
+		System.out.println(produit);
+	}
 }

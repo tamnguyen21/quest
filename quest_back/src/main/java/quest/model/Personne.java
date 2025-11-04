@@ -12,6 +12,10 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import quest.view.Views;
+
 @Entity
 @Table(name="personne")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -20,17 +24,28 @@ public abstract class Personne {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.Common.class)
 	protected Integer id;
+	
 	@Column(length = 25,nullable = false,unique = true)
+	@JsonView(Views.Common.class)
 	protected String login;
+	
 	@Column(length = 180,nullable = false)
+	@JsonView(Views.Common.class)
 	protected String password;
+	
 	@Column(nullable = false,columnDefinition = "VARCHAR(30) default 'Doe'")
+	@JsonView(Views.Common.class)
 	protected String nom;
+	
 	@Column(length = 30,nullable = false)
+	@JsonView(Views.Common.class)
 	protected String prenom;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(columnDefinition = "ENUM('Homme','Femme','NB')",nullable = false)
+	@JsonView(Views.Common.class)
 	protected Civilite civilite;
 	
 	public Personne() {}

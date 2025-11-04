@@ -3,15 +3,23 @@ package quest.model;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import quest.view.Views;
+
 @Embeddable
 public class Adresse {
 	@Column(length = 15)
+	@JsonView(Views.Stagiaire.class)
 	private String numero;
 	@Column(length = 50)
+	@JsonView(Views.Stagiaire.class)
 	private String voie;
 	@Column(length = 50)
+	@JsonView(Views.Stagiaire.class)
 	private String ville;
 	@Column(length = 15)
+	@JsonView(Views.Stagiaire.class)
 	private String cp;
 
 	public Adresse() {}	

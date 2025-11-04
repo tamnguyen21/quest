@@ -7,19 +7,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import quest.view.Views;
+
 @Entity
 public class Stagiaire extends Personne{
 
 	@Column(length = 50)
+	@JsonView(Views.Common.class)
 	private String email;
 	@Embedded
+	@JsonView(Views.Stagiaire.class)
 	private Adresse adresse;
 
 	@OneToOne
 	@JoinColumn(name="ordinateur")
+	@JsonView(Views.Stagiaire.class)
 	private Ordinateur ordinateur;
+	
 	@ManyToOne
+	@JsonView(Views.Stagiaire.class)
 	@JoinColumn(name="filiere")
+
 	private Filiere filiere;
 
 	public Stagiaire() {}

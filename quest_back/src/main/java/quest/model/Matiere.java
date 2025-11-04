@@ -7,13 +7,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import quest.view.Views;
+
 @Entity
 @Table(name="matiere")
 public class Matiere {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.Common.class)
 	private Integer id;
+	
 	@Column(length = 50,nullable = false)
+	@JsonView(Views.Common.class)
 	private String libelle;
 	
 	public Matiere() {}

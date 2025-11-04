@@ -10,11 +10,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
-import quest.config.AppConfig;
-
 @Configuration
 @EnableWebMvc
-@ComponentScan("quest.controller")
+@ComponentScan({"quest.controller","quest.rest"})
 @Import(AppConfig.class)
 public class WebConfig implements WebMvcConfigurer {
 

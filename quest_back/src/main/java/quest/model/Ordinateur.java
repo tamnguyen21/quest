@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import quest.view.Views;
+
 @Entity
 @Table(name="ordinateur")
 public class Ordinateur {
@@ -14,10 +18,15 @@ public class Ordinateur {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="numero")
+	@JsonView(Views.Common.class)
 	private Integer id;
+	
 	@Column(length = 25,nullable = false)
+	@JsonView(Views.Common.class)
 	private String marque;
+	
 	@Column(columnDefinition = "int default 4")
+	@JsonView(Views.Common.class)
 	private int ram;
 	
 	public Ordinateur() {}
