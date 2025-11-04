@@ -1,7 +1,5 @@
 package eshop.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import eshop.dao.IDAOPersonne;
 import eshop.dao.IDAOProduit;
 import eshop.model.Produit;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/produit")
