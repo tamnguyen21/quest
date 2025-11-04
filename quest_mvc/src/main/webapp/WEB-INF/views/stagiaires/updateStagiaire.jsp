@@ -40,7 +40,7 @@ Adresse :   <form:input type="text" path="adresse.numero"  placeholder="numero_r
  Ordinateur: 
 <form:select required="required" path="ordinateur.id">
 <form:option value="">Choisir ordinateur</form:option>
-<form:options items="${ordinateurs}" itemValue="id" itemLabel="marque"/>
+<form:options items="${ordinateurs}" itemValue="id" itemLabel="infos"/>
 </form:select>
 
 
@@ -49,7 +49,7 @@ Adresse :   <form:input type="text" path="adresse.numero"  placeholder="numero_r
 Filiere: 
 <form:select required="required" path="filiere.id">
 <form:option value="">Choisir filiere</form:option>
-<form:options items="${filieres}" itemValue="id" itemLabel="libelle"/>
+<form:options items="${filieres}" itemValue="id" itemLabel="infos"/>
 </form:select>
 
 

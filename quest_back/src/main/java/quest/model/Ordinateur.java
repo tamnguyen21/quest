@@ -51,6 +51,11 @@ public class Ordinateur {
 		this.ram = ram;
 	}
 	
+	public String getInfos() 
+	{
+		return this.id+" - "+this.marque;
+	}
+	
 	@Override
 	public String toString() {
 		return "Ordinateur [id=" + id + ", marque=" + marque + ", ram=" + ram + "]";

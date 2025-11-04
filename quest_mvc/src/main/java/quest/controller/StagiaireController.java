@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import quest.model.Civilite;
 import quest.model.Stagiaire;
 import quest.service.FiliereService;
+import quest.service.OrdinateurService;
 import quest.service.PersonneService;
 
 @Controller
@@ -23,6 +24,9 @@ public class StagiaireController {
 	
 	@Autowired
 	FiliereService filiereService;
+	
+	@Autowired
+	OrdinateurService ordinateurService;
 
 	@GetMapping
 	public String allStagiaires(Model model) {
@@ -30,6 +34,7 @@ public class StagiaireController {
 		model.addAttribute("stagiaire",new Stagiaire());
 		model.addAttribute("civilites",Civilite.values());
 		model.addAttribute("filieres",filiereService.getAll());
+		model.addAttribute("ordinateurs",ordinateurService.getAll());
 		return "stagiaires/stagiaires";
 		
 	}
@@ -40,6 +45,7 @@ public class StagiaireController {
 		model.addAttribute("stagiaire", stagiaire);
 		model.addAttribute("civilites",Civilite.values());
 		model.addAttribute("filieres",filiereService.getAll());
+		model.addAttribute("ordinateurs",ordinateurService.getAll());
 		return "stagiaires/updateStagiaire";
 	}
 	

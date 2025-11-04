@@ -111,6 +111,11 @@ public class Filiere {
 	public void setVersion(int version) {
 		this.version = version;
 	}
+	
+	public String getInfos() 
+	{
+		return this.id+" - "+this.libelle;
+	}
 
 	@Override
 	public String toString() {

@@ -98,7 +98,7 @@ font-weight:bold;
 
 <form:select required="required" path="ordinateur.id">
 <form:option value="">Choisir Ordinateur</form:option>
-<form:options items="${ordinateurs}" itemValue="id" itemLabel="marque"/>
+<form:options items="${ordinateurs}" itemValue="id" itemLabel="infos"/>
 </form:select>
 </td>
 </tr>
@@ -107,7 +107,7 @@ font-weight:bold;
  <td>
 <form:select required="required" path="filiere.id">
 <form:option value="">Choisir une filiere</form:option>
-<form:options items="${filieres}" itemValue="id" itemLabel="libelle"/>
+<form:options items="${filieres}" itemValue="id" itemLabel="infos"/>
 </form:select>
 </td>
 </tr>
