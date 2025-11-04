@@ -12,7 +12,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("eshop.controller")
+@ComponentScan({"eshop.controller","eshop.rest"})
 @Import(AppConfig.class)
 public class WebConfig implements WebMvcConfigurer {
 
