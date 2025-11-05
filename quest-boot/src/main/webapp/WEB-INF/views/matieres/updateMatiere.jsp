@@ -1,24 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>     
-    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Modif Matiere</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<h1>Update de la matière ${matiere.id}</h1>
+<t:general title="Update de la matière ${ matiere.id }">
+	<jsp:attribute name="customStyle">
+		tr {
+			text-align: center;
+		}
 
-<form:form modelAttribute="matiere" method="POST" action="matiere/${matiere.id}">
-	<form:hidden path="id"/>
-		Libelle : <form:input required="required" type="text" path="libelle" placeholder="Saisir libellé"/><br>
-	<input type="submit" value="Modifier">
-	
-</form:form>
+		#fond {
+			background-image: url('assets/images/tpt.png');
+			background-position: center;
+		}
+	</jsp:attribute>
 
-</body>
-</html>
-
+	<jsp:body>
+		<form:form modelAttribute="matiere" method="POST" action="matiere/${ matiere.id }">
+			<form:hidden path="id"/>
+			Libelle : <form:input required="required" type="text" path="libelle" placeholder="Saisir libellé"/><br>
+			<input type="submit" value="Modifier">
+		</form:form>
+	</jsp:body>
+</t:general>

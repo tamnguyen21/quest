@@ -1,14 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Quest</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="t" %>
 
-<h1>Vous etes sur l'espace Formateur</h1>
-
-</body>
-</html>
+<t:general title="Quest">
+	<jsp:body>
+        <h2>Vous etes sur l'espace Formateur</h2>
+	</jsp:body>
+</t:general>

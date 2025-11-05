@@ -1,86 +1,65 @@
-<%@ include file="/includes.jsp" %>
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<base href="/">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="t" %>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html>
+<t:general title="Gestion des matières">
+	<jsp:attribute name="customStyle">
+		tr {
+			text-align: center;
+		}
 
-<style>
-tr {
-	text-align: center;
-}
+		#fond {
+			background-image: url('assets/images/tpt.png');
+			background-position: center;
+		}
+	</jsp:attribute>
 
-#fond {
-	background-image: url('assets/images/tpt.png');
-	background-position: center;
-}
-</style>
+	<jsp:attribute name="customScript">
+		<script>
+			filterByLib.onkeyup=function(event)
+			{
+				$.ajax("matiere/filter", {
+					type: "GET",
+					data: {
+					searchLike: $("#filterByLib").val()
+					},
+					success: function (resp) {
+					$('#tbody').html(resp);
+					}
+				});
+			}
+		</script>
+	</jsp:attribute>
 
-<head>
-<script
-src="https://code.jquery.com/jquery-3.7.1.min.js"
-integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-crossorigin="anonymous"></script>
+	<jsp:body>
+		<input type="text" placeholder="Filtrer par libelle" id="filterByLib" />
 
-<meta charset="UTF-8">
-
-<title>Page Matiere</title>
-</head>
-<body id="fond">
-
-	<h1>Gestion des matières</h1>
-	<input type="text" placeholder="Filtrer par libelle" id="filterByLib">
-	<table>
-		<tr>
-			<th>ID</th>
-			<th>Libellé</th>
-			<th>Actions</th>
-		</tr>
-		<tbody id="tbody">
-		<c:forEach items="${matieres}" var="matiere">
-
+		<table>
 			<tr>
-				<td>${matiere.id}</td>
-				<td>${matiere.libelle}</td>
-
-				<td><a href="matiere/${matiere.id}"><input type="button"
-						value="Modifier"></a> <a
-					href="matiere/delete/${matiere.id}"><input type="button"
-						value="Supprimer"></a></td>
+				<th>ID</th>
+				<th>Libellé</th>
+				<th>Actions</th>
 			</tr>
-		</c:forEach>
 
-		</tbody>
-	</table>
+			<tbody id="tbody">
+				<c:forEach items="${matieres}" var="matiere">
+					<tr>
+						<td>${matiere.id}</td>
+						<td>${matiere.libelle}</td>
 
-	<form:form modelAttribute="matiere" method="POST" action="matiere">
-		Libelle : <form:input required="required" type="text" path="libelle" placeholder="Saisir libellé"/><br>
-		<input type="submit" value="Ajouter">
-	</form:form>
-</body>
+						<td>
+							<a href="matiere/${matiere.id}"><input type="button" value="Modifier"></a>
+							<a href="matiere/delete/${matiere.id}"><input type="button" value="Supprimer"></a>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 
-</html>
-
-<script>
-
-filterByLib.onkeyup=function(event)
-{
-	$.ajax("matiere/filter", {
-	    type: "GET",
-	    data: {
-	      searchLike: $("#filterByLib").val()
-	    },
-	    success: function (resp) {
-	      $('#tbody').html(resp);
-	    }
-	  });
-}
-
-
-</script>
-
-<%@ include file="/footer.jsp" %>
+		<form:form modelAttribute="matiere" method="POST" action="matiere">
+			Libelle : <form:input required="required" type="text" path="libelle" placeholder="Saisir libellé"/><br>
+			<input type="submit" value="Ajouter">
+		</form:form>
+	</jsp:body>
+</t:general>

@@ -1,22 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Quest</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="t" %>
 
-<h1>Vous etes sur l'espace Stagiaire</h1>
+<t:general title="Quest">
+	<jsp:body>
+        <h2>Vous etes sur l'espace Stagiaire</h2>
 
-<p>Site en cours de construction</p>
+        <p>Site en cours de construction</p>
 
-
-<form action="stagiaire/changeConnect" method="POST">
-<input type="text" name="login" placeholder="saisir votre login"><br>
-<input type="password" name="password" placeholder="saisir votre nouveau password">
-<input type="submit" value="Envoyer">
-</form>
-</body>
-</html>
+        <form action="stagiaire/changeConnect" method="POST">
+            <input type="text" name="login" placeholder="saisir votre login"><br>
+            <input type="password" name="password" placeholder="saisir votre nouveau password">
+            <input type="submit" value="Envoyer">
+        </form>
+	</jsp:body>
+</t:general>

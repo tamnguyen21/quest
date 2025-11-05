@@ -1,5 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>      
-
 <style>
 footer {
     display:grid;
@@ -17,7 +15,7 @@ footer {
 }
 
 footer button{
-    
+
 }
 
 footer button:nth-child(odd) {
