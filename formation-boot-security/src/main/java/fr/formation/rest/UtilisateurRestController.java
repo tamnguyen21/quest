@@ -94,8 +94,10 @@ public class UtilisateurRestController {
 
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
 
+        // On demande à Spring Security si le user / password sont OK
         this.am.authenticate(auth);
 
+        // Si la connexion est OK, on génère un jeton JWT
         return Jwts.builder()
             .subject(request.getUsername()) // Souvent, c'est le username ici
             .issuedAt(now)

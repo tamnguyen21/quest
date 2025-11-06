@@ -29,8 +29,9 @@ public class JwtHeaderFilter extends OncePerRequestFilter {
         SecretKey secretKey = Keys.hmacShaKeyFor(key.getBytes());
 
         if (header != null) {
-            String token = header.substring(7);
+            String token = header.substring(7); // On enlève "Bearer " pour garder que le jeton
 
+            // On vérifie le jeton, et si tout est OK, on récupère l'utilisateur associé à ce jeton
             String username = Jwts.parser()
                 .verifyWith(secretKey) // On donne la clé pour valider le jeton
                 .build()
@@ -39,6 +40,7 @@ public class JwtHeaderFilter extends OncePerRequestFilter {
                 .getSubject() // Le nom d'utilisateur
             ;
 
+            // On refabrique une liste de rôles pour l'utilisateur
             List<GrantedAuthority> autorities = new ArrayList<>();
 
             autorities.add(new SimpleGrantedAuthority("ROLE_USER"));
