@@ -1,6 +1,9 @@
 package fr.formation.rest;
 
+import java.util.Date;
 import java.util.List;
+
+import javax.crypto.SecretKey;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,8 @@ import fr.formation.dto.response.UtilisateurProjection2Response;
 import fr.formation.dto.response.UtilisateurProjectionResponse;
 import fr.formation.dto.response.UtilisateurResponse;
 import fr.formation.model.Utilisateur;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 
 @RestController
 @RequestMapping("/api/utilisateur")
@@ -73,5 +78,20 @@ public class UtilisateurRestController {
         this.dao.save(utilisateur);
 
         return utilisateur.getId();
+    }
+
+    @PostMapping("/connexion")
+    public String connexion() {
+        Date now = new Date();
+        String key = "6E5A7234753778214125442A472D4B6150645367556B58703273357638792F42";
+        SecretKey secretKey = Keys.hmacShaKeyFor(key.getBytes());
+
+        return Jwts.builder()
+            .subject("nom utilisateur") // Souvent, c'est le username ici
+            .issuedAt(now)
+            .expiration(new Date(now.getTime() + 300_000)) // Durée de validité = 5 mins
+            .signWith(secretKey)
+            .compact() // Le jeton JWT sous forme de String
+        ;
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -29,7 +28,7 @@ public class SecurityConfig {
             // auth.requestMatchers("/api/matiere").hasRole("USER");
             // auth.requestMatchers("/api/matiere").hasAuthority("ROLE_USER");
 
-            auth.requestMatchers(HttpMethod.POST, "/api/utilisateur").permitAll();
+            auth.requestMatchers(HttpMethod.POST, "/api/utilisateur", "/api/utilisateur/connexion").permitAll();
 
             auth.requestMatchers("/**").authenticated();
         });
