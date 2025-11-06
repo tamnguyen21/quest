@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,13 +19,14 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
+@EnableMethodSecurity(prePostEnabled = true) // Activer les annotations @PreAuthorize / @PostAuthorize
 public class SecurityConfig {
     // Le SecurityFilterChain va nous permettre de configurer les accès, éventuellement le CSRF, politiques CORS générales, etc.
     @Bean // On bypass la config auto-configuration
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // Configurer ici les accès généraux
         http.authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/api/matiere").hasRole("USER");
+            // auth.requestMatchers("/api/matiere").hasRole("USER");
             // auth.requestMatchers("/api/matiere").hasAuthority("ROLE_USER");
 
             auth.requestMatchers(HttpMethod.POST, "/api/utilisateur").permitAll();
