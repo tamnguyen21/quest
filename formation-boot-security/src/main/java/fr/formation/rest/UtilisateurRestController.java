@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.formation.dao.IDAOUtilisateur;
 import fr.formation.dto.request.SubscribeUserRequest;
+import fr.formation.dto.response.UtilisateurProjection2Response;
+import fr.formation.dto.response.UtilisateurProjectionResponse;
 import fr.formation.dto.response.UtilisateurResponse;
 import fr.formation.model.Utilisateur;
 
@@ -45,6 +46,17 @@ public class UtilisateurRestController {
             // .map(UtilisateurResponse::convert)
             .toList()
         ;
+    }
+
+    @GetMapping("projected-by")
+    public List<UtilisateurProjectionResponse> findAllProjectedBy() {
+        return this.dao.findAllProjectedBy(UtilisateurProjectionResponse.class);
+        // return this.dao.findAllProjectedBy();
+    }
+
+    @GetMapping("projected-by-2")
+    public List<UtilisateurProjection2Response> findAllProjectedBy2() {
+        return this.dao.findAllProjectedBy(UtilisateurProjection2Response.class);
     }
 
     @PostMapping
