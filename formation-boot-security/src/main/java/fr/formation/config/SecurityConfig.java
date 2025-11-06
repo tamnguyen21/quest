@@ -46,9 +46,10 @@ public class SecurityConfig {
             CorsConfigurationSource source = request -> {
                 CorsConfiguration config = new CorsConfiguration();
 
+                // On autorise toutes les en-têtes HTTP, toutes les méthodes HTTP de tous les domaines
                 config.setAllowedHeaders(List.of("*"));
+                config.setAllowedMethods(List.of("*"));
                 config.setAllowedOrigins(List.of("*"));
-                config.setAllowedHeaders(List.of("*"));
 
                 return config;
             };
