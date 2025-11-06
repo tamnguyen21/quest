@@ -1,5 +1,7 @@
 package fr.formation.config;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 public class SecurityConfig {
@@ -36,6 +40,21 @@ public class SecurityConfig {
         // Désactiver la protection CSRF
         // http.csrf(csrf -> csrf.disable());
         http.csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"));
+
+        // Configuration de la politique CORS
+        http.cors(cors -> {
+            CorsConfigurationSource source = request -> {
+                CorsConfiguration config = new CorsConfiguration();
+
+                config.setAllowedHeaders(List.of("*"));
+                config.setAllowedOrigins(List.of("*"));
+                config.setAllowedHeaders(List.of("*"));
+
+                return config;
+            };
+
+            cors.configurationSource(source);
+        });
 
         return http.build();
     }
