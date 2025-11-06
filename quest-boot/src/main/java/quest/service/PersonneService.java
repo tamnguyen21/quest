@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import quest.dao.IDAOPersonne;
@@ -16,6 +17,9 @@ public class PersonneService {
 
 	@Autowired
 	IDAOPersonne daoPersonne;
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	public Personne getById(Integer id)
 	{
@@ -37,11 +41,11 @@ public class PersonneService {
 		if(opt.isEmpty()) {return null;}
 		else {
 
-			if(opt.get() instanceof Formateur) 
+			if(opt.get() instanceof Formateur)
 			{
 				return (Formateur)opt.get();
 			}
-			else 
+			else
 			{
 				throw new RuntimeException("L'id recu n'est pas celui d'un Formateur...");
 			}
@@ -70,33 +74,40 @@ public class PersonneService {
 		return daoPersonne.findAll();
 	}
 
-	public Personne create(Personne personne) 
+	public Personne create(Personne personne)
 	{
-		if(personne.getId()!=null) 
+		if(personne.getId()!=null)
 		{
 			throw new RuntimeException("Comment ca une personne en insert a deja un id ?!");
 		}
+
+		personne.setPassword(this.passwordEncoder.encode(personne.getPassword()));
 		return daoPersonne.save(personne);
 	}
 
-	public Personne update(Personne personne) 
+	public Personne update(Personne personne)
 	{
-		if(personne.getId()==null) 
+		if(personne.getId()==null)
 		{
 			throw new RuntimeException("Comment ca une personne en update a sans un id ?!");
 		}
+
+		if (personne.getPassword() != null) {
+			personne.setPassword(this.passwordEncoder.encode(personne.getPassword()));
+		}
+
 		return daoPersonne.save(personne);
 	}
 
-	public Personne updateInfosConnect(Integer id,String login,String password) 
+	public Personne updateInfosConnect(Integer id,String login,String password)
 	{
 		Personne personne = daoPersonne.findById(id).get();
 		personne.setLogin(login);
 		personne.setPassword(password);
 		return daoPersonne.save(personne);
 	}
-	
-	public void deleteById(Integer id) 
+
+	public void deleteById(Integer id)
 	{
 		daoPersonne.deleteById(id);
 	}

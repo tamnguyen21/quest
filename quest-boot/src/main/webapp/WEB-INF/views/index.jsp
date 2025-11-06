@@ -23,22 +23,25 @@ body {
 <head>
 <meta charset="UTF-8">
 <title>Index</title>
+<base href="/">
 </head>
 <body>
-	<form method="POST" action="home">
+	<form method="POST" action="process_login">
 
 		<fieldset>
 			<table>
 				<tr>
 					<td><label for="input-login">Login :</label></td>
 					<td><input type="text" id="input-login"
-						placeholder="Saisir votre login" name="login"></td>
+						placeholder="Saisir votre login" name="username"></td>
 				</tr>
 				<tr>
 					<td>Password :</td>
 					<td><input type="password"
 						placeholder="Saisir votre mot de passe" name="password"></td>
 				</tr>
+
+				<input type="hidden" name="${ _csrf.parameterName }" value="${ _csrf.token }" />
 
 			</table>
 			<input type="submit" value="Se connecter">

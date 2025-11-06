@@ -1,0 +1,29 @@
+package quest.rest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import quest.config.JwtUtils;
+import quest.dto.request.AuthUserRequest;
+
+@RestController
+@RequestMapping("/api")
+public class AuthRestController {
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @PostMapping("/auth")
+    public String auth(@RequestBody AuthUserRequest request) {
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
+
+        // On demande à Spring Security si le user / password sont OK
+        this.authenticationManager.authenticate(auth);
+
+        return JwtUtils.generate(auth);
+    }
+}

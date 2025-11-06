@@ -1,6 +1,7 @@
 package quest.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,10 +14,11 @@ public interface IDAOPersonne extends JpaRepository<Personne,Integer> {
 
 	@Query("from Stagiaire")
 	public List<Stagiaire> findAllStagiaire();
-	
+
 	@Query("from Formateur")
 	public List<Formateur> findAllFormateur();
-	
-	
+
 	public Personne findByLoginAndPassword(String login,String password);
+
+	public Optional<Personne> findByLogin(String login);
 }

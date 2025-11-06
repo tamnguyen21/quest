@@ -81,11 +81,6 @@
 	</jsp:attribute>
 
 	<jsp:body>
-		<!-- Il faudrait verifier sur chaque page si on a le droit d'etre ici, sinon on est redirect ailleurs -->
-		<c:if test="${connected==null || connected.getClass().getSimpleName().equals('Stagiaire')}">
-			<c:redirect url="home"></c:redirect>
-		</c:if>
-
 		<img src="https://i.ibb.co/j9w1t5mg/image.webp" alt="Blason">
 
 		<table class="table table-striped">
