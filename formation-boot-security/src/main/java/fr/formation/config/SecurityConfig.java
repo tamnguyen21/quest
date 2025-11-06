@@ -34,7 +34,8 @@ public class SecurityConfig {
         http.httpBasic(Customizer.withDefaults());
 
         // Désactiver la protection CSRF
-        http.csrf(csrf -> csrf.disable());
+        // http.csrf(csrf -> csrf.disable());
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"));
 
         return http.build();
     }
