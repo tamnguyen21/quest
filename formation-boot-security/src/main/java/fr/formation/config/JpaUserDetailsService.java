@@ -1,13 +1,18 @@
 package fr.formation.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import fr.formation.dao.IDAOUtilisateur;
+
 @Service
 public class JpaUserDetailsService implements UserDetailsService {
+    @Autowired
+    private IDAOUtilisateur dao;
 
     // Récupérer l'utilisateur en base de données
     // > Si l'utilisateur existe pas, lever une exception UsernameNotFoundException
@@ -15,11 +20,31 @@ public class JpaUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return User
-            .withUsername(username)
-            .password("$2a$10$zFeTn0rQKrsMXIT2I2NAl.70YWXs05/XyJsnSsznDjB4C.T0yv8hC")
-            .roles("USER")
-            .build()
+        // Optional<Utilisateur> optUtilisateur = this.dao.findByUsername(username);
+
+        // if (optUtilisateur.isEmpty()) {
+        //     throw new UsernameNotFoundException("User not found");
+        // }
+
+        // Utilisateur utilisateur = optUtilisateur.get();
+
+        // Utilisateur utilisateur = this.dao.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        // return User
+        //     .withUsername(username)
+        //     .password(utilisateur.getPassword())
+        //     .roles("USER")
+        //     .build()
+        // ;
+
+        return this.dao.findByUsername(username)
+            .map(user -> User
+                    .withUsername(username)
+                    .password(user.getPassword())
+                    .roles("USER")
+                    .build()
+            )
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"))
         ;
     }
 }
