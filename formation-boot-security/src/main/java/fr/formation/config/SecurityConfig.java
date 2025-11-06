@@ -2,6 +2,7 @@ package fr.formation.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -19,8 +20,9 @@ public class SecurityConfig {
         // Configurer ici les accès généraux
         http.authorizeHttpRequests(auth -> {
             auth.requestMatchers("/api/matiere").hasRole("USER");
-
             // auth.requestMatchers("/api/matiere").hasAuthority("ROLE_USER");
+
+            auth.requestMatchers(HttpMethod.POST, "/api/utilisateur").permitAll();
 
             auth.requestMatchers("/**").authenticated();
         });
@@ -36,7 +38,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
 
     // UserDetailsService -> Utilisé par l'AuthenticationProvider pour charger un utilisateur (username, password, roles, etc.)
     // @Bean
