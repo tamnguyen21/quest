@@ -2,14 +2,42 @@ package fr.formation.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+    // Le SecurityFilterChain va nous permettre de configurer les accès, éventuellement le CSRF, politiques CORS générales, etc.
+    @Bean // On bypass la config auto-configuration
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // Configurer ici les accès généraux
+        http.authorizeHttpRequests(auth -> {
+            auth.requestMatchers("/api/matiere").hasRole("USER");
+
+            // auth.requestMatchers("/api/matiere").hasAuthority("ROLE_USER");
+
+            auth.requestMatchers("/**").authenticated();
+        });
+
+        // Activer le formulaire de connexion
+        http.formLogin(Customizer.withDefaults());
+
+        // Activer l'authentification par HTTP Basic
+        http.httpBasic(Customizer.withDefaults());
+
+        // Désactiver la protection CSRF
+        http.csrf(csrf -> csrf.disable());
+
+        return http.build();
+    }
+
+
     // UserDetailsService -> Utilisé par l'AuthenticationProvider pour charger un utilisateur (username, password, roles, etc.)
     // @Bean
     UserDetailsService inMemory(PasswordEncoder passwordEncoder) {

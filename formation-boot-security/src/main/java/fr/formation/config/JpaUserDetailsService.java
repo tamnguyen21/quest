@@ -41,6 +41,7 @@ public class JpaUserDetailsService implements UserDetailsService {
             .map(user -> User
                     .withUsername(username)
                     .password(user.getPassword())
+                    // .authorities("ROLE_USER") // c'est pareil que roles("USER")
                     .roles("USER")
                     .build()
             )
