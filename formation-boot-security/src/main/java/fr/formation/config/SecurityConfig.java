@@ -11,7 +11,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 public class SecurityConfig {
     // UserDetailsService -> Utilisé par l'AuthenticationProvider pour charger un utilisateur (username, password, roles, etc.)
-    @Bean
+    // @Bean
     UserDetailsService inMemory(PasswordEncoder passwordEncoder) {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
 
