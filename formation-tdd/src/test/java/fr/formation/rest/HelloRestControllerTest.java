@@ -1,5 +1,7 @@
 package fr.formation.rest;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import fr.formation.dao.IDAOHello;
+import fr.formation.model.Hello;
 
 // @SpringBootTest // Tests unitaires qui lancent le contexte de Spring
 // @AutoConfigureMockMvc // Cette annotation permet d'injecter un MockMvc
@@ -64,5 +67,35 @@ public class HelloRestControllerTest {
         // then
         // Vérifier si la méthode findAll de la DAO a été appelée UNE ET UNE SEULE FOIS
         Mockito.verify(this.dao).findAll();
+    }
+
+    @Test
+    @WithMockUser
+    void shouldFindAllUseDaoFindAllValues() throws Exception {
+        // given
+        Hello h1 = new Hello();
+        Hello h2 = new Hello();
+
+        h1.setId(1);
+        h1.setMessage("Coucou");
+
+        // List.of permet de créer une liste figée avec les valeurs
+        List<Hello> values = List.of(h1, h2);
+
+        // Demander à Mockito de retourner la liste quand findAll est appelée
+        Mockito.when(this.dao.findAll()).thenReturn(values);
+
+        // when
+        ResultActions result = this.mockMvc.perform(MockMvcRequestBuilders.get("/api/hello/all"));
+
+        // then
+        // "$" == la racine du JSON
+        // jsonPath nous permet de vérifier les contenus du json
+        // .isArray permet de vérifier si le flux JSON est un tableau
+        result.andExpect(MockMvcResultMatchers.jsonPath("$").isArray());
+
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(values.size()));
+
+        result.andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1));
     }
 }
