@@ -97,4 +97,128 @@ public class CalcTest {
             () -> this.calc.add(a, b)
         );
     }
+
+    @Test
+    void shouldReturn0WhenEmpty() {
+        // given
+        String value = "";
+
+        // when
+        int result = this.calc.add(value);
+
+
+        // then
+        Assertions.assertEquals(0, result);
+    }
+
+    @Test
+    void shouldReturn0WhenNull() {
+        // given
+        String value = null;
+
+        // when
+        int result = this.calc.add(value);
+
+
+        // then
+        Assertions.assertEquals(0, result);
+    }
+
+    @Test
+    void shouldReturn2When2() {
+        // given
+        String value = "2";
+
+        // when
+        int result = this.calc.add(value);
+
+
+        // then
+        Assertions.assertEquals(2, result);
+    }
+
+    @Test
+    void shouldReturn36When12And5And19() {
+        // given
+        String value = "12,5,19";
+
+        // when
+        int result = this.calc.add(value);
+
+
+        // then
+        Assertions.assertEquals(36, result);
+    }
+
+    @Test
+    void shouldReturn34When10And5And19() {
+        // given
+        String value = "10,5,19";
+
+        // when
+        int result = this.calc.add(value);
+
+
+        // then
+        Assertions.assertEquals(34, result);
+    }
+
+    @Test
+    void shouldThrowNegativeNotAllowedExceptionWhenNegative() {
+        // given
+        String value = "10,-5,19";
+
+        // when & then
+        Assertions.assertThrows(
+            NegativeNotAllowedException.class,
+            () -> this.calc.add(value)
+        );
+    }
+
+    @Test
+    void shouldReturn34When10And5And19WithSemiColon() {
+        // given
+        String value = "10;5;19";
+
+        // when
+        int result = this.calc.add(value);
+
+
+        // then
+        Assertions.assertEquals(34, result);
+    }
+
+    @Test
+    void shouldReturn34When10And5And19WithNewLine() {
+        // given
+        String value = """
+                10
+                5
+                19
+                """;
+
+        // when
+        int result = this.calc.add(value);
+
+
+        // then
+        Assertions.assertEquals(34, result);
+    }
+
+    @Test
+    void shouldReturn34When10And5And19WithMixin() {
+        // given
+        String value = """
+                10
+                5,19
+                4;2
+                """;
+
+        // when
+        int result = this.calc.add(value);
+
+
+        // then
+        Assertions.assertEquals(40, result);
+    }
 }
