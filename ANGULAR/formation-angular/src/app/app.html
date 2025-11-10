@@ -7,3 +7,11 @@
 <h1>Le titre = {{ title }}</h1>
 
 <p>Le prénom est {{ prenom }}</p>
+
+
+<input type="text" [value]="prenom" (input)="onInput($event)" />
+
+<button (click)="changePrenom()" >Modifier prénom</button>
+
+<!-- ngModel => binding two-ways => lecture + écriture -->
+<input type="text" [(ngModel)]="prenom" />
