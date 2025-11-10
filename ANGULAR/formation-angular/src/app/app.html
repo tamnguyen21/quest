@@ -27,3 +27,11 @@
 <input type="color" [(ngModel)]="couleur" />
 
 <p [style.color]="couleur">Le paragraphe en couleur : {{ couleur }}</p>
+
+<hr />
+
+<input type="number" [(ngModel)]="todo.id">
+<input type="text" [(ngModel)]="todo.title">
+<input type="checkbox" [(ngModel)]="todo.completed">
+
+<p>{{ todo.id }} - {{ todo.title }} - {{ todo.completed }}</p>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { Todo } from './todo';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class App {
 
   protected prenom: string = "Jérémy";
   protected couleur: string = "black";
+  protected todo: Todo = new Todo(1, "Le titre du TODO", false, 1);
 
   public changePrenom() {
     this.prenom = "Nouveau prénom !";
