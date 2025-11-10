@@ -3,13 +3,15 @@ import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { Todo } from './todo';
 import { CommonModule } from '@angular/common';
+import { AscBold } from './asc-bold/asc-bold';
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
     FormsModule,
-    CommonModule
+    CommonModule,
+    AscBold
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
