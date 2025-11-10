@@ -3,7 +3,7 @@ export class Todo {
         private _id: number,
         private _title: string,
         private _completed: boolean,
-        private _userId: number
+        private _userId?: number
     ) { }
 
     public get id(): number {
@@ -30,7 +30,7 @@ export class Todo {
         this._completed = value;
     }
 
-    public get userId(): number {
+    public get userId(): number | undefined {
         return this._userId;
     }
 
