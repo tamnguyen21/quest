@@ -15,6 +15,7 @@ export class App {
   protected readonly title = 'formation-angular';
 
   protected prenom: string = "Jérémy";
+  protected couleur: string = "black";
 
   public changePrenom() {
     this.prenom = "Nouveau prénom !";

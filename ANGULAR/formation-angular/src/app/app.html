@@ -8,10 +8,23 @@
 
 <p>Le prénom est {{ prenom }}</p>
 
-
 <input type="text" [value]="prenom" (input)="onInput($event)" />
 
 <button (click)="changePrenom()" >Modifier prénom</button>
 
 <!-- ngModel => binding two-ways => lecture + écriture -->
 <input type="text" [(ngModel)]="prenom" />
+
+<hr />
+
+<select [(ngModel)]="couleur">
+  <option value="black">Noir</option>
+  <option value="green">Vert</option>
+  <option value="yellow">Jaune</option>
+  <option value="blue">Bleu</option>
+</select>
+
+<input type="color" [(ngModel)]="couleur" />
+
+<p [style.color]="couleur">Le paragraphe en couleur : {{ couleur }}</p>
+
