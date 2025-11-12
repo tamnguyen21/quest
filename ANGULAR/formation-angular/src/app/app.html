@@ -1,4 +1,6 @@
 
+<app-navigation [utilisateur]="prenom"></app-navigation>
+
 <!-- Ici, viendra s'insérer les différentes pages -->
 <router-outlet></router-outlet>
 
@@ -35,5 +37,5 @@
 <hr />
 
 COMPOSANT AVANT
-<asc-bold>DU CONTENU ICI DE LA PART DU PARENT</asc-bold>
+<asc-bold [titre]="prenom">DU CONTENU ICI DE LA PART DU PARENT</asc-bold>
 COMPOSANT APRES

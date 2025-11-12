@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import { Todo } from './todo';
 import { CommonModule } from '@angular/common';
 import { AscBold } from './asc-bold/asc-bold';
+import { Navigation } from './navigation/navigation';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,8 @@ import { AscBold } from './asc-bold/asc-bold';
     RouterOutlet,
     FormsModule,
     CommonModule,
-    AscBold
+    AscBold,
+    Navigation
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
