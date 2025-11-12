@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
+import { AscBold } from '../asc-bold/asc-bold';
 
 @Component({
   selector: 'app-home-page',
-  imports: [],
+  imports: [
+    AscBold
+  ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })
