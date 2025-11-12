@@ -2,6 +2,7 @@
 
 <ul>
     <!-- <li *ngFor="let t of todos"> -->
+    <!-- async demande à Angular de s'abonner au flux et de retourner le résultat -->
     <li *ngFor="let t of todos$ | async">
         {{ t.title }}
     </li>

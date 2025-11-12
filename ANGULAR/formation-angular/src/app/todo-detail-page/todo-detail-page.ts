@@ -18,15 +18,17 @@ export class TodoDetailPage implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: any) => {
-      this.todo = this.todoService.findById(params.id);
+      this.todoService.findById(params.id).subscribe(todo => {
+        this.todo = todo;
 
-      if (this.todo) {
-        this.title.setTitle("Détail du Todo #" + this.todo.id);
-      }
+        if (this.todo) {
+          this.title.setTitle("Détail du Todo #" + this.todo.id);
+        }
 
-      else {
-        this.title.setTitle("Todo inconnu");
-      }
+        else {
+          this.title.setTitle("Todo inconnu");
+        }
+      });
     });
   }
 }

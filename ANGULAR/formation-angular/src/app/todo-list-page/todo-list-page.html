@@ -11,7 +11,7 @@
   </thead>
 
   <tbody>
-    <tr *ngFor="let t of todos; trackBy: trackByTodo" [style.color]="t.completed | todoState">
+    <tr *ngFor="let t of todos$ | async; trackBy: trackByTodo" [style.color]="t.completed | todoState">
       <td>
         <a [routerLink]="[ '/todos', t.id ]">{{ t.id }}</a>
       </td>

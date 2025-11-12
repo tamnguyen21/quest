@@ -1,51 +1,45 @@
 import { Injectable } from '@angular/core';
 import { Todo } from './todo';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { TestTools } from 'rxjs/internal/util/Immediate';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoService {
-  // Compteur d'id pour "auto-générer"
-  private todoId = 3;
+  private apiUrl: string = "https://jsonplaceholder.typicode.com/todos";
 
-  // Tableau de Todo, initialisé avec 2 Todos
-  private todos: Todo[] = [
-    new Todo(1, "Le titre", true, 1),
-    new Todo(2, "Plier son parachute", false, 1)
-  ];
+  constructor(private http: HttpClient) { }
 
-  public findAll(): Todo[] {
-    return this.todos;
+  public findAll(): Observable<Todo[]> {
+    return this.http.get<Todo[]>(this.apiUrl);
   }
 
   public findAllByNom(nom: string): Todo[] {
-    return this.todos.filter(t => t.title.includes(nom));
+    return [];
   }
 
-  public findById(id: number): Todo | null {
-    return this.todos.find(t => t.id == id) ?? null;
+  public findById(id: number): Observable<Todo> {
+    return this.http.get<Todo>(`${ this.apiUrl }/${ id }`);
   }
 
-  public save(todo: Todo): void {
+  public save(todo: Todo): Observable<Todo> {
+    const payload = {
+      id: todo.id,
+      title: todo.title,
+      completed: todo.completed,
+      userId: todo.userId
+    };
+
     if (!todo.id) {
-      this.todos.push(new Todo(this.todoId++, todo.title, todo.completed));
+      return this.http.post<Todo>(this.apiUrl, payload);
     }
 
-    else {
-      const updatedTodo: Todo | null = this.findById(todo.id);
-
-      if (updatedTodo) {
-        updatedTodo.title = todo.title;
-        updatedTodo.completed = todo.completed;
-      }
-    }
+    return this.http.put<Todo>(`${ this.apiUrl }/${ todo.id }`, payload);
   }
 
-  public deleteById(id: number): void {
-    const todoIndex = this.todos.findIndex(t => t.id == id);
-
-    if (todoIndex !== -1) {
-      this.todos.splice(todoIndex, 1);
-    }
+  public deleteById(id: number): Observable<void> {
+    return this.http.delete<void>(`${ this.apiUrl }/${ id }`);
   }
 }
