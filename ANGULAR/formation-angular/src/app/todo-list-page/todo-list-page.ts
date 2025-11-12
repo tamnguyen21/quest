@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Todo } from '../todo';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TodoStatePipe } from '../todo-state-pipe';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-todo-list-page',
@@ -12,8 +13,18 @@ import { TodoStatePipe } from '../todo-state-pipe';
   templateUrl: './todo-list-page.html',
   styleUrl: './todo-list-page.css',
 })
-export class TodoListPage {
+export class TodoListPage implements OnInit {
   protected todo: Todo = new Todo(1, "Le titre du TODO", false, 1);
+
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params: any) => {
+      console.log(params);
+      // console.log("ID = " + params['id']);
+      console.log("ID = " + params.id);
+    });
+  }
 
   // Tableau de Todo
   // protected todos: Array<Todo> = new Array();

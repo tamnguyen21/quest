@@ -3,6 +3,8 @@
 </div>
 
 <div>
-    <a href="home">Accueil</a> |
-    <a href="todos">Liste des Todos</a>
+    <a [routerLink]="['/home']" routerLinkActive="active">Accueil</a> |
+    <a [routerLink]="['/todos']" routerLinkActive="active">Liste des Todos</a> |
+
+    <a routerLink="/home" routerLinkActive="active">Accueil</a>
 </div>
