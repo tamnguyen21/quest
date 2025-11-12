@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { Todo } from '../todo';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TodoStatePipe } from '../todo-state-pipe';
 
 @Component({
   selector: 'app-todo-list-page',
   imports: [
-    CommonModule, FormsModule
+    CommonModule, FormsModule, TodoStatePipe
   ],
   templateUrl: './todo-list-page.html',
   styleUrl: './todo-list-page.css',
@@ -20,6 +21,10 @@ export class TodoListPage {
     new Todo(1, "Le titre", true, 1),
     new Todo(2, "Plier son parachute", false, 1)
   ];
+
+  public trackByTodo(index: number, todo: Todo): number {
+    return todo.id;
+  }
 
   public ajouterTodo() {
     // On ajoute le Todo à la liste

@@ -13,11 +13,14 @@
       <th>Titre</th>
       <th>Complet ?</th>
       <th>Complet 2 ?</th>
+      <th>Complet 3 ?</th>
     </tr>
   </thead>
 
   <tbody>
-    <tr *ngFor="let t of todos; track t?.id">
+    <tr
+        *ngFor="let t of todos; trackBy: trackByTodo"
+        [style.color]="t.completed | todoState">
       <td>{{ t.id }}</td>
       <td>{{ t.title }}</td>
 
@@ -42,6 +45,8 @@
           <span>Pas terminé !</span>
         }
       </td>
+
+      <td>{{ t.completed | todoState:"string" }}</td>
     </tr>
   </tbody>
 </table>
