@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TodoStatePipe } from '../todo-state-pipe';
 import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-todo-list-page',
@@ -16,9 +17,11 @@ import { ActivatedRoute } from '@angular/router';
 export class TodoListPage implements OnInit {
   protected todo: Todo = new Todo(1, "Le titre du TODO", false, 1);
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle("Liste des Todos");
+
     this.route.queryParams.subscribe((params: any) => {
       console.log(params);
       // console.log("ID = " + params['id']);

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AscBold } from '../asc-bold/asc-bold';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home-page',
@@ -10,5 +11,7 @@ import { AscBold } from '../asc-bold/asc-bold';
   styleUrl: './home-page.css',
 })
 export class HomePage {
-
+  constructor(private title: Title) {
+    this.title.setTitle("Accueil");
+  }
 }
