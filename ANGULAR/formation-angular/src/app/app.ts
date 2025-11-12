@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AscBold } from './asc-bold/asc-bold';
 import { Navigation } from './navigation/navigation';
+import { DemoPipePipe } from './demo-pipe-pipe';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ import { Navigation } from './navigation/navigation';
     FormsModule,
     CommonModule,
     AscBold,
-    Navigation
+    Navigation,
+    DemoPipePipe
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
