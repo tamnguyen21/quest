@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'asc-bold',
@@ -7,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrl: './asc-bold.css',
 })
 export class AscBold {
+  protected compteur: number = 0;
 
+  @HostListener('click')
+  protected onClick(): void {
+    this.compteur++;
+
+    console.log(this.compteur);
+  }
 }
