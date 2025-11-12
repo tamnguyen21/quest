@@ -1,1 +1,14 @@
-<h1>Todo #{{ todoId }}</h1>
+@if (todo) {
+    <h1>Todo #{{ todo.id }}</h1>
+    <div>
+        {{ todo.title }}
+    </div>
+
+    <div>
+        {{ todo.completed | todoState:"string" }}
+    </div>
+}
+
+@else {
+    <h1>Todo inconnu</h1>
+}
