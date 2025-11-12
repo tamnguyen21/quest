@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Todo } from './todo';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { TestTools } from 'rxjs/internal/util/Immediate';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +15,12 @@ export class TodoService {
     return this.http.get<Todo[]>(this.apiUrl);
   }
 
-  public findAllByNom(nom: string): Todo[] {
-    return [];
+  public findAllByNom(nom: string): Observable<Todo[]> {
+    return this.findAll().pipe( // pipe permet de modifier le flux, en filtrant, en le transformant, etc.
+
+      // On prend le résultat, et on le transforme en une nouvelle liste filtrée
+      map(todos => todos.filter(todo => todo.title.includes(nom)))
+    );
   }
 
   public findById(id: number): Observable<Todo> {
