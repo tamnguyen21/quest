@@ -1,0 +1,8 @@
+<h1>HTTP DEMO</h1>
+
+<ul>
+    <!-- <li *ngFor="let t of todos"> -->
+    <li *ngFor="let t of todos$ | async">
+        {{ t.title }}
+    </li>
+</ul>
