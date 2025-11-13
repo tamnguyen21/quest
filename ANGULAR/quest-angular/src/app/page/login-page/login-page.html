@@ -1,5 +1,9 @@
 <h1>Se connecter</h1>
 
-<input type="text" [(ngModel)]="authForm.username" placeholder="Nom d'utilisateur" />
-<input type="password" [(ngModel)]="authForm.password" placeholder="Mot de passe" />
-<button (click)="connecter()">Se connecter</button>
+<form (ngSubmit)="connecter()" [formGroup]="userForm">
+    <input type="text" formControlName="username" placeholder="Nom d'utilisateur" />
+    <input type="password" formControlName="password" placeholder="Mot de passe" />
+
+    <input type="submit" value="Se connecter" />
+</form>
+

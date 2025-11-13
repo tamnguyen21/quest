@@ -19,7 +19,6 @@ export class MatiereDto {
 
     public toJson(): any {
         return {
-            id: this.id,
             libelle: this.libelle
         };
     }

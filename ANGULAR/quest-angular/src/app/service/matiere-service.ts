@@ -32,14 +32,14 @@ export class MatiereService {
     return this.http.get<MatiereDto>(`${ this.apiUrl }/${ id }`);
   }
 
-  public save(MatiereDto: MatiereDto): void {
-    const payload = MatiereDto.toJson();
+  public save(matiereDto: MatiereDto): void {
+    const payload = matiereDto.toJson();
 
-    if (!MatiereDto.id) {
+    if (!matiereDto.id) {
       this.http.post<MatiereDto>(this.apiUrl, payload).subscribe(() => this.refresh());
     }
 
-    this.http.put<MatiereDto>(`${ this.apiUrl }/${ MatiereDto.id }`, payload).subscribe(() => this.refresh());
+    this.http.put<MatiereDto>(`${ this.apiUrl }/${ matiereDto.id }`, payload).subscribe(() => this.refresh());
   }
 
   public deleteById(id: number): void {
