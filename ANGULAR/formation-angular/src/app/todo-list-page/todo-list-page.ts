@@ -18,14 +18,17 @@ import { Observable } from 'rxjs';
 })
 export class TodoListPage implements OnInit {
   protected todo: Todo = new Todo(0, "Le titre du TODO", false, 1);
+  protected todos!: Todo[];
   protected todos$!: Observable<Todo[]>;
 
   constructor(private route: ActivatedRoute, private title: Title, private todoService: TodoService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.title.setTitle("Liste des Todos");
 
-    this.refresh();
+    this.todos = await this.todoService.findAllPromise();
+
+    this.todos$ = this.todoService.findAll();
 
     this.route.queryParams.subscribe((params: any) => {
       console.log(params);
@@ -38,18 +41,14 @@ export class TodoListPage implements OnInit {
     return todo.id;
   }
 
-  private refresh(): void {
-    this.todos$ = this.todoService.findAll();
-  }
-
   public ajouterTodo() {
-    this.todoService.save(this.todo).subscribe(() => this.refresh());
+    this.todoService.save(this.todo);
 
     this.todo = new Todo(0, "", false, 1);
   }
 
   public modifierTodo() {
-    this.todoService.save(this.todo).subscribe(() => this.refresh());
+    this.todoService.save(this.todo);
 
     this.todo = new Todo(0, "", false, 1);
   }
@@ -60,6 +59,6 @@ export class TodoListPage implements OnInit {
   }
 
   public deleteTodo(todo: Todo): void {
-    this.todoService.deleteById(todo.id).subscribe(() => this.refresh());
+    this.todoService.deleteById(todo.id);
   }
 }
