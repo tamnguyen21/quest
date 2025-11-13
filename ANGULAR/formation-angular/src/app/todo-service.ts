@@ -7,7 +7,7 @@ import { firstValueFrom, map, Observable, startWith, Subject, switchMap } from '
   providedIn: 'root',
 })
 export class TodoService {
-  private apiUrl: string = "https://jsonplaceholder.typicode.com/todos";
+  private apiUrl: string = "/todos";
   private todos!: Todo[];
   private refresh$: Subject<void> = new Subject<void>();
 
