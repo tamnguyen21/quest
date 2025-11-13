@@ -37,4 +37,13 @@ export class Todo {
     public set userId(value: number) {
         this._userId = value;
     }
+
+    public toJson(): any {
+        return {
+            id: this.id,
+            title: this.title,
+            completed: this.completed,
+            userId: this.userId
+        };
+    }
 }

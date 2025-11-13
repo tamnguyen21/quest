@@ -77,12 +77,7 @@ export class TodoService {
   }
 
   public save(todo: Todo): void {
-    const payload = {
-      id: todo.id,
-      title: todo.title,
-      completed: todo.completed,
-      userId: todo.userId
-    };
+    const payload = todo.toJson();
 
     if (!todo.id) {
       this.http.post<Todo>(this.apiUrl, payload).subscribe(() => this.refresh());
