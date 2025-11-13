@@ -1,0 +1,23 @@
+<h1>Liste des matières</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Libellé</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr *ngFor="let matiere of matieres$ | async; trackBy: trackMatiere">
+            <td>
+                <a [routerLink]="[ '/matiere', matiere.id ]">{{ matiere.libelle }}</a>
+            </td>
+
+            <td>
+                <button>Modifier</button>
+                <button>Supprimer</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
