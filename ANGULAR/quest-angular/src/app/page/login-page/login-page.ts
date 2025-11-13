@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { AuthRequestDto } from '../../dto/auth-request-dto';
 import { AuthService } from '../../service/auth-service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -15,7 +16,7 @@ export class LoginPage implements OnInit {
   protected usernameCtrl!: FormControl;
   protected passwordCtrl!: FormControl;
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder) { }
+  constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.usernameCtrl = this.formBuilder.control('', Validators.required);
@@ -27,7 +28,15 @@ export class LoginPage implements OnInit {
     });
   }
 
-  public connecter() {
-    this.authService.auth(new AuthRequestDto(this.userForm.value.username, this.userForm.value.password));
+  public async connecter() {
+    try {
+      await this.authService.auth(new AuthRequestDto(this.userForm.value.username, this.userForm.value.password));
+
+      this.router.navigate([ '/matiere' ]);
+    }
+
+    catch {
+      // TODO faire un truc en cas d'erreur
+    }
   }
 }

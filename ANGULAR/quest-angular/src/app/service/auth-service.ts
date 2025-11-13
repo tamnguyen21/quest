@@ -19,11 +19,16 @@ export class AuthService {
   }
 
   public auth(authRequest: AuthRequestDto) {
-    this.http.post<AuthResponseDto>('/auth', authRequest.toJson()).subscribe(resp => {
-      this._token = resp.token;
+    return new Promise(resolve => {
+      this.http.post<AuthResponseDto>('/auth', authRequest.toJson()).subscribe(resp => {
+        this._token = resp.token;
 
-      // Stocker le jeton dans le navigateur, dans le sessionStorage, avec la clé "token"
-      sessionStorage.setItem("token", this._token);
-    });
+        // Stocker le jeton dans le navigateur, dans le sessionStorage, avec la clé "token"
+        sessionStorage.setItem("token", this._token);
+
+        // Quand le resolve va s'exécuter ... côté appelant, on pourra récupérer l'information
+        resolve(null);
+      });
+    })
   }
 }
