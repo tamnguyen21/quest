@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import quest.config.JwtUtils;
 import quest.dto.request.AuthUserRequest;
+import quest.dto.response.AuthResponse;
 
 @RestController
 @RequestMapping("/api")
@@ -18,12 +19,12 @@ public class AuthRestController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/auth")
-    public String auth(@RequestBody AuthUserRequest request) {
+    public AuthResponse auth(@RequestBody AuthUserRequest request) {
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
 
         // On demande à Spring Security si le user / password sont OK
         this.authenticationManager.authenticate(auth);
 
-        return JwtUtils.generate(auth);
+        return new AuthResponse(JwtUtils.generate(auth));
     }
 }
