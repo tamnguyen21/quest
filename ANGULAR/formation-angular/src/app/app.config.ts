@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { apiUrlInterceptor } from './api-url-interceptor';
+import { jwtHeaderInterceptor } from './jwt-header-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,7 +19,7 @@ export const appConfig: ApplicationConfig = {
 
     // Services liés au client HTTP HttpClient
     provideHttpClient(
-      withInterceptors([ apiUrlInterceptor ])
+      withInterceptors([ apiUrlInterceptor, jwtHeaderInterceptor ])
     )
   ]
 };
