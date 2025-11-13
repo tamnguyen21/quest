@@ -13,15 +13,17 @@ import { CommonModule } from '@angular/common';
 export class LoginPage implements OnInit {
   protected userForm!: FormGroup;
   protected usernameCtrl!: FormControl;
+  protected passwordCtrl!: FormControl;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.usernameCtrl = this.formBuilder.control('', Validators.required);
+    this.passwordCtrl = this.formBuilder.control('', [ Validators.required, Validators.minLength(6) ]);
 
     this.userForm = this.formBuilder.group({
       username: this.usernameCtrl,
-      password: this.formBuilder.control('')
+      password: this.passwordCtrl
     });
   }
 
