@@ -18,16 +18,22 @@ export class AuthService {
     return this._token;
   }
 
-  public auth(authRequest: AuthRequestDto) {
-    return new Promise(resolve => {
-      this.http.post<AuthResponseDto>('/auth', authRequest.toJson()).subscribe(resp => {
-        this._token = resp.token;
+  public auth(authRequest: AuthRequestDto): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.http.post<AuthResponseDto>('/auth', authRequest.toJson()).subscribe({
+        // next => si la réponse est OK
+        next: resp => {
+          this._token = resp.token;
 
-        // Stocker le jeton dans le navigateur, dans le sessionStorage, avec la clé "token"
-        sessionStorage.setItem("token", this._token);
+          // Stocker le jeton dans le navigateur, dans le sessionStorage, avec la clé "token"
+          sessionStorage.setItem("token", this._token);
 
-        // Quand le resolve va s'exécuter ... côté appelant, on pourra récupérer l'information
-        resolve(null);
+          // Quand le resolve va s'exécuter ... côté appelant, on pourra savoir quand c'est terminé
+          resolve();
+        },
+
+        // error => si la réponse est KO (30X, 40X, 50X)
+        error: err => reject(err)
       });
     })
   }

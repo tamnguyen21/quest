@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrl: './login-page.css',
 })
 export class LoginPage implements OnInit {
+  protected loginError: boolean = false;
   protected userForm!: FormGroup;
   protected usernameCtrl!: FormControl;
   protected passwordCtrl!: FormControl;
@@ -30,13 +31,16 @@ export class LoginPage implements OnInit {
 
   public async connecter() {
     try {
-      await this.authService.auth(new AuthRequestDto(this.userForm.value.username, this.userForm.value.password));
+      // La méthode auth renvoyant une Promise, on peut attendre la résolution avec "await"
+      await this.authService.auth(new AuthRequestDto(this.usernameCtrl.value, this.passwordCtrl.value));
 
+      // Si tout est OK, on va sur la page des matières
       this.router.navigate([ '/matiere' ]);
     }
 
+    // Si la connexion n'a pas pu se faire, affichage de l'erreur sur le template
     catch {
-      // TODO faire un truc en cas d'erreur
+      this.loginError = true;
     }
   }
 }
