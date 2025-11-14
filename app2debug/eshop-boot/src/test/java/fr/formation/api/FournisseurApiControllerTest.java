@@ -20,9 +20,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.formation.repo.FournisseurRepository;
+import fr.formation.model.Fournisseur;
 import fr.formation.request.CreateFournisseurRequest;
 import fr.formation.security.config.SecurityConfig;
+import fr.formation.service.FournisseurService;
 
 @WebMvcTest(FournisseurApiController.class)
 @WithMockUser
@@ -35,7 +36,7 @@ class FournisseurApiControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
-    private FournisseurRepository repository;
+    private FournisseurService service;
 
     @Test
     void shouldFindAllStatusOk() throws Exception {
@@ -49,7 +50,7 @@ class FournisseurApiControllerTest {
         // then
         result.andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.verify(this.repository).findAll();
+        Mockito.verify(this.service).findAll();
     }
 
     @Test
@@ -69,7 +70,7 @@ class FournisseurApiControllerTest {
         // then
         result.andExpect(MockMvcResultMatchers.status().isForbidden());
 
-        Mockito.verify(this.repository, Mockito.never()).save(Mockito.any());
+        Mockito.verify(this.service, Mockito.never()).save(Mockito.any(), Mockito.any());
     }
 
     @Test
@@ -77,6 +78,8 @@ class FournisseurApiControllerTest {
     void shouldCreateStatusCreated() throws Exception {
         // given
         CreateFournisseurRequest request = this.createRequest(FOURNISSEUR_NAME);
+
+        Mockito.when(this.service.save(Mockito.eq(null), Mockito.any())).thenReturn(new Fournisseur());
 
         // when
         ResultActions result = this.mockMvc.perform(
@@ -90,7 +93,7 @@ class FournisseurApiControllerTest {
         // then
         result.andExpect(MockMvcResultMatchers.status().isCreated());
 
-        Mockito.verify(this.repository).save(Mockito.any());
+        Mockito.verify(this.service).save(Mockito.eq(null), Mockito.any());
     }
 
     @ParameterizedTest
@@ -100,6 +103,8 @@ class FournisseurApiControllerTest {
     void shouldCreateStatusBadRequest(String nom) throws Exception {
         // given
         CreateFournisseurRequest request = this.createRequest(nom);
+
+        Mockito.lenient().when(this.service.save(Mockito.eq(null), Mockito.any())).thenReturn(new Fournisseur());
 
         // when
         ResultActions result = this.mockMvc.perform(
@@ -113,7 +118,7 @@ class FournisseurApiControllerTest {
         // then
         result.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-        Mockito.verify(this.repository, Mockito.never()).save(Mockito.any());
+        Mockito.verify(this.service, Mockito.never()).save(Mockito.any(), Mockito.any());
     }
 
     private String json(CreateFournisseurRequest request) throws JsonProcessingException {
