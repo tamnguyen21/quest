@@ -1,5 +1,9 @@
 <h1>Se connecter</h1>
 
+@if (loginError) {
+    <div>Nom d'utilisateur ou mot de passe incorrect</div>
+}
+
 <form (ngSubmit)="connecter()" [formGroup]="userForm">
     <div>
         <input type="text" formControlName="username" placeholder="Nom d'utilisateur" />
