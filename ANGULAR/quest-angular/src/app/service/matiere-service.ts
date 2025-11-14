@@ -39,7 +39,9 @@ export class MatiereService {
       this.http.post<MatiereDto>(this.apiUrl, payload).subscribe(() => this.refresh());
     }
 
-    this.http.put<MatiereDto>(`${ this.apiUrl }/${ matiereDto.id }`, payload).subscribe(() => this.refresh());
+    else {
+      this.http.put<MatiereDto>(`${ this.apiUrl }/${ matiereDto.id }`, payload).subscribe(() => this.refresh());
+    }
   }
 
   public deleteById(id: number): void {

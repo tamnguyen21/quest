@@ -1,5 +1,25 @@
 <h1>Liste des matières</h1>
 
+<form (ngSubmit)="creerOuModifier()" [formGroup]="matiereForm">
+    <div>
+        <input type="text" formControlName="label" />
+
+        @if (labelCtrl.hasError('required')) {
+            <span>Le libellé est obligatoire</span>
+        }
+    </div>
+
+    @if (editingMatiere) {
+        <input type="submit" [disabled]="matiereForm.invalid" value="Modifier" />
+    }
+
+    @else {
+        <input type="submit" [disabled]="matiereForm.invalid" value="Créer" />
+    }
+</form>
+
+<hr />
+
 <table>
     <thead>
         <tr>
@@ -15,8 +35,8 @@
             </td>
 
             <td>
-                <button>Modifier</button>
-                <button>Supprimer</button>
+                <button (click)="editer(matiere)">Modifier</button>
+                <button (click)="supprimer(matiere)">Supprimer</button>
             </td>
         </tr>
     </tbody>
