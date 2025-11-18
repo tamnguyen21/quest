@@ -2,7 +2,6 @@ package quest.rest;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,6 +21,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import quest.dao.IDAOFiliere;
 import quest.dao.IDAOPersonne;
@@ -47,7 +47,7 @@ public class FiliereRestControllerTest {
     private IDAOPersonne daoPers;
     
     @MockitoBean
-    private FiliereService filierSrv;
+    private FiliereService filiereSrv;
     
     @Autowired
     private MockMvc mockMvc;
@@ -77,14 +77,14 @@ public class FiliereRestControllerTest {
 
     @Test
     @WithMockUser
-    void shouldFindAllUseDaoFindAll() throws Exception {
+    void shouldFindAllUseServiceFindAll() throws Exception {
         // given
 
         // when
         this.mockMvc.perform(MockMvcRequestBuilders.get(API_URL));
 
         // then
-        Mockito.verify(this.dao).findAll();
+        Mockito.verify(this.filiereSrv).getAll();
     }
 
     @Test
@@ -97,7 +97,7 @@ public class FiliereRestControllerTest {
         f1.setDebut(LocalDate.of(2025, 1, 1));
         f1.setFin(LocalDate.of(2025, 11, 18));
 
-        Mockito.when(this.dao.findAll()).thenReturn(List.of(f1));
+        Mockito.when(this.filiereSrv.getAll()).thenReturn(List.of(f1));
 
         // when
         ResultActions result = this.mockMvc.perform(MockMvcRequestBuilders.get(API_URL));
@@ -124,7 +124,7 @@ public class FiliereRestControllerTest {
     @WithMockUser
     void shouldFindByIdStatusOk() throws Exception {
         // given
-        Mockito.when(this.dao.findById(FILIERE_ID)).thenReturn(Optional.of(new Filiere()));
+        Mockito.when(this.filiereSrv.getById(FILIERE_ID)).thenReturn(new Filiere());
 
         // when
         ResultActions result = this.mockMvc.perform(MockMvcRequestBuilders.get(API_URL_BY_ID));
@@ -135,15 +135,15 @@ public class FiliereRestControllerTest {
 
     @Test
     @WithMockUser
-    void shouldFindByIdUseDaoFindById() throws Exception {
+    void shouldFindByIdUseServiceFindById() throws Exception {
         // given
-        Mockito.when(this.dao.findById(FILIERE_ID)).thenReturn(Optional.of(new Filiere()));
+        Mockito.when(this.filiereSrv.getById(FILIERE_ID)).thenReturn(new Filiere());
 
         // when
         this.mockMvc.perform(MockMvcRequestBuilders.get(API_URL_BY_ID));
 
         // then
-        Mockito.verify(this.dao).findById(FILIERE_ID);
+        Mockito.verify(this.filiereSrv).getById(FILIERE_ID);
     }
 
     @Test
@@ -168,7 +168,7 @@ public class FiliereRestControllerTest {
         f1.setDebut(LocalDate.of(2025, 1, 1));
         f1.setFin(LocalDate.of(2025, 11, 18));
 
-        Mockito.when(this.dao.findById(FILIERE_ID)).thenReturn(Optional.of(f1));
+        Mockito.when(this.filiereSrv.getById(FILIERE_ID)).thenReturn(f1);
 
         // when
         ResultActions result = this.mockMvc.perform(MockMvcRequestBuilders.get(API_URL_BY_ID));
@@ -186,7 +186,7 @@ public class FiliereRestControllerTest {
         // given
 
         // when
-        ResultActions result = this.createAndPost(FILIERE_LIBELLE, FILIERE_DEBUT, FILIERE_FIN);
+        ResultActions result = this.createAndPost(FILIERE_LIBELLE, FILIERE_DEBUT.toString(), FILIERE_FIN.toString());
 
         // then
         result.andExpect(MockMvcResultMatchers.status().isForbidden());
@@ -198,7 +198,7 @@ public class FiliereRestControllerTest {
     	// given
 
         // when
-        ResultActions result = this.createAndPost(FILIERE_LIBELLE, FILIERE_DEBUT, FILIERE_FIN);
+        ResultActions result = this.createAndPost(FILIERE_LIBELLE, FILIERE_DEBUT.toString(), FILIERE_FIN.toString());
 
         // then
         result.andExpect(MockMvcResultMatchers.status().isOk());
@@ -215,10 +215,10 @@ public class FiliereRestControllerTest {
         ArgumentCaptor<Filiere> filiereCaptor = ArgumentCaptor.captor();
 
         // when
-        this.createAndPost(FILIERE_LIBELLE, FILIERE_DEBUT, FILIERE_FIN);
+        this.createAndPost(FILIERE_LIBELLE, FILIERE_DEBUT.toString(), FILIERE_FIN.toString());
 
         // then
-        Mockito.verify(this.filiereSrv).save(filiereCaptor.capture());
+        Mockito.verify(this.filiereSrv).create(filiereCaptor.capture());
 
         Filiere filiere = filiereCaptor.getValue();
 
@@ -227,17 +227,21 @@ public class FiliereRestControllerTest {
         Assertions.assertEquals(FILIERE_FIN, filiere.getFin());
     }
 
+    //"'libelle', '2025-01-01', '2025-11-18'",
+
     @ParameterizedTest
-    @CsvSource({
-        "'',code",
-        "'  ',code",
-        ",code",
-        "nom,",
-        "nom,''",
-        "nom,'     '",
+    @CsvSource({        
+        ",,",
+        "'libelle', '2025-01-01', ''",
+        "'libelle', '', '2025-11-18'",
+        "'', '2025-01-01', '2025-11-18'",
+        "'libelle', '', ''",
+        "'  ', '2025-01-01', ''",
+        "'', '', '2025-11-18'",
+        "'', '', ''"
     })
     @WithMockUser(roles = "ADMIN")
-    void shouldCreateStatusBadRequest(String libelle, LocalDate debut, LocalDate fin) throws Exception {
+    void shouldCreateStatusBadRequest(String libelle, String debut, String fin) throws Exception {
         // given
 
         // when
@@ -246,11 +250,13 @@ public class FiliereRestControllerTest {
         // then
         result.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-        Mockito.verify(this.dao, Mockito.never()).save(Mockito.any());
+        Mockito.verify(this.filiereSrv, Mockito.never()).create(Mockito.any());
     }
 
-    private ResultActions createAndPost(String libelle, LocalDate debut, LocalDate fin) throws Exception {
+    private ResultActions createAndPost(String libelle, String debut, String fin) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+
         CreateFiliereRequest request = new CreateFiliereRequest();
 
         request.setLibelle(libelle);
