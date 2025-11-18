@@ -21,9 +21,7 @@ public class MatiereService {
 		{
 			throw new RuntimeException("L'id d'une matiere ne peut pas etre null");	
 		}
-		Optional <Matiere> opt = daoMatiere.findById(id);
-		if(opt.isEmpty()) {return null;}
-		else {return opt.get();}
+	return daoMatiere.findById(id).orElse(null);
 	}
 
 	public List<Matiere> getAll()
