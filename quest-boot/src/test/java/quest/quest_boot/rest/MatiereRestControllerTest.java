@@ -23,19 +23,19 @@ public class MatiereRestControllerTest {
 	private static final String MATIERE_LIBELLE = "Java";
     private static final String API_URL = "/api/matiere";
     private static final String API_URL_BY_ID = API_URL + "/" + MATIERE_ID;
-    
+
 	@MockitoBean
 	private MatiereService srv;
-	
-	@MockitoBean 
+
+	@MockitoBean
 	private IDAOPersonne daoPersonne;
-	
-	@MockitoBean 
+
+	@MockitoBean
 	private IDAOMatiere daoMatiere;
-	
+
 	@Autowired
 	private MockMvc mockMvc;
-	
+
 	  @Test
 	    void shouldFindAllStatusUnauthorized() throws Exception {
 	        // given
@@ -46,7 +46,7 @@ public class MatiereRestControllerTest {
 	        // then
 	        result.andExpect(MockMvcResultMatchers.status().isUnauthorized());
 	    }
-	  
+
 	    @Test
 	    @WithMockUser
 	    void shouldFindAllStatusOk() throws Exception {
@@ -67,25 +67,25 @@ public class MatiereRestControllerTest {
 
 	        // when
 	        this.mockMvc.perform(MockMvcRequestBuilders.get(API_URL_BY_ID));
-	  
+
 
 	        // then
 	        Mockito.verify(this.srv).getById(MATIERE_ID);
-	        
+
 	    }
-	    
+
 	    @Test
 	    @WithMockUser
 	    void shouldFindByIdStatusNotFoundWhenIdNotFound() throws Exception {
 	        // given
-	    	Mockito.when(srv.getById(0)).thenThrow(new RuntimeException(""));
+	    	// Mockito.when(srv.getById(0)).thenThrow(new RuntimeException(""));
 	        // when
-	        ResultActions result = this.mockMvc.perform(MockMvcRequestBuilders.get(API_URL));
+	        ResultActions result = this.mockMvc.perform(MockMvcRequestBuilders.get(API_URL_BY_ID));
 
 	        // then
 	        result.andExpect(MockMvcResultMatchers.status().isNotFound());
 	    }
-	    
+
 	    @Test
 	    @WithMockUser
 	    void shouldFindByIdReturnAttributes() throws Exception {
@@ -94,7 +94,7 @@ public class MatiereRestControllerTest {
 
 	        m1.setId(MATIERE_ID);
 	        m1.setLibelle(MATIERE_LIBELLE);
-	    
+
 	        Mockito.when(this.srv.getById(MATIERE_ID)).thenReturn((m1));
 
 	        // when
@@ -103,10 +103,10 @@ public class MatiereRestControllerTest {
 	        // then
 	        result.andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
 	        result.andExpect(MockMvcResultMatchers.jsonPath("$.libelle").exists());
-	      
+
 	    }
 
-	    
+
 	    @Test
 	    @WithMockUser
 	    void shouldFindAllUseDaoFindAll() throws Exception {

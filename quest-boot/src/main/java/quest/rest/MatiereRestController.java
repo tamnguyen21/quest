@@ -3,6 +3,7 @@ package quest.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,10 +36,15 @@ public class MatiereRestController {
 
 	@JsonView(Views.Matiere.class)
 	@GetMapping("/{id}")
-	public Matiere ficheMatiere(@PathVariable Integer id, Matiere matiere) {
-		return matiereSrv.getById(id);
-	}
+	public ResponseEntity<Matiere> ficheMatiere(@PathVariable Integer id, Matiere matiere) {
+		Matiere m = matiereSrv.getById(id);
 
+		if (m == null) {
+			return ResponseEntity.notFound().build();
+		}
+
+		return ResponseEntity.ok(m);
+	}
 
 	@PostMapping
 	public Matiere ajoutMatiere(@RequestBody Matiere matiere)
