@@ -1,16 +1,23 @@
 package quest.dto.request;
 
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class CreateFiliereRequest {
 	@NotBlank
 	private String libelle;
-	
-	@NotBlank
-	private String debut;
-	
-	@NotBlank
-	private String fin;
+
+	@NotNull
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate debut;
+
+	@NotNull
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate fin;
 
 	public String getLibelle() {
 		return libelle;
@@ -20,26 +27,26 @@ public class CreateFiliereRequest {
 		this.libelle = libelle;
 	}
 
-	public String getDebut() {
+	public LocalDate getDebut() {
 		return debut;
 	}
 
-	public void String(String debut) {
+	public void String(LocalDate debut) {
 		this.debut = debut;
 	}
 
-	public String getFin() {
+	public LocalDate getFin() {
 		return fin;
 	}
 
-	public void setFin(String fin) {
+	public void setFin(LocalDate fin) {
 		this.fin = fin;
 	}
 
-	public void setDebut(String debut) {
+	public void setDebut(LocalDate debut) {
 		this.debut = debut;
-		
+
 	}
-	
-	
+
+
 }

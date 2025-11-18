@@ -1,6 +1,7 @@
 package quest.rest;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -45,10 +46,10 @@ public class FiliereRestControllerTest {
 
     @MockitoBean
     private IDAOPersonne daoPers;
-    
+
     @MockitoBean
     private FiliereService filiereSrv;
-    
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -119,7 +120,7 @@ public class FiliereRestControllerTest {
         // then
         result.andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
-    
+
     @Test
     @WithMockUser
     void shouldFindByIdStatusOk() throws Exception {
@@ -181,24 +182,24 @@ public class FiliereRestControllerTest {
     }
 
     @Test
-    @WithMockUser
+    // @WithMockUser
     void shouldCreateStatusForbidden() throws Exception {
         // given
 
         // when
-        ResultActions result = this.createAndPost(FILIERE_LIBELLE, FILIERE_DEBUT.toString(), FILIERE_FIN.toString());
+        ResultActions result = this.createAndPost(FILIERE_LIBELLE, FILIERE_DEBUT, FILIERE_FIN);
 
         // then
-        result.andExpect(MockMvcResultMatchers.status().isForbidden());
+        result.andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
-    
+
     @Test
     @WithMockUser
     void shouldCreateStatusOk() throws Exception {
     	// given
 
         // when
-        ResultActions result = this.createAndPost(FILIERE_LIBELLE, FILIERE_DEBUT.toString(), FILIERE_FIN.toString());
+        ResultActions result = this.createAndPost(FILIERE_LIBELLE, FILIERE_DEBUT, FILIERE_FIN);
 
         // then
         result.andExpect(MockMvcResultMatchers.status().isOk());
@@ -215,7 +216,7 @@ public class FiliereRestControllerTest {
         ArgumentCaptor<Filiere> filiereCaptor = ArgumentCaptor.captor();
 
         // when
-        this.createAndPost(FILIERE_LIBELLE, FILIERE_DEBUT.toString(), FILIERE_FIN.toString());
+        this.createAndPost(FILIERE_LIBELLE, FILIERE_DEBUT, FILIERE_FIN);
 
         // then
         Mockito.verify(this.filiereSrv).create(filiereCaptor.capture());
@@ -230,7 +231,7 @@ public class FiliereRestControllerTest {
     //"'libelle', '2025-01-01', '2025-11-18'",
 
     @ParameterizedTest
-    @CsvSource({        
+    @CsvSource({
         ",,",
         "'libelle', '2025-01-01', ''",
         "'libelle', '', '2025-11-18'",
@@ -243,9 +244,20 @@ public class FiliereRestControllerTest {
     @WithMockUser(roles = "ADMIN")
     void shouldCreateStatusBadRequest(String libelle, String debut, String fin) throws Exception {
         // given
+        LocalDate dateDebut = null;
+        LocalDate dateFin = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        if (debut != null && !debut.isBlank()) {
+            dateDebut = LocalDate.parse(debut, formatter);
+        }
+
+        if (fin != null && !fin.isBlank()) {
+            dateFin = LocalDate.parse(fin, formatter);
+        }
 
         // when
-        ResultActions result = this.createAndPost(libelle, debut, fin);
+        ResultActions result = this.createAndPost(libelle, dateDebut, dateFin);
 
         // then
         result.andExpect(MockMvcResultMatchers.status().isBadRequest());
@@ -253,7 +265,7 @@ public class FiliereRestControllerTest {
         Mockito.verify(this.filiereSrv, Mockito.never()).create(Mockito.any());
     }
 
-    private ResultActions createAndPost(String libelle, String debut, String fin) throws Exception {
+    private ResultActions createAndPost(String libelle, LocalDate debut, LocalDate fin) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 

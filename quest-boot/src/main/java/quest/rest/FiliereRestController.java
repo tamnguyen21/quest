@@ -2,8 +2,10 @@ package quest.rest;
 
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,19 +40,25 @@ public class FiliereRestController {
 
 	@JsonView(Views.Filiere.class)
 	@GetMapping("/{id}")
-	public Filiere ficheFiliere(@PathVariable Integer id, Filiere filiere) {
-		return filiereSrv.getById(id);
+	public ResponseEntity<Filiere> ficheFiliere(@PathVariable Integer id, Filiere filiere) {
+		Filiere f = filiereSrv.getById(id);
+
+		if (f == null) {
+			return ResponseEntity.notFound().build();
+		}
+
+		return ResponseEntity.ok(f);
 	}
 
 
 	@PostMapping
-	public int ajoutFiliere(@Valid @RequestBody CreateFiliereRequest request)
+	public Integer ajoutFiliere(@Valid @RequestBody CreateFiliereRequest request)
 	{
 		Filiere filiere = new Filiere();
         BeanUtils.copyProperties(request, filiere);
 
         filiereSrv.create(filiere);
-        
+
 		return filiere.getId();
 	}
 
