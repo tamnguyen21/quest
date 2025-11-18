@@ -10,7 +10,7 @@ import quest.model.Formateur;
 import quest.model.Personne;
 import quest.model.Stagiaire;
 
-public interface IDAOPersonne extends JpaRepository<Personne,Integer> {
+public interface IDAOPersonne extends JpaRepository<Personne, Integer> {
 
 	@Query("from Stagiaire")
 	public List<Stagiaire> findAllStagiaire();
@@ -18,7 +18,7 @@ public interface IDAOPersonne extends JpaRepository<Personne,Integer> {
 	@Query("from Formateur")
 	public List<Formateur> findAllFormateur();
 
-	public Personne findByLoginAndPassword(String login,String password);
+	public Personne findByLoginAndPassword(String login, String password);
 
 	public Optional<Personne> findByLogin(String login);
 }
