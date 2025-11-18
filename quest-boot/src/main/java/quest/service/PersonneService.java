@@ -53,6 +53,22 @@ public class PersonneService {
 
 
 	}
+	
+	public Formateur getFormateurWithModules(Integer id) {
+        Optional <Formateur> opt = daoPersonne.formateurWithModules(id);
+        if(opt.isEmpty()) {return null;}
+        else {
+
+            if(opt.get() instanceof Formateur) 
+            {
+                return (Formateur)opt.get();
+            }
+            else 
+            {
+                throw new RuntimeException("L'id recu n'est pas celui d'un Formateur...");
+            }
+        }
+    }
 
 	public Personne getByLoginAndPassword(String login,String password)
 	{
