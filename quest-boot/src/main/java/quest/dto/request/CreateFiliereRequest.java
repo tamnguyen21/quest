@@ -1,7 +1,5 @@
 package quest.dto.request;
 
-import java.time.LocalDate;
-
 import jakarta.validation.constraints.NotBlank;
 
 public class CreateFiliereRequest {
@@ -9,10 +7,10 @@ public class CreateFiliereRequest {
 	private String libelle;
 	
 	@NotBlank
-	private LocalDate debut;
+	private String debut;
 	
 	@NotBlank
-	private LocalDate fin;
+	private String fin;
 
 	public String getLibelle() {
 		return libelle;
@@ -22,20 +20,25 @@ public class CreateFiliereRequest {
 		this.libelle = libelle;
 	}
 
-	public LocalDate getDebut() {
+	public String getDebut() {
 		return debut;
 	}
 
-	public void setDebut(LocalDate debut) {
+	public void String(String debut) {
 		this.debut = debut;
 	}
 
-	public LocalDate getFin() {
+	public String getFin() {
 		return fin;
 	}
 
-	public void setFin(LocalDate fin) {
+	public void setFin(String fin) {
 		this.fin = fin;
+	}
+
+	public void setDebut(String debut) {
+		this.debut = debut;
+		
 	}
 	
 	

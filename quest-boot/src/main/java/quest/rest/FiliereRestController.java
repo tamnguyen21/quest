@@ -2,6 +2,7 @@ package quest.rest;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import jakarta.validation.Valid;
+import quest.dto.request.CreateFiliereRequest;
 import quest.model.Filiere;
 import quest.service.FiliereService;
 import quest.view.Views;
@@ -41,9 +44,14 @@ public class FiliereRestController {
 
 
 	@PostMapping
-	public Filiere ajoutFiliere(@RequestBody Filiere filiere)
+	public int ajoutFiliere(@Valid @RequestBody CreateFiliereRequest request)
 	{
-		return filiereSrv.create(filiere);
+		Filiere filiere = new Filiere();
+        BeanUtils.copyProperties(request, filiere);
+
+        filiereSrv.create(filiere);
+        
+		return filiere.getId();
 	}
 
 
