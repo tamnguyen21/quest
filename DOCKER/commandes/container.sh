@@ -19,6 +19,9 @@ docker run -p 80:80 --name nom_container image:tag
 docker run -v chemin_repertoire_local:chemin_repertoire_container --name nom_container image:tag
 docker run -v D:/repertoire/du/systeme:/chemin/dans/container --name nom_container image:tag
 
+# Exécuter un nouveau container avec une connexion à un réseau
+docker run --network nom_reseau --name nom_container image:tag
+
 # Arrêter un container en cours d'exécution
 docker stop nom_contaier
 docker stop id_contaier
