@@ -31,10 +31,6 @@ public class CreateFiliereRequest {
 		return debut;
 	}
 
-	public void String(LocalDate debut) {
-		this.debut = debut;
-	}
-
 	public LocalDate getFin() {
 		return fin;
 	}
