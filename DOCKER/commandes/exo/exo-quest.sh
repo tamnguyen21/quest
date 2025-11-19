@@ -24,3 +24,17 @@ CREATE DATABASE projet_quest;
 
 # On vérifie la creation
 SHOW DATABASES;
+
+
+# Démarrer un container eclipse-temurin
+# > En mode interactif, avec la commande bash
+# > Avec un nom : "quest-boot"
+# > Binder le port 8080 du container sur un port local
+# > PAS en mode background
+# > Sur le réseau "quest"
+# > En mapping le répertoire projet du "quest-boot" sur /app
+docker run -it --name quest-boot -v "D:/quest-boot":/app -p 8081:8080 --network quest eclipse-temurin:21-jdk bash
+
+cd /app
+./mvnw clean package
+java -jar -Dspring.datasource.url=jdbc:mysql://quest-mysql:3306/projet_quest -Dspring.datasource.username=root -Dspring.datasource.password=root target/quest-boot-0.0.1-SNAPSHOT.jar
