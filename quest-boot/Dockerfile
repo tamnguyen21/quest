@@ -4,6 +4,10 @@ WORKDIR /app
 
 COPY pom.xml .
 
+# Télécharger les dépendances Maven
+# L'option -B permet d'exécuter la commande maven en mode Batch (pas d'interaction avec l'utilisateur)
+RUN mvn dependency:go-offline -B
+
 COPY ./src ./src
 
 RUN mvn package
