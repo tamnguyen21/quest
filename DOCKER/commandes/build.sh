@@ -6,3 +6,6 @@ docker build -t nom_image:tag_image C:/chemin/vers/contenu
 
 # Exemple
 docker build -t ajc/quest:boot .
+
+# Nettoyer les images du build
+docker image prune -f
