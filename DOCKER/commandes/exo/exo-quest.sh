@@ -38,3 +38,27 @@ docker run -it --name quest-boot -v "D:/quest-boot":/app -p 8081:8080 --network 
 cd /app
 ./mvnw clean package
 java -jar -Dspring.datasource.url=jdbc:mysql://quest-mysql:3306/projet_quest -Dspring.datasource.username=root -Dspring.datasource.password=root target/quest-boot-0.0.1-SNAPSHOT.jar
+
+# Créer un nouveau container mysql (image mysql, tag 8.0.44-debian)
+# > Sans mapping de port
+# > En arrière plan
+# > Avec la variable d'environnement MYSQL_ROOT_PASSWORD avec la valeur "root"
+# > Sur le réseau "quest"
+# > Avec le nom "quest-mysql"
+# > Avec un mapping de volume : copier le fichier "quest-init.sql" ci-joint dans "/docker-entrypoint-initdb.d/init.sql"
+
+# Puis, se connecter au client MySQL du container puis
+# > Vérifier que la base projet_quest existe
+# > Sélectionner cette base avec l'instruction USE projet_quest
+# > Voir la liste des tables avec SHOW TABLES;
+# > Faire un select de la table matiere pour vérifier s'il en existe bien une
+
+docker run -d -e MYSQL_ROOT_PASSWORD=root --network quest --name quest-mysql -v "D:/test/quest-init.sql":/docker-entrypoint-initdb.d/init.sql mysql:8.0.44-debian
+
+docker exec -it quest-mysql mysql -uroot -p
+
+SHOW DATABASES;
+USE projet_quest;
+SHOW TABLES;
+SELECT * FROM matiere;
+
