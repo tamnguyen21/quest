@@ -17,6 +17,27 @@ services:
       # - ./demo-init.sql:/docker-entrypoint-initdb.d/setup.sql
       - db_data:/var/lib/mysql
 
+    # Comment déterminer que mysql est prêt à l'emploi
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 10s
+      retries: 10
+
+  # Container "java"
+  java:
+    image: XXX
+    container_name: XXX
+
+    # Ce container dépend d'un autre container (ou plusieurs autres)
+    depends_on:
+      # L'instruction en dessous permet simplement de démarrer java après mysql
+      # - mysql
+
+      # L'instruction en dessous permet d'attendre l'état de santé
+      mysql:
+        condition: service_healthy
+
+
 
 # Les volumes, c'est tous les volumes nécessaires pour les services
 volumes:
