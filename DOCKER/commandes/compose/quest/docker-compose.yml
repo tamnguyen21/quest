@@ -14,7 +14,7 @@ services:
 
     volumes:
       - db_data:/var/lib/mysql
-      - ./quest-init.sql:/docker-entrypoint-initdb.d/setup.sql
+      # - ./quest-init.sql:/docker-entrypoint-initdb.d/setup.sql
 
     networks:
       - quest
