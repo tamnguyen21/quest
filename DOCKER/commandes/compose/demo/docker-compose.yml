@@ -1,0 +1,54 @@
+name: demo-compose
+
+# Les services, c'est tous les containers à créer / à maintenir
+services:
+  # Container "mysql", qui utilisera une image, des volumes, un réseau, des ports, etc...
+  mysql:
+    image: mysql:8.0.44-debian
+    container_name: demo-mysql
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+    networks:
+      - cledemo
+
+    volumes:
+      # - ./demo-init.sql:/docker-entrypoint-initdb.d/setup.sql
+      - db_data:/var/lib/mysql
+
+    # Comment déterminer que mysql est prêt à l'emploi
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 10s
+      retries: 10
+
+  # Container "java"
+  java:
+    image: XXX
+    container_name: XXX
+
+    ports:
+      - 8080:8080
+
+    # Ce container dépend d'un autre container (ou plusieurs autres)
+    depends_on:
+      # L'instruction en dessous permet simplement de démarrer java après mysql
+      # - mysql
+
+      # L'instruction en dessous permet d'attendre l'état de santé
+      mysql:
+        condition: service_healthy
+
+
+
+# Les volumes, c'est tous les volumes nécessaires pour les services
+volumes:
+  db_data:
+    name: demo-db-data
+
+# Les networks, c'est le ou les réseaux nécessaire(s) pour les services
+networks:
+  cledemo:
+    name: demo
+
