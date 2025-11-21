@@ -28,6 +28,9 @@ services:
     image: XXX
     container_name: XXX
 
+    ports:
+      - 8080:8080
+
     # Ce container dépend d'un autre container (ou plusieurs autres)
     depends_on:
       # L'instruction en dessous permet simplement de démarrer java après mysql
