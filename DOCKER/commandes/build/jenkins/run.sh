@@ -1,0 +1,1 @@
+docker run -d -p 8081:8080 -v /var/run/docker.sock:/var/run/docker.sock --name jenkins --network devops ajc/jenkins
