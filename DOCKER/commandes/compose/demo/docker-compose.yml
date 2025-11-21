@@ -1,0 +1,30 @@
+name: demo-compose
+
+# Les services, c'est tous les containers à créer / à maintenir
+services:
+  # Container "mysql", qui utilisera une image, des volumes, un réseau, des ports, etc...
+  mysql:
+    image: mysql:8.0.44-debian
+    container_name: demo-mysql
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+    networks:
+      - cledemo
+
+    volumes:
+      # - ./demo-init.sql:/docker-entrypoint-initdb.d/setup.sql
+      - db_data:/var/lib/mysql
+
+
+# Les volumes, c'est tous les volumes nécessaires pour les services
+volumes:
+  db_data:
+    name: demo-db-data
+
+# Les networks, c'est le ou les réseaux nécessaire(s) pour les services
+networks:
+  cledemo:
+    name: demo
+
