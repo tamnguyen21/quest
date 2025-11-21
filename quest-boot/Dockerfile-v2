@@ -10,11 +10,7 @@ RUN mvn dependency:go-offline -B
 
 COPY ./src ./src
 
-RUN mvn clean verify sonar:sonar \
-  -Dsonar.projectKey=quest-boot \
-  -Dsonar.projectName='quest-boot' \
-  -Dsonar.host.url=http://localhost:9000 \
-  -Dsonar.token=sqp_26da2428edd263448fa4b3edf90f5180f7192c43
+RUN mvn package
 
 # RUN rm -R src
 # RUN rm pom.xml
