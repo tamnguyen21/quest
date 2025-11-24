@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Github checkout') {
+            steps {
+                script {
+                    git credentialsId: 'github-login',
+                        url: 'git@github.com:jabid021/SOPRA-250905-GIT.git',
+                        branch: 'main'
+
+                    // Permet de stocker les fichiers pour les réinclure dans un autre agent, un autre workspace
+                    stash name: 'source-code', includes: '**/*'
+                }
+            }
+        }
+
+        stage('Maven package') {
+            agent {
+                docker {
+                    image 'maven:3.9.11-eclipse-temurin-21'
+                    args '''
+                        -v $HOME/.m2:/root/.m2:z
+                        -u root
+                    '''
+                }
+            }
+
+
+            steps {
+                // Permet de récupérer les fichiers sauvegardés plus haut
+                unstash 'source-code'
+
+                dir('quest-boot') {
+                    sh 'mvn -version'
+                    sh 'mvn package'
+                }
+            }
+        }
+    }
+}

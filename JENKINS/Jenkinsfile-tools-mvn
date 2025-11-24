@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    // Outil "maven 3.9.11" disponible pour toutes les steps de toutes les stages
+    tools {
+        maven 'maven-3.9.11'
+    }
+
+    stages {
+        stage('Github checkout') {
+            steps {
+                script {
+                    git credentialsId: 'github-login',
+                    url: 'git@github.com:jabid021/SOPRA-250905-GIT.git',
+                    branch: 'main'
+                }
+            }
+        }
+
+        stage('Maven version') {
+            steps {
+                sh 'mvn -version'
+            }
+        }
+
+        stage('Maven version 3.5') {
+            // Outil "maven 3.5" disponible uniquement pour les steps de cette stage
+            tools {
+                maven 'maven-3.5'
+            }
+
+            steps {
+                sh 'mvn -version'
+            }
+        }
+
+        stage('Maven package') {
+            steps {
+                dir('quest-boot') {
+                    sh 'mvn -version'
+                    sh 'mvn package'
+                }
+            }
+        }
+    }
+}
