@@ -1,14 +1,14 @@
-FROM node:lts-bullseye AS builder
+#FROM node:lts-bullseye AS builder
 
-WORKDIR /app
+#WORKDIR /app
 
-COPY package.json .
+#COPY package.json .
 
-RUN npm install
+#RUN npm install
 
-COPY . .
+#COPY . .
 
-RUN ./node_modules/.bin/ng build
+#RUN ./node_modules/.bin/ng build
 
 
 FROM nginx:latest
