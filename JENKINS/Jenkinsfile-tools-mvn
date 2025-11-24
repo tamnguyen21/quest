@@ -22,9 +22,20 @@ pipeline {
             }
         }
 
+        stage('Maven version 3.5') {
+            tools {
+                maven 'maven-3.5'
+            }
+
+            steps {
+                sh 'mvn -version'
+            }
+        }
+
         stage('Maven package') {
             steps {
                 dir('quest-boot') {
+                    sh 'mvn -version'
                     sh 'mvn package'
                 }
             }
