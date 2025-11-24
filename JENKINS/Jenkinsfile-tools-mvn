@@ -1,6 +1,7 @@
 pipeline {
     agent any
 
+    // Outil "maven 3.9.11" disponible pour toutes les steps de toutes les stages
     tools {
         maven 'maven-3.9.11'
     }
@@ -23,6 +24,7 @@ pipeline {
         }
 
         stage('Maven version 3.5') {
+            // Outil "maven 3.5" disponible uniquement pour les steps de cette stage
             tools {
                 maven 'maven-3.5'
             }

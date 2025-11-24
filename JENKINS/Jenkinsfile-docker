@@ -1,7 +1,9 @@
 pipeline {
+    // Utilisation de l'agent Docker, avec l'image maven dans sa version 3.9.11-eclipse-temurin-21
     agent {
         docker {
             image 'maven:3.9.11-eclipse-temurin-21'
+            // Avec comme argument un mapping de volume (pour le cache Maven) et l'utilisateur root
             args '''
                 -v $HOME/.m2:/root/.m2:z
                 -u root
@@ -9,7 +11,7 @@ pipeline {
         }
     }
 
-
+    // Ces stages seront exécutées sur le container Maven
     stages {
         stage('Maven version') {
             steps {
