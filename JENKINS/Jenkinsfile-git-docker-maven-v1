@@ -26,10 +26,11 @@ pipeline {
                 }
             }
 
-            // Permet de récupérer les fichiers sauvegardés plus haut
-            unstash 'source-code'
 
             steps {
+                // Permet de récupérer les fichiers sauvegardés plus haut
+                unstash 'source-code'
+
                 dir('quest-boot') {
                     sh 'mvn -version'
                     sh 'mvn package'
