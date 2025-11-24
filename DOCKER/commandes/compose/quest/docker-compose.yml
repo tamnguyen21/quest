@@ -17,7 +17,7 @@ services:
       - ./quest-init.sql:/docker-entrypoint-initdb.d/setup.sql
 
     networks:
-      - quest
+      - clequest
 
 
   boot:
@@ -37,7 +37,7 @@ services:
         condition: service_healthy
 
     networks:
-      - quest
+      - clequest
 
 
   angular:
@@ -51,12 +51,12 @@ services:
       - boot
 
     networks:
-      - quest
+      - clequest
 
 volumes:
   db_data:
     name: quest-db-data
 
 networks:
-  quest:
+  clequest:
     name: quest
