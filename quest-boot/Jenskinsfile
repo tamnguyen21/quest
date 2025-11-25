@@ -32,6 +32,7 @@ pipeline {
                         dir('quest-boot') {
                             script {
                                 // Attention : tool 'SonarQube' n'est pas un scanner, à remplacer par SonarScanner CLI
+
                                 withSonarQubeEnv('SonarQube') {
                                     sh "./node_modules/.bin/sonar-scanner -Dsonar.projectKey=quest-boot"
                                 }
