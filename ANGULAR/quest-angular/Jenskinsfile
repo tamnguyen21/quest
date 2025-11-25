@@ -1,58 +1,63 @@
 pipeline {
-	agent any
-	
-	stages {
-		stage('Github checkout') {
-			steps {
-				script {
-					git credentialsId: '<GitHub-login>',
-					url: 'git@github.com:tamnguyen21/quest.git ',
-					branch: 'main'
-				}
-			}
-		}
-		stage("node image"){
-			agent{
-				docker{
-					image "node:lts-bullseye"
-					args '''
-				-v $HOME/.m2:/root/.m2
-				-v root
-			'''
-					reuseNode true
-				}
-			}
-			steps{
-			    
-				
-				dir('ANGULAR/quest-angular'){
-					sh "npm install"
-					sh "./node_modules/.bin/ng build"
-					
-				}
-			}
-			
-				
-					
-				
-			
-		}
-		stage('Docker Build'){
-			steps{
-				dir('ANGULAR/quest-angular'){
-				    sh '''
-            export DOCKER_BUILDKIT=1
-            docker build -t ajc/quest:angular .
-            '''
-				}
-			}
-		}
-		stage("Docker Deploy"){
-			steps{
-				dir('DOCKER/commandes/compose/quest'){
-					sh "docker compose up -d angular"
-				}
-			}
-		}
-	}
+    agent any
+
+    stages {
+        stage('Build') {
+            agent {
+                docker {
+                    image 'node:lts-bullseye'
+                    args '''
+                        -v $HOME/.npm:/root/.npmm2:z
+                        -u root
+                        --network devops
+                    '''
+                    reuseNode true // Sans ça, il y aura un 2eme workspace
+                }
+            }
+
+            stages {
+                stage('Installation dependances') {
+                    steps {
+                        dir('ANGULAR/quest-angular') {
+                            sh 'npm install'
+                        }
+                    }
+                }
+
+                stage('Analyse Sonar') {
+                    steps {
+                        dir('ANGULAR/quest-angular') {
+                            withSonarQubeEnv('SonarQube') {
+                                sh './node_modules/.bin/sonar-scanner -Dsonar.projectKey=quest-angular'
+                            }
+                        }
+                    }
+                }
+
+                stage('Build Angular') {
+                    steps {
+                        dir('ANGULAR/quest-angular') {
+                            sh './node_modules/.bin/ng build'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                dir('ANGULAR/quest-angular') {
+                    sh 'docker build -t ajc/quest:angular .'
+                }
+            }
+        }
+
+        stage('Docker Deploy') {
+            steps {
+                dir('DOCKER/commandes/compose/quest') {
+                    sh 'docker compose up -d --build angular'
+                }
+            }
+        }
+    }
 }
