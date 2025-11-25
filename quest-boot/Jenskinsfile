@@ -31,10 +31,9 @@ pipeline {
                     steps {
                         dir('quest-boot') {
                             script {
-                                // Attention : tool 'SonarQube' n'est pas un scanner, à remplacer par SonarScanner CLI
 
                                 withSonarQubeEnv('SonarQube') {
-                                    sh "./node_modules/.bin/sonar-scanner -Dsonar.projectKey=quest-boot"
+                                    sh "sh 'mvn sonar:sonar -Dsonar.projectKey=quest-boot -Dsonar.projectName=quest-boot'"
                                 }
                             }
                         }
@@ -56,7 +55,7 @@ pipeline {
         stage('Docker Deploy') {
             steps {
                 dir('DOCKER/commandes/compose/quest') {
-                    sh "docker compose up -d boot"
+                    sh "docker compose up -d"
                 }
             }
         }
