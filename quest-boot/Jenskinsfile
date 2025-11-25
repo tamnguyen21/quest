@@ -1,11 +1,7 @@
 pipeline {
 	agent any
 
-    node {
-        stage('SCM') {
-            checkout scm
-            }
-        }
+    
 	
 	stages {
         
@@ -25,6 +21,12 @@ pipeline {
             }
 
             stages {
+
+                node {
+        stage('SCM') {
+            checkout scm
+            }
+        }
 
                 stage('Analyse Sonar') {
                     steps {
