@@ -29,7 +29,7 @@ pipeline {
                         dir('quest-boot') {
                             script {
                                 // Attention : tool 'SonarQube' n'est pas un scanner, à remplacer par SonarScanner CLI
-                                def scannerHome = tool 'SonarQube'
+                                def scannerHome = tool 'SonarScanner'
                                 withSonarQubeEnv('SonarQube') {
                                     sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=quest-boot"
                                 }
