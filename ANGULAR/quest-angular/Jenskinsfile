@@ -6,27 +6,29 @@ pipeline {
 			steps {
 				script {
 					git credentialsId: '<GitHub-login>',
-					url: 'git@github.com:jabid021/SOPRA-250905-GIT.git ',
+					url: 'git@github.com:tamnguyen21/quest.git ',
 					branch: 'main'
 				}
 			}
 		}
-		stage("Maven package"){
+		stage("node image"){
 			agent{
 				docker{
-					image "maven:3.9.11-eclipse-temurin-21"
+					image "node:lts-bullseye"
 					args '''
-						-v $HOME/.m2:/root/.m2
-						-v root
-					'''
+				-v $HOME/.m2:/root/.m2
+				-v root
+			'''
 					reuseNode true
 				}
 			}
 			steps{
+			    
 				
-				dir('quest-boot'){
-					sh "mvn -version"
-					sh "mvn -version"
+				dir('ANGULAR/quest-angular'){
+					sh "npm install"
+					sh "./node_modules/.bin/ng build"
+					
 				}
 			}
 			
@@ -37,8 +39,11 @@ pipeline {
 		}
 		stage('Docker Build'){
 			steps{
-				dir('quest-boot'){
-					sh "docker build -t ajc/quest:boot ."
+				dir('ANGULAR/quest-angular'){
+				    sh '''
+            export DOCKER_BUILDKIT=1
+            docker build -t ajc/quest:angular .
+            '''
 				}
 			}
 		}
