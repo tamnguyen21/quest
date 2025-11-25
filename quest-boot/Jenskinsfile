@@ -22,9 +22,9 @@ pipeline {
 
                 stage('Analyse Sonar') {
                     steps {
-                        dir('ANGULAR/quest-angular') {
+                        dir('quest-boot') {
                             withSonarQubeEnv('SonarQube') {
-                                sh './node_modules/.bin/sonar-scanner -Dsonar.projectKey=quest-angular'
+                                sh './node_modules/.bin/sonar-scanner -Dsonar.projectKey=quest-boot'
                             }
                         }
                     }
