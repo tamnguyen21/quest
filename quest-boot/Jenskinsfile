@@ -2,6 +2,12 @@ pipeline {
 	agent any
 	
 	stages {
+
+        stage('SCM') {
+            steps {
+                checkout scm
+            }
+        }
         
         stage('Build') {
             agent {
@@ -23,9 +29,15 @@ pipeline {
                 stage('Analyse Sonar') {
                     steps {
                         dir('quest-boot') {
-                            withSonarQubeEnv('SonarQube') {
-                                sh './node_modules/.bin/sonar-scanner -Dsonar.projectKey=quest-boot'
+
+                            script {
+                                // Adaptation du node{} avec tool SonarScanner
+                                def scannerHome = tool 'SonarScanner'
+                                withSonarQubeEnv('SonarQube') {
+                                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=quest-boot"
+                                }
                             }
+
                         }
                     }
                 }
