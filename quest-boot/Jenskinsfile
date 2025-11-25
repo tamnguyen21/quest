@@ -33,7 +33,7 @@ pipeline {
                             script {
 
                                 withSonarQubeEnv('SonarQube') {
-                                    sh "sh 'mvn sonar:sonar -Dsonar.projectKey=quest-boot -Dsonar.projectName=quest-boot'"
+                                    sh "mvn sonar:sonar -Dsonar.projectKey=quest-boot -Dsonar.projectName=quest-boot"
                                 }
                             }
                         }
