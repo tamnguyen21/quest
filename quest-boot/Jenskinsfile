@@ -26,9 +26,9 @@ pipeline {
 
                             script {
                                 // Adaptation du node{} avec tool SonarScanner
-    
+                            def scannerHome = tool 'SonarScanner'
                                 withSonarQubeEnv('SonarQube') {
-                                    sh './node_modules/.bin/sonar-scanner -Dsonar.projectKey=quest-boot'
+                                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=quest-boot"
                                 }
                             }
 
