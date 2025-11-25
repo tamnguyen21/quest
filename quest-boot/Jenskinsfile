@@ -1,22 +1,18 @@
 pipeline {
-	agent any
+    agent any
 
-    
-	
-	stages {
-        
+    stages {
+
         stage('Build') {
             agent {
                 docker {
                     image "maven:3.9.11-eclipse-temurin-21"
-					args '''
-						-v $HOME/.m2:/root/.m2
-						-u root
+                    args '''
+                        -v $HOME/.m2:/root/.m2
+                        -u root
                         --network devops
-
-					'''
-					reuseNode true
-                     // Sans ça, il y aura un 2eme workspace
+                    '''
+                    reuseNode true
                 }
             }
 
@@ -31,15 +27,13 @@ pipeline {
                 stage('Analyse Sonar') {
                     steps {
                         dir('quest-boot') {
-
                             script {
-                                // Adaptation du node{} avec tool SonarScanner
-                            def scannerHome = tool 'SonarQube'
+                                // Attention : tool 'SonarQube' n'est pas un scanner, à remplacer par SonarScanner CLI
+                                def scannerHome = tool 'SonarQube'
                                 withSonarQubeEnv('SonarQube') {
                                     sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=quest-boot"
                                 }
                             }
-
                         }
                     }
                 }
@@ -48,25 +42,27 @@ pipeline {
                     steps {
                         dir('quest-boot') {
                             sh "mvn -version"
-					        sh "mvn package"
+                            sh "mvn package"
                         }
                     }
                 }
             }
         }
-		stage('Docker Build'){
-			steps{
-				dir('quest-boot'){
-					sh "docker build -t ajc/quest:boot ."
-				}
-			}
-		}
-		stage("Docker Deploy"){
-			steps{
-				dir('DOCKER/commandes/compose/quest'){
-					sh "docker compose up -d boot"
-				}
-			}
-		}
-	}
+
+        stage('Docker Build') {
+            steps {
+                dir('quest-boot') {
+                    sh "docker build -t ajc/quest:boot ."
+                }
+            }
+        }
+
+        stage('Docker Deploy') {
+            steps {
+                dir('DOCKER/commandes/compose/quest') {
+                    sh "docker compose up -d boot"
+                }
+            }
+        }
+    }
 }
